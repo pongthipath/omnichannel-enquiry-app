@@ -19,7 +19,7 @@ export function useLogin() {
     },
     onSuccess: (me) => {
       qc.setQueryData(meKey, me);
-      router.replace('/enquiries');
+      router.replace(me.userType === 'staff' ? '/inbox' : '/my');
     },
   });
 }

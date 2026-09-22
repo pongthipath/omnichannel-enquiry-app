@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ตั้งค่าแผนก</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&amp;family=Noto+Sans:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Noto Sans Thai Looped','Noto Sans',sans-serif;color:#111928}
+a{color:#3758F9}a:hover{color:#1B44C8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; background: #F9FAFB; font-family: 'Noto Sans Thai Looped','Noto Sans',sans-serif; color: #111928; overflow: hidden;">
+<dc-import name="Sidebar" active="departments" hint-size="232px,900px"></dc-import>
+<main style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 24px 24px 24px 28px;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div style="flex-grow: 1; display: flex; flex-direction: column;">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700;">แผนก</h1>
+<span style="font-size: 14px; color: #637381;">พนักงานเห็นเรื่องของแผนกตัวเอง เรื่องใหม่ที่ยังไม่ระบุแผนกจะเข้าแผนกเริ่มต้น</span>
+</div>
+<button style="height: 42px; padding: 0 16px; border: 0; border-radius: 6px; background: #3758F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">+ เพิ่มแผนก</button>
+</div>
+
+<div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0;">
+<section style="flex-grow: 1; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-content: start;">
+<sc-for list="{{depts}}" as="d" hint-placeholder-count="7">
+<div style="{{d.cardStyle}}">
+<div style="display: flex; align-items: center; gap: 10px;">
+<span style="width: 40px; height: 40px; border-radius: 8px; background: #EBEEFE; color: #1B44C8; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Noto Sans',sans-serif;">{{d.short}}</span>
+<div style="flex-grow: 1; display: flex; flex-direction: column;"><span style="font-size: 15px; font-weight: 700;">{{d.th}}</span><span style="font-size: 12px; color: #637381;">{{d.en}} · {{d.code}}</span></div>
+<sc-if value="{{d.isDefault}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #DAF8E6; color: #1A8245;">แผนกเริ่มต้น</span></sc-if>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+<div style="display: flex; flex-direction: column;"><span style="font-size: 12px; color: #637381;">พนักงาน</span><span style="font-size: 18px; font-weight: 700;">{{d.staff}}</span></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 12px; color: #637381;">เรื่องค้าง</span><span style="font-size: 18px; font-weight: 700;">{{d.open}}</span></div>
+<div style="display: flex; flex-direction: column;"><span style="font-size: 12px; color: #637381;">หัวหน้า</span><span style="font-size: 13px; font-weight: 600; padding-top: 4px;">{{d.lead}}</span></div>
+</div>
+</div>
+</sc-for>
+</section>
+
+<aside aria-label="แก้ไขแผนก" style="width: 340px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA;">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700;">ฝ่ายบริการลูกค้า</h2>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600;">ชื่อภาษาไทย<input value="ฝ่ายบริการลูกค้า" style="height: 42px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; font-family: inherit; font-size: 14px;"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600;">ชื่อภาษาอังกฤษ<input value="Customer Service" style="height: 42px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; font-family: inherit; font-size: 14px;"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600;">รหัส<input value="CS" style="height: 42px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; font-family: 'Noto Sans',sans-serif; font-size: 14px; background: #F9FAFB; color: #637381;" disabled=""></label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: 14px;"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #3758F9;">เป็นแผนกเริ่มต้นของเรื่องใหม่</label>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 13px; font-weight: 600;">สมาชิก (4)</span>
+<sc-for list="{{members}}" as="m" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px;"><span style="width: 28px; height: 28px; border-radius: 14px; background: #374151; color: #FFFFFF; font-weight: 600; display: flex; align-items: center; justify-content: center;">{{m.initial}}</span><span style="flex-grow: 1;">{{m.name}}</span><span style="color: #637381;">{{m.role}}</span></div>
+</sc-for>
+</div>
+<div style="display: flex; gap: 8px; margin-top: auto;">
+<span style="flex-grow: 1;"></span>
+<button style="height: 42px; padding: 0 14px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 14px; cursor: pointer;">ยกเลิก</button>
+<button style="height: 42px; padding: 0 16px; border: 0; border-radius: 6px; background: #3758F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">บันทึก</button>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var list = [
+      ['CS', 'CS', 'ฝ่ายบริการลูกค้า', 'Customer Service', 4, 3, 'ธนา', true],
+      ['SALES', 'SA', 'ฝ่ายขาย', 'Sales', 1, 2, '—'],
+      ['QC', 'QC', 'ควบคุมคุณภาพ', 'Quality Control', 1, 2, '—'],
+      ['LOGISTICS', 'LG', 'ขนส่ง', 'Logistics', 0, 1, '—'],
+      ['FINANCE', 'FN', 'การเงิน', 'Finance', 0, 0, '—'],
+      ['WAREHOUSE', 'WH', 'คลังสินค้า', 'Warehouse', 0, 0, '—'],
+      ['PURCHASING', 'PU', 'จัดซื้อ', 'Purchasing', 0, 0, '—']
+    ];
+    var depts = list.map(function (d) {
+      return { code: d[0], short: d[1], th: d[2], en: d[3], staff: d[4], open: d[5], lead: d[6], isDefault: !!d[7],
+        cardStyle: 'display: flex; flex-direction: column; gap: 14px; padding: 16px; border-radius: 10px; background: #FFFFFF; cursor: pointer; ' +
+          (d[7] ? 'border: 2px solid #3758F9;' : 'border: 1px solid #DFE4EA;') };
+    });
+    return {
+      depts: depts,
+      members: [
+        { initial: 'ธ', name: 'ธนา (หัวหน้า CS)', role: 'Supervisor' },
+        { initial: 'ส', name: 'สุดา (CS)', role: 'Agent' },
+        { initial: 'ว', name: 'วิภา (ผู้จัดการ)', role: 'Manager' },
+        { initial: 'A', name: 'ผู้ดูแลระบบ', role: 'Admin' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import { cn } from '../../utils/cn';
 
-export type BadgeTone = 'gray' | 'primary' | 'green' | 'yellow' | 'red' | 'cyan';
+export type BadgeTone = 'gray' | 'primary' | 'green' | 'yellow' | 'red' | 'cyan' | 'purple';
 
 // Text colors meet 4.5:1 on their tint
 const tones: Record<BadgeTone, { box: string; text: string }> = {
@@ -11,6 +11,7 @@ const tones: Record<BadgeTone, { box: string; text: string }> = {
   yellow: { box: 'bg-yellow-light dark:bg-dark-3', text: 'text-yellow dark:text-yellow-dark' },
   red: { box: 'bg-red-light dark:bg-dark-3', text: 'text-red dark:text-red-dark' },
   cyan: { box: 'bg-cyan-light dark:bg-dark-3', text: 'text-cyan dark:text-white' },
+  purple: { box: 'bg-purple-light dark:bg-dark-3', text: 'text-purple dark:text-white' },
 };
 
 /** Tailgrids "Badge" — small rounded label. */

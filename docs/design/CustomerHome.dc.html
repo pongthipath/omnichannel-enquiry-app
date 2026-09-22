@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ลูกค้า: เรื่องของฉัน</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&amp;family=Noto+Sans:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Noto Sans Thai Looped','Noto Sans',sans-serif;color:#111928}
+a{color:#3758F9}a:hover{color:#1B44C8}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; display: flex; flex-direction: column; background: #F9FAFB; font-family: 'Noto Sans Thai Looped','Noto Sans',sans-serif; color: #111928; overflow: hidden;">
+<header style="display: flex; flex-direction: column; gap: 14px; padding: 20px 16px 16px; background: #3758F9; color: #FFFFFF;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div style="flex-grow: 1; display: flex; flex-direction: column;">
+<span style="font-size: 13px; color: #DDE3FE;">Bangkok Bistro Co.</span>
+<span style="font-size: 20px; font-weight: 700;">สวัสดี คุณมาลี</span>
+</div>
+<button aria-label="การแจ้งเตือน" style="width: 44px; height: 44px; border: 0; border-radius: 22px; background: rgba(255,255,255,0.16); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></button>
+</div>
+<label style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px; border-radius: 8px; background: #FFFFFF; color: #6B7280;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input aria-label="ค้นหาเรื่อง" placeholder="ค้นหาเรื่องหรือเลขที่เรื่อง" style="flex-grow: 1; border: 0; font-family: inherit; font-size: 16px; color: #111928; outline: none; background: transparent;">
+</label>
+</header>
+
+<div style="flex-grow: 1; overflow: hidden; display: flex; flex-direction: column; gap: 16px; padding: 16px;">
+<section style="display: flex; flex-direction: column; gap: 10px;">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700;">แจ้งเรื่องใหม่</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+<sc-for list="{{quick}}" as="q" hint-placeholder-count="4">
+<a href="CustomerChat.dc.html" style="display: flex; flex-direction: column; gap: 2px; min-height: 64px; padding: 12px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; text-decoration: none; color: #111928;">
+<span style="font-size: 14px; font-weight: 600;">{{q.label}}</span>
+<span style="font-size: 12px; color: #637381;">{{q.hint}}</span>
+</a>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700;">เรื่องของฉัน</h2>
+<span style="font-size: 13px; color: #637381;">2 เรื่อง</span>
+</div>
+<div role="tablist" style="display: flex; padding: 4px; gap: 4px; border-radius: 8px; background: #F3F4F6;">
+<button role="tab" aria-selected="true" style="flex-grow: 1; height: 36px; border: 0; border-radius: 6px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-family: inherit; font-size: 13px; font-weight: 600; color: #3758F9;">ทั้งหมด</button>
+<button role="tab" aria-selected="false" style="flex-grow: 1; height: 36px; border: 0; border-radius: 6px; background: transparent; font-family: inherit; font-size: 13px; color: #637381;">กำลังดำเนินการ</button>
+<button role="tab" aria-selected="false" style="flex-grow: 1; height: 36px; border: 0; border-radius: 6px; background: transparent; font-family: inherit; font-size: 13px; color: #637381;">เสร็จแล้ว</button>
+</div>
+<a href="CustomerChat.dc.html" style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; text-decoration: none; color: #111928;">
+<div style="display: flex; align-items: center; gap: 6px;"><span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">ENQ-2026-000017</span><span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #EBEEFE; color: #1B44C8;">กำลังดำเนินการ</span><span style="flex-grow: 1;"></span><span style="font-size: 12px; color: #637381;">16:45</span></div>
+<span style="font-size: 15px; font-weight: 600;">เนยฝรั่งเศสกล่องบุบ 2 ลัง</span>
+<span style="font-size: 13px; color: #637381;">สมชาย (QC): รบกวนถ่ายรูปวันหมดอายุบนกล่องเพิ่มด้วยครับ</span>
+<div style="display: flex; gap: 4px; margin-top: 4px;"><span style="flex-grow: 1; height: 4px; border-radius: 2px; background: #3758F9;"></span><span style="flex-grow: 1; height: 4px; border-radius: 2px; background: #3758F9;"></span><span style="flex-grow: 1; height: 4px; border-radius: 2px; background: #3758F9;"></span><span style="flex-grow: 1; height: 4px; border-radius: 2px; background: #E5E7EB;"></span></div>
+</a>
+<a href="CustomerChat.dc.html" style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; text-decoration: none; color: #111928;">
+<div style="display: flex; align-items: center; gap: 6px;"><span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">ENQ-2026-000021</span><span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #F3F4F6; color: #4B5563;">ปิดแล้ว</span><span style="flex-grow: 1;"></span><span style="font-size: 12px; color: #637381;">19 ก.ย.</span></div>
+<span style="font-size: 15px; font-weight: 600;">ขอตัวอย่างเนย Elle &amp; Vire 1kg</span>
+<span style="font-size: 13px; color: #637381;">ธนพล (Sales): จัดส่งตัวอย่างพร้อมรอบส่งของพรุ่งนี้ครับ</span>
+</a>
+</section>
+</div>
+
+<nav aria-label="เมนูหลัก" style="display: flex; height: 64px; background: #FFFFFF; border-top: 1px solid #DFE4EA;">
+<a href="CustomerHome.dc.html" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; font-weight: 600; color: #3758F9; text-decoration: none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>เรื่องของฉัน</a>
+<a href="CustomerChat.dc.html" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; color: #637381; text-decoration: none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8M12 8v8"></path></svg>แจ้งเรื่อง</a>
+<a href="CustomerHome.dc.html" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; color: #637381; text-decoration: none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>สินค้า</a>
+<a href="CustomerHome.dc.html" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; color: #637381; text-decoration: none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21v-1a6 6 0 0 1 12 0v1"></path></svg>บัญชี</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      quick: [
+        { label: 'สินค้าเสียหาย', hint: 'แนบรูปได้' },
+        { label: 'ติดตามออเดอร์', hint: 'สถานะการจัดส่ง' },
+        { label: 'ขอราคา / ใบเสนอราคา', hint: 'สั่งจำนวนมาก' },
+        { label: 'ใบกำกับภาษี', hint: 'การเงิน' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

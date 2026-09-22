@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>กล่องงานพนักงาน</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&amp;family=Noto+Sans:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Noto Sans Thai Looped','Noto Sans',sans-serif;color:#111928}
+a{color:#3758F9}a:hover{color:#1B44C8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; background: #F9FAFB; font-family: 'Noto Sans Thai Looped','Noto Sans',sans-serif; color: #111928; overflow: hidden;">
+<dc-import name="Sidebar" active="inbox" hint-size="232px,900px"></dc-import>
+
+<section aria-label="รายการเรื่อง" style="width: 356px; flex-shrink: 0; display: flex; flex-direction: column; background: #FFFFFF; border-right: 1px solid #DFE4EA;">
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 16px 16px 12px; border-bottom: 1px solid #DFE4EA;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<h1 style="margin: 0; font-size: 20px; font-weight: 700;">กล่องงาน</h1>
+<button style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px; border: 0; border-radius: 6px; background: #3758F9; color: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"></path></svg>สร้างเรื่อง</button>
+</div>
+<label style="display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #F9FAFB; color: #6B7280;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input aria-label="ค้นหา" placeholder="ค้นหาเลขเรื่อง ข้อความ ลูกค้า หรือสินค้า" style="flex-grow: 1; border: 0; background: transparent; font-family: inherit; font-size: 14px; color: #111928; outline: none;">
+</label>
+<div role="tablist" style="display: flex; padding: 4px; gap: 4px; border-radius: 8px; background: #F3F4F6;">
+<button role="tab" aria-selected="false" style="flex-grow: 1; height: 32px; border: 0; border-radius: 6px; background: transparent; font-family: inherit; font-size: 13px; color: #637381; cursor: pointer;">ของฉัน 3</button>
+<button role="tab" aria-selected="false" style="flex-grow: 1; height: 32px; border: 0; border-radius: 6px; background: transparent; font-family: inherit; font-size: 13px; color: #637381; cursor: pointer;">แผนกฉัน 3</button>
+<button role="tab" aria-selected="true" style="flex-grow: 1; height: 32px; border: 0; border-radius: 6px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-family: inherit; font-size: 13px; font-weight: 600; color: #3758F9; cursor: pointer;">ทั้งหมด 10</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px;">
+<sc-for list="{{chips}}" as="chip" hint-placeholder-count="6">
+<button style="{{chip.style}}">{{chip.label}} <span style="font-weight: 700;">{{chip.count}}</span></button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; font-size: 12px; color: #637381; border-bottom: 1px solid #F3F4F6;">
+<span>เรียงตาม: ข้อความล่าสุด</span>
+<span>เกิน SLA 1 · ยังไม่มอบหมาย 3</span>
+</div>
+<div style="flex-grow: 1; overflow: hidden; display: flex; flex-direction: column;">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="8">
+<div style="{{it.rowStyle}}">
+<div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 20px; background: {{it.avatarBg}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px;">{{it.initial}}</div>
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+<div style="display: flex; align-items: center; gap: 6px;">
+<span style="font-size: 14px; font-weight: 600; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{it.customer}}</span>
+<span style="font-size: 12px; color: #637381; flex-shrink: 0;">{{it.time}}</span>
+</div>
+<span style="font-size: 13px; font-weight: 600; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{it.subject}}</span>
+<span style="font-size: 13px; color: #637381; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{it.preview}}</span>
+<div style="display: flex; align-items: center; gap: 4px; margin-top: 4px;">
+<span style="font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; border: 1px solid #DFE4EA; color: #4B5563;">{{it.channel}}</span>
+<sc-for list="{{it.badges}}" as="b" hint-placeholder-count="2">
+<span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: {{b.bg}}; color: {{b.fg}};">{{b.label}}</span>
+</sc-for>
+<span style="flex-grow: 1;"></span>
+<sc-if value="{{it.hasUnread}}" hint-placeholder-val="{{true}}">
+<span style="min-width: 20px; height: 20px; border-radius: 10px; background: #3758F9; color: #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{it.unread}}</span>
+</sc-if>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<main aria-label="บทสนทนา" style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; background: #F9FAFB;">
+<header style="display: flex; flex-direction: column; gap: 12px; padding: 14px 20px; background: #FFFFFF; border-bottom: 1px solid #DFE4EA;">
+<div style="display: flex; align-items: flex-start; gap: 12px;">
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #637381;">
+<span style="font-family: 'Noto Sans',sans-serif;">ENQ-2026-000022</span><span>·</span><span>Phuket Seafood House</span><span>·</span><span>แอปมือถือ</span>
+</div>
+<h2 style="margin: 0; font-size: 18px; font-weight: 700;">แซลมอนมาส่งช้ากว่านัด</h2>
+</div>
+<button style="height: 36px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 600; color: #111928; cursor: pointer;">ส่งต่อแผนก</button>
+<button style="height: 36px; padding: 0 12px; border: 0; border-radius: 6px; background: #3758F9; font-family: inherit; font-size: 13px; font-weight: 600; color: #FFFFFF; cursor: pointer;">เปลี่ยนสถานะ ▾</button>
+</div>
+<ol aria-label="ขั้นตอนสถานะ" style="margin: 0; padding: 0; list-style: none; display: flex; gap: 4px;">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="6">
+<li style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px;">
+<span style="height: 4px; border-radius: 2px; background: {{s.bar}};"></span>
+<span style="font-size: 11px; color: {{s.fg}}; font-weight: {{s.weight}};">{{s.label}}</span>
+</li>
+</sc-for>
+</ol>
+</header>
+
+<div style="flex-grow: 1; overflow: hidden; display: flex; flex-direction: column; gap: 14px; padding: 20px;">
+<div style="align-self: center; font-size: 12px; color: #637381; padding: 2px 10px; border-radius: 10px; background: #F3F4F6;">21 ก.ย. 2569</div>
+<div style="display: flex; gap: 8px; align-items: flex-end; max-width: 78%;">
+<div style="width: 28px; height: 28px; flex-shrink: 0; border-radius: 14px; background: #0B76B7; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">P</div>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<div style="padding: 10px 14px; border-radius: 12px 12px 12px 4px; background: #FFFFFF; border: 1px solid #DFE4EA; font-size: 14px; line-height: 22px;">แซลมอนนัดส่ง 9 โมง แต่มาถึงเกือบเที่ยงค่ะ</div>
+<span style="font-size: 11px; color: #637381;">10:00 · แอปมือถือ</span>
+</div>
+</div>
+<div style="align-self: center; font-size: 12px; color: #4B5563; padding: 4px 12px; border-radius: 12px; background: #EBEEFE;">ธนา มอบหมายให้ สุดา (CS)</div>
+<div style="display: flex; flex-direction: column; gap: 4px; align-self: flex-end; align-items: flex-end; max-width: 78%;">
+<div style="padding: 10px 14px; border-radius: 12px 12px 4px 12px; background: #3758F9; color: #FFFFFF; font-size: 14px; line-height: 22px;">ขออภัยค่ะ รถติดฝนตกหนัก รอบหน้าจะจัดรถคันแรกให้นะคะ</div>
+<span style="font-size: 11px; color: #637381;">สุดา (CS) · 10:20 · อ่านแล้ว</span>
+</div>
+<div style="align-self: center; font-size: 12px; color: #1A8245; padding: 4px 12px; border-radius: 12px; background: #DAF8E6;">สุดา เปลี่ยนสถานะเป็น แก้ไขแล้ว</div>
+<div style="align-self: center; font-size: 12px; color: #637381; padding: 2px 10px; border-radius: 10px; background: #F3F4F6;">วันนี้</div>
+<div style="display: flex; gap: 8px; align-items: flex-end; max-width: 78%;">
+<div style="width: 28px; height: 28px; flex-shrink: 0; border-radius: 14px; background: #0B76B7; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">P</div>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<div style="padding: 10px 14px; border-radius: 12px 12px 12px 4px; background: #FFFFFF; border: 1px solid #DFE4EA; font-size: 14px; line-height: 22px;">วันนี้ก็มาช้าอีกแล้วค่ะ ร้านต้องปิดเมนูแซลมอน</div>
+<span style="font-size: 11px; color: #637381;">15:49 · แอปมือถือ</span>
+</div>
+</div>
+<div style="align-self: center; font-size: 12px; color: #9D5425; padding: 4px 12px; border-radius: 12px; background: #FFFBEB;">ลูกค้าทักกลับ ระบบเปิดเรื่องอีกครั้ง (ครั้งที่ 1) และเริ่มนับ SLA ใหม่</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 20px 16px; background: #FFFFFF; border-top: 1px solid #DFE4EA;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<div role="tablist" style="display: flex; padding: 3px; gap: 3px; border-radius: 8px; background: #F3F4F6;">
+<button role="tab" aria-selected="true" style="height: 30px; padding: 0 12px; border: 0; border-radius: 6px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-family: inherit; font-size: 13px; font-weight: 600; color: #3758F9; cursor: pointer;">ตอบลูกค้า</button>
+<button role="tab" aria-selected="false" style="height: 30px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent; font-family: inherit; font-size: 13px; color: #637381; cursor: pointer;">โน้ตภายใน</button>
+</div>
+<span style="font-size: 12px; color: #637381;">ส่งทาง: แอปมือถือ ▾</span>
+<span style="flex-grow: 1;"></span>
+<button style="height: 30px; padding: 0 10px; border: 1px solid #DFE4EA; border-radius: 15px; background: #FFFFFF; font-family: inherit; font-size: 12px; color: #374151; cursor: pointer;">ขออภัยในความไม่สะดวก</button>
+<button style="height: 30px; padding: 0 10px; border: 1px solid #DFE4EA; border-radius: 15px; background: #FFFFFF; font-family: inherit; font-size: 12px; color: #374151; cursor: pointer;">ขอรูปเพิ่มเติม</button>
+</div>
+<div style="display: flex; align-items: flex-end; gap: 8px; padding: 8px 8px 8px 14px; border: 1px solid #3758F9; border-radius: 8px;">
+<textarea aria-label="พิมพ์ข้อความ" placeholder="พิมพ์ข้อความถึงลูกค้า…" style="flex-grow: 1; height: 44px; border: 0; resize: none; font-family: inherit; font-size: 14px; line-height: 22px; color: #111928; outline: none;"></textarea>
+<button aria-label="แนบไฟล์" style="width: 40px; height: 40px; border: 0; border-radius: 6px; background: transparent; color: #637381; display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+<button aria-label="ส่ง" style="width: 40px; height: 40px; border: 0; border-radius: 6px; background: #3758F9; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg></button>
+</div>
+</div>
+</main>
+
+<aside aria-label="ข้อมูลประกอบ" style="width: 312px; flex-shrink: 0; display: flex; flex-direction: column; background: #FFFFFF; border-left: 1px solid #DFE4EA;">
+<div role="tablist" style="display: flex; border-bottom: 1px solid #DFE4EA; padding: 0 8px;">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{showCustomer}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 16px;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div style="width: 48px; height: 48px; border-radius: 24px; background: #0B76B7; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px;">P</div>
+<div style="display: flex; flex-direction: column;">
+<span style="font-size: 15px; font-weight: 700;">Phuket Seafood House</span>
+<span style="font-size: 13px; color: #637381;">CUS-00415 · คุณนิด</span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+<div style="padding: 10px; border-radius: 8px; background: #F9FAFB; border: 1px solid #DFE4EA; display: flex; flex-direction: column;"><span style="font-size: 12px; color: #637381;">เรื่องที่ยังเปิด</span><span style="font-size: 20px; font-weight: 700;">2</span></div>
+<div style="padding: 10px; border-radius: 8px; background: #FEEBEB; display: flex; flex-direction: column;"><span style="font-size: 12px; color: #E10E0E;">เกิน SLA</span><span style="font-size: 20px; font-weight: 700; color: #E10E0E;">1</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 12px; font-weight: 600; color: #637381;">ช่องทางติดต่อ</span>
+<div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: #637381;">อีเมล</span><span>nid@phuketseafood.test</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: #637381;">แอปมือถือ</span><span style="color: #1A8245; font-weight: 600;">เชื่อมแล้ว</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: #637381;">โทรศัพท์</span><span>[เบอร์โทร]</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 12px; font-weight: 600; color: #637381;">เรื่องอื่นของลูกค้านี้</span>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid #DFE4EA; border-radius: 8px;">
+<div style="display: flex; gap: 6px; align-items: center;"><span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">ENQ-2026-000014</span><span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #FEEBEB; color: #E10E0E;">เกิน SLA</span></div>
+<span style="font-size: 13px; font-weight: 600;">วิปปิ้งครีมหมดอายุก่อนกำหนด 6 กล่อง</span>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showDetail}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 16px;">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 8px; background: #FFFBEB;">
+<span style="font-size: 12px; font-weight: 600; color: #9D5425;">SLA รอบใหม่ (หลังเปิดอีกครั้ง)</span>
+<span style="font-size: 20px; font-weight: 700; color: #9D5425;">เหลือ [เวลา]</span>
+<span style="height: 6px; border-radius: 3px; background: #FDE68A;"></span>
+</div>
+<sc-for list="{{fields}}" as="f" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 12px; color: #637381;">{{f.label}}</span>
+<button style="display: flex; align-items: center; justify-content: space-between; height: 40px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #111928; cursor: pointer;">{{f.value}}<span style="color: #9CA3AF;">▾</span></button>
+</div>
+</sc-for>
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<span style="font-size: 12px; color: #637381;">แท็ก</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px;">
+<span style="font-size: 12px; padding: 3px 10px; border-radius: 12px; background: #EBEEFE; color: #1B44C8; font-weight: 600;">ขนส่งล่าช้า</span>
+<span style="font-size: 12px; padding: 3px 10px; border-radius: 12px; background: #EBEEFE; color: #1B44C8; font-weight: 600;">ลูกค้าประจำ</span>
+<button style="font-size: 12px; padding: 3px 10px; border-radius: 12px; border: 1px dashed #CED4DA; background: #FFFFFF; font-family: inherit; color: #637381; cursor: pointer;">+ เพิ่มแท็ก</button>
+</div>
+</div>
+<div style="display: flex; gap: 10px; align-items: center; padding: 10px; border: 1px solid #DFE4EA; border-radius: 8px;">
+<div style="width: 40px; height: 40px; border-radius: 6px; background: #F3F4F6; display: flex; align-items: center; justify-content: center; color: #9CA3AF; font-size: 11px;">รูป</div>
+<div style="display: flex; flex-direction: column; min-width: 0;">
+<span style="font-size: 13px; font-weight: 600;">Norwegian Salmon Fillet (per kg)</span>
+<span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">SLM-FLT-KG · Mowi</span>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showHistory}}" hint-placeholder-val="{{false}}">
+<ol style="margin: 0; padding: 16px; list-style: none; display: flex; flex-direction: column; gap: 14px;">
+<sc-for list="{{history}}" as="h" hint-placeholder-count="5">
+<li style="display: flex; gap: 10px;">
+<span style="width: 10px; height: 10px; margin-top: 6px; flex-shrink: 0; border-radius: 5px; background: {{h.dot}};"></span>
+<div style="display: flex; flex-direction: column;">
+<span style="font-size: 13px; font-weight: 600;">{{h.text}}</span>
+<span style="font-size: 12px; color: #637381;">{{h.meta}}</span>
+</div>
+</li>
+</sc-for>
+</ol>
+</sc-if>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'customer' };
+  }
+  renderVals() {
+    var self = this;
+    var S = {
+      OPEN: { label: 'เปิด', bg: '#E1F4FC', fg: '#0B76B7' },
+      ASSIGNED: { label: 'มอบหมายแล้ว', bg: '#EBEEFE', fg: '#1B44C8' },
+      IN_PROGRESS: { label: 'กำลังดำเนินการ', bg: '#EBEEFE', fg: '#1B44C8' },
+      WAITING: { label: 'รอลูกค้าตอบ', bg: '#FFFBEB', fg: '#9D5425' },
+      RESOLVED: { label: 'แก้ไขแล้ว', bg: '#DAF8E6', fg: '#1A8245' },
+      CLOSED: { label: 'ปิดแล้ว', bg: '#F3F4F6', fg: '#4B5563' }
+    };
+    var red = function (l) { return { label: l, bg: '#FEEBEB', fg: '#E10E0E' }; };
+    var yellow = function (l) { return { label: l, bg: '#FFFBEB', fg: '#9D5425' }; };
+    var rows = [
+      ['B', '#1B44C8', 'Bangkok Bistro Co.', 'เนยฝรั่งเศสกล่องบุบ 2 ลัง', 'ส่งให้แล้วค่ะ', '16:45', 'LINE', 'IN_PROGRESS', [red('ด่วน')], 1],
+      ['P', '#0B76B7', 'Phuket Seafood House', 'แซลมอนมาส่งช้ากว่านัด', 'วันนี้ก็มาช้าอีกแล้วค่ะ ร้านต้องปิดเมนูแซลมอน', '15:49', 'APP', 'OPEN', [yellow('เปิดอีกครั้ง')], 1, true],
+      ['N', '#1A8245', 'Nana Pizza', 'Mozzarella 2.3kg มีสต็อกพอสำหรับ 40 ก้อนไหม', 'สัปดาห์หน้าจะเปิดสาขาใหม่ ต้องใช้ Mozzarella…', '15:49', 'APP', 'OPEN', [], 1],
+      ['S', '#9D5425', 'Siam Riverside Hotel', 'ขอใบเสนอราคา Mozzarella 20 ลัง', 'ใช่ครับ 2.3kg', '15:31', 'FB', 'IN_PROGRESS', [], 1],
+      ['S', '#9D5425', 'Siam Riverside Hotel', 'ออเดอร์ SO-58812 จะส่งถึงกี่โมง', 'วันนี้จะมาส่งกี่โมงครับ ครัวต้องเตรียมงานเลี้ยงเย็นนี้', '15:19', 'FB', 'ASSIGNED', [], 1],
+      ['P', '#0B76B7', 'Phuket Seafood House', 'วิปปิ้งครีมหมดอายุก่อนกำหนด 6 กล่อง', 'รับของเมื่อวาน วิปปิ้งครีม 6 กล่องวันหมดอายุเหลือแค่ 2 วัน', '14:49', 'โทร', 'OPEN', [red('ด่วน'), red('เกิน SLA')], 1],
+      ['C', '#374151', 'Chiang Mai Bakehouse', 'ขอราคาช็อกโกแลต Callebaut 54% สั่ง 50 ถุง', 'ถ้าสั่ง 50 ถุงต่อเดือน มีราคาพิเศษไหมคะ', '13:49', 'WEB', 'OPEN', [], 1],
+      ['C', '#374151', 'Chiang Mai Bakehouse', 'ครีมชีสขาด 2 กล่องจากออเดอร์ล่าสุด', 'รบกวนส่งรูปใบส่งของที่มีลายเซ็นรับของให้หน่อยนะคะ', '12:24', 'APP', 'WAITING', [], 0],
+      ['N', '#1A8245', 'Nana Pizza', 'ขอใบกำกับภาษีเต็มรูปเดือนที่แล้ว', 'ส่งไฟล์ใบกำกับภาษีไปที่อีเมลแล้วครับ', 'เมื่อวาน', 'WEB', 'RESOLVED', [], 0]
+    ];
+    var items = rows.map(function (r) {
+      var st = S[r[7]];
+      var selected = !!r[10];
+      return {
+        initial: r[0], avatarBg: r[1], customer: r[2], subject: r[3], preview: r[4], time: r[5], channel: r[6],
+        badges: [st].concat(r[8]), unread: r[9], hasUnread: r[9] > 0,
+        rowStyle: 'display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #F3F4F6; cursor: pointer; ' +
+          (selected ? 'background: #EBEEFE; box-shadow: inset 3px 0 0 #3758F9;' : 'background: #FFFFFF;')
+      };
+    });
+    var chipBase = 'height: 28px; padding: 0 10px; border-radius: 14px; font-family: inherit; font-size: 12px; cursor: pointer; ';
+    var chips = [['ทุกสถานะ', 10, true], ['เปิด', 4], ['มอบหมายแล้ว', 1], ['กำลังดำเนินการ', 2], ['รอลูกค้า', 1], ['แก้ไขแล้ว', 1], ['ปิดแล้ว', 1]].map(function (c) {
+      return { label: c[0], count: c[1], style: chipBase + (c[2] ? 'border: 1px solid #3758F9; background: #EBEEFE; color: #1B44C8;' : 'border: 1px solid #DFE4EA; background: #FFFFFF; color: #4B5563;') };
+    });
+    var order = ['เปิด', 'มอบหมาย', 'ดำเนินการ', 'รอลูกค้า', 'แก้ไขแล้ว', 'ปิด'];
+    var steps = order.map(function (l, i) {
+      var current = i === 0;
+      return { label: l, bar: current ? '#3758F9' : '#E5E7EB', fg: current ? '#1B44C8' : '#6B7280', weight: current ? '700' : '400' };
+    });
+    var tab = this.state.tab;
+    var tabDefs = [['customer', 'ลูกค้า'], ['detail', 'รายละเอียดเรื่อง'], ['history', 'ประวัติ']];
+    var tabs = tabDefs.map(function (t) {
+      var on = t[0] === tab;
+      return {
+        label: t[1], selected: on ? 'true' : 'false',
+        pick: function () { self.setState({ tab: t[0] }); },
+        style: 'flex-grow: 1; height: 48px; border: 0; background: transparent; font-family: inherit; font-size: 13px; cursor: pointer; ' +
+          (on ? 'color: #3758F9; font-weight: 700; box-shadow: inset 0 -2px 0 #3758F9;' : 'color: #637381;')
+      };
+    });
+    return {
+      items: items, chips: chips, steps: steps, tabs: tabs,
+      showCustomer: tab === 'customer', showDetail: tab === 'detail', showHistory: tab === 'history',
+      fields: [
+        { label: 'ประเภท', value: 'สั่งซื้อ / จัดส่ง · ส่งช้า' },
+        { label: 'ความสำคัญ', value: 'สูง' },
+        { label: 'แผนก', value: 'ขนส่ง' },
+        { label: 'ผู้รับผิดชอบ', value: 'สุดา (CS)' }
+      ],
+      history: [
+        { text: 'ลูกค้าทักกลับ เปิดเรื่องอีกครั้ง', meta: 'วันนี้ 15:49 · ระบบ', dot: '#9D5425' },
+        { text: 'เปลี่ยนสถานะเป็น แก้ไขแล้ว', meta: '21 ก.ย. 10:25 · สุดา (CS)', dot: '#1A8245' },
+        { text: 'ตอบลูกค้าครั้งแรก', meta: '21 ก.ย. 10:20 · สุดา (CS)', dot: '#3758F9' },
+        { text: 'มอบหมายให้ สุดา (CS)', meta: '21 ก.ย. 10:10 · ธนา', dot: '#3758F9' },
+        { text: 'สร้างเรื่องจากแอปมือถือ', meta: '21 ก.ย. 10:00 · Phuket Seafood House', dot: '#9CA3AF' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

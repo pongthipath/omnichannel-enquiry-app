@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Alert, Button, Card, Checkbox, SegmentedTabs, TextField } from '../../components/common';
+import { Alert, Button, Card, Checkbox, Icon, SegmentedTabs, TextField } from '../../components/common';
 import { DEMO_PASSWORD, demoAccounts } from '../../constants/demo-accounts';
 import { errorMessage } from '../../helpers/error.helper';
 import { useLogin } from '../../hooks/queries/use-session';
@@ -12,6 +12,7 @@ import { ApiError } from '../../services/http-client';
 /** L1/L2 in docs/ux-ui.md — one screen, tabs switch between customer and staff sign-in. */
 export default function LoginScreen() {
   const { t } = useTranslation();
+  const { width } = useWindowDimensions();
   const [userType, setUserType] = useState<UserType>('customer');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +35,29 @@ export default function LoginScreen() {
       : undefined;
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-1 dark:bg-dark">
+    <SafeAreaView className="flex-1 flex-row bg-gray-1 dark:bg-dark">
+      {width >= 1000 && (
+        <View className="w-[42%] max-w-[620px] justify-between bg-dark p-14">
+          <View className="flex-row items-center gap-3">
+            <View className="h-11 w-11 items-center justify-center rounded-xl bg-primary">
+              <Text className="font-bold text-2xl text-white">F</Text>
+            </View>
+            <Text className="font-bold text-xl text-white">{t('appName')}</Text>
+          </View>
+          <View className="gap-6">
+            <Text className="font-bold text-[34px] leading-[48px] text-white">{t('auth.login.brandTitle')}</Text>
+            {(['inbox', 'clock', 'shield'] as const).map((icon, i) => (
+              <View key={icon} className="flex-row items-center gap-3">
+                <View className="h-8 w-8 items-center justify-center rounded-lg bg-dark-2">
+                  <Icon name={icon} color="#6B83FA" />
+                </View>
+                <Text className="flex-1 font-sans text-[15px] text-gray-3">{t(`auth.login.brandPoint${i + 1}`)}</Text>
+              </View>
+            ))}
+          </View>
+          <Text className="font-sans text-[13px] text-dark-6">{t('auth.login.brandFooter')}</Text>
+        </View>
+      )}
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className="flex-1">
         <ScrollView contentContainerClassName="grow justify-center px-4 py-10" keyboardShouldPersistTaps="handled">
           <View className="w-full max-w-[440px] gap-6 self-center">

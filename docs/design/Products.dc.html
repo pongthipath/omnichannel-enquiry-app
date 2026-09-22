@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>สินค้า</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&amp;family=Noto+Sans:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Noto Sans Thai Looped','Noto Sans',sans-serif;color:#111928}
+a{color:#3758F9}a:hover{color:#1B44C8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; background: #F9FAFB; font-family: 'Noto Sans Thai Looped','Noto Sans',sans-serif; color: #111928; overflow: hidden;">
+<dc-import name="Sidebar" active="products" hint-size="232px,900px"></dc-import>
+<main style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 24px 24px 24px 28px;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div style="flex-grow: 1; display: flex; flex-direction: column;">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700;">สินค้า</h1>
+<span style="font-size: 14px; color: #637381;">30 รายการ · ใช้แนบในเรื่องและค้นหาจากกล่องงาน</span>
+</div>
+<button style="height: 42px; padding: 0 14px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #111928; cursor: pointer;">นำเข้าจาก ERP</button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA;">
+<label style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px; border: 1px solid #3758F9; border-radius: 6px; color: #6B7280;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input aria-label="ค้นหาสินค้า" value="mozarela" style="flex-grow: 1; border: 0; background: transparent; font-family: inherit; font-size: 15px; color: #111928; outline: none;">
+<span style="font-size: 12px; color: #637381;">พิมพ์ผิดก็หาเจอ</span>
+</label>
+<div style="display: flex; flex-wrap: wrap; gap: 6px;">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="8">
+<button style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0;">
+<section style="flex-grow: 1; min-width: 0; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; overflow: hidden;">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+<thead><tr style="background: #F9FAFB; color: #637381; font-size: 12px; text-align: left;">
+<th style="padding: 10px 16px; font-weight: 600;">สินค้า</th><th style="padding: 10px 8px; font-weight: 600;">หมวด</th><th style="padding: 10px 8px; font-weight: 600;">ขนาด</th><th style="padding: 10px 8px; font-weight: 600; text-align: right;">เรื่องที่เกี่ยวข้อง</th><th style="padding: 10px 16px; font-weight: 600;">ความตรง</th>
+</tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="p" hint-placeholder-count="8">
+<tr style="{{p.rowStyle}}">
+<td style="padding: 11px 16px;"><div style="display: flex; align-items: center; gap: 10px;"><span style="width: 36px; height: 36px; border-radius: 6px; background: #F3F4F6; color: #9CA3AF; font-size: 10px; display: flex; align-items: center; justify-content: center;">รูป</span><div style="display: flex; flex-direction: column;"><span style="font-weight: 600;">{{p.name}}</span><span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">{{p.code}} · {{p.brand}}</span></div></div></td>
+<td style="padding: 11px 8px; color: #4B5563;">{{p.cat}}</td>
+<td style="padding: 11px 8px; color: #4B5563;">{{p.size}}</td>
+<td style="padding: 11px 8px; text-align: right; font-weight: 700;">{{p.related}}</td>
+<td style="padding: 11px 16px;"><span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: {{p.matchBg}}; color: {{p.matchFg}};">{{p.match}}</span></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</section>
+
+<aside aria-label="รายละเอียดสินค้า" style="width: 340px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA;">
+<div style="height: 150px; border-radius: 8px; background: #F3F4F6; display: flex; align-items: center; justify-content: center; color: #9CA3AF; font-size: 13px;">[รูปสินค้า]</div>
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">CHS-MOZ-23</span>
+<span style="font-size: 17px; font-weight: 700;">Galbani Mozzarella Cheese 2.3kg</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; font-size: 13px;">
+<div style="padding: 10px; border-radius: 8px; background: #F9FAFB; display: flex; flex-direction: column;"><span style="color: #637381;">แบรนด์</span><span style="font-weight: 600;">Galbani</span></div>
+<div style="padding: 10px; border-radius: 8px; background: #F9FAFB; display: flex; flex-direction: column;"><span style="color: #637381;">หมวด</span><span style="font-weight: 600;">Cheese</span></div>
+<div style="padding: 10px; border-radius: 8px; background: #F9FAFB; display: flex; flex-direction: column;"><span style="color: #637381;">ขนาด</span><span style="font-weight: 600;">2.3 kg / block</span></div>
+<div style="padding: 10px; border-radius: 8px; background: #F9FAFB; display: flex; flex-direction: column;"><span style="color: #637381;">ราคา</span><span style="font-weight: 600;">[ราคา]</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 12px; font-weight: 600; color: #637381;">เรื่องที่ถามถึงสินค้านี้ (2)</span>
+<a href="Main.dc.html" style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 8px; border: 1px solid #DFE4EA; text-decoration: none; color: #111928;"><div style="display: flex; gap: 6px; align-items: center;"><span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">ENQ-2026-000013</span><span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #E1F4FC; color: #0B76B7;">เปิด</span></div><span style="font-size: 13px; font-weight: 600;">Nana Pizza · ถามสต็อก 40 ก้อน</span></a>
+<a href="Main.dc.html" style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 8px; border: 1px solid #DFE4EA; text-decoration: none; color: #111928;"><div style="display: flex; gap: 6px; align-items: center;"><span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">ENQ-2026-000018</span><span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #EBEEFE; color: #1B44C8;">กำลังดำเนินการ</span></div><span style="font-size: 13px; font-weight: 600;">Siam Riverside Hotel · ใบเสนอราคา 20 ลัง</span></a>
+</div>
+<a href="Main.dc.html" style="margin-top: auto; height: 42px; border-radius: 6px; background: #3758F9; color: #FFFFFF; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none;">ดูเรื่องทั้งหมดในกล่องงาน</a>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var chip = 'height: 30px; padding: 0 12px; border-radius: 15px; font-family: inherit; font-size: 12px; cursor: pointer; ';
+    var cats = ['ทั้งหมด', 'Dairy', 'Cheese', 'Bakery', 'Pantry', 'Frozen Meat', 'Seafood', 'Frozen', 'Fresh', 'Beverage', 'Packaging', 'Cleaning'].map(function (c, i) {
+      return { label: c, style: chip + (i === 0 ? 'border: 1px solid #3758F9; background: #EBEEFE; color: #1B44C8;' : 'border: 1px solid #DFE4EA; background: #FFFFFF; color: #4B5563;') };
+    });
+    var best = ['ตรงที่สุด', '#DAF8E6', '#1A8245'];
+    var none = ['—', '#F3F4F6', '#6B7280'];
+    var list = [
+      ['CHS-MOZ-23', 'Galbani Mozzarella Cheese 2.3kg', 'Galbani', 'Cheese', '2.3 kg', 2, best, true],
+      ['CHS-PAR-1KG', 'Grana Padano Parmesan 1kg', 'Grana Padano', 'Cheese', '1 kg', 0, none],
+      ['CHS-CRM-136', 'Philadelphia Cream Cheese 1.36kg', 'Philadelphia', 'Cheese', '1.36 kg', 1, none],
+      ['CHS-CHD-2KG', 'Mainland Cheddar 2kg', 'Mainland', 'Cheese', '2 kg', 0, none],
+      ['BTR-FR-250', 'President เนยจืด 250g (French Butter)', 'President', 'Dairy', '250 g', 1, none],
+      ['BTR-FR-1KG', 'Elle & Vire French Butter 1kg', 'Elle & Vire', 'Dairy', '1 kg', 1, none],
+      ['CRM-WHP-1L', 'Elle & Vire Whipping Cream 1L', 'Elle & Vire', 'Dairy', '1 L', 1, none],
+      ['CHO-DRK-1KG', 'Callebaut Dark Chocolate 54% 1kg', 'Callebaut', 'Bakery', '1 kg', 1, none],
+      ['SLM-FLT-KG', 'Norwegian Salmon Fillet (per kg)', 'Mowi', 'Seafood', '1 kg', 1, none],
+      ['FLR-BRD-25', 'Bread Flour 25kg', 'UFM', 'Bakery', '25 kg', 0, none]
+    ];
+    var rows = list.map(function (p) {
+      return {
+        code: p[0], name: p[1], brand: p[2], cat: p[3], size: p[4], related: p[5], match: p[6][0], matchBg: p[6][1], matchFg: p[6][2],
+        rowStyle: 'border-top: 1px solid #F3F4F6; ' + (p[7] ? 'background: #EBEEFE; box-shadow: inset 3px 0 0 #3758F9;' : 'background: #FFFFFF; opacity: 0.55;')
+      };
+    });
+    return { cats: cats, rows: rows };
+  }
+}
+</script>
+</body>
+</html>

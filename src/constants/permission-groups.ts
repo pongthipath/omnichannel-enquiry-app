@@ -1,0 +1,69 @@
+import { Permission as P } from './permissions';
+
+/**
+ * Permissions grouped by page and section of the UI (design §16.13), for the roles page.
+ * Labels: i18n `permissions.<NAME>` · group titles: `permissions.group.<id>`.
+ */
+export const PERMISSION_GROUPS: { id: string; column: 0 | 1 | 2; items: P[] }[] = [
+  {
+    id: 'inbox',
+    column: 0,
+    items: [
+      P.INBOX_PAGE_VIEW,
+      P.INBOX_SCOPE_OWN,
+      P.INBOX_SCOPE_DEPARTMENT,
+      P.INBOX_SCOPE_ALL,
+      P.INBOX_CHAT_REPLY,
+      P.INBOX_CHAT_INTERNAL_VIEW,
+      P.INBOX_ASSIGN_SELF,
+      P.INBOX_ASSIGN_OTHERS,
+      P.INBOX_STATUS_CHANGE,
+      P.INBOX_STATUS_CHANGE_ANY,
+      P.INBOX_STATUS_ESCALATE,
+      P.INBOX_STATUS_REOPEN,
+      P.INBOX_ENQUIRY_CREATE,
+      P.INBOX_ENQUIRY_EDIT,
+      P.INBOX_CUSTOMER_CHAT_VIEW,
+      P.INBOX_CUSTOMER_CHAT_SEARCH_MESSAGES,
+      P.INBOX_TAG_APPLY,
+      P.INBOX_TAG_CREATE_INLINE,
+    ],
+  },
+  {
+    id: 'customerPanel',
+    column: 1,
+    items: [
+      P.CUSTOMER_PANEL_CONTACT_VIEW,
+      P.CUSTOMER_PANEL_CONTACT_EDIT,
+      P.CUSTOMER_PANEL_SALESPERSON_ASSIGN,
+      P.CUSTOMER_PANEL_CHANNEL_VIEW,
+      P.CUSTOMER_PANEL_CHANNEL_LINK,
+      P.CUSTOMER_PANEL_CHANNEL_UNLINK,
+      P.CUSTOMER_PANEL_MERGE,
+      P.CUSTOMER_PANEL_HISTORY_VIEW,
+      P.CUSTOMER_PANEL_ORDERS_VIEW,
+      P.CUSTOMER_PANEL_NOTE_VIEW,
+      P.CUSTOMER_PANEL_NOTE_EDIT,
+      P.CUSTOMER_PANEL_TAG_APPLY,
+    ],
+  },
+  { id: 'customers', column: 1, items: [P.CUSTOMERS_PAGE_VIEW, P.CUSTOMERS_PLACEHOLDER_VIEW, P.CUSTOMERS_PLACEHOLDER_MERGE] },
+  { id: 'dashboard', column: 2, items: [P.DASHBOARD_PAGE_VIEW, P.DASHBOARD_KPI_VIEW, P.DASHBOARD_CATEGORY_VIEW, P.DASHBOARD_NEAR_BREACH] },
+  {
+    id: 'settings',
+    column: 2,
+    items: [P.SETTINGS_SLA_VIEW, P.SETTINGS_SLA_EDIT, P.SETTINGS_STAFF_MANAGE, P.SETTINGS_DEPARTMENT_MANAGE, P.SETTINGS_TAG_MANAGE, P.SETTINGS_ROLE_MANAGE],
+  },
+  { id: 'tools', column: 2, items: [P.SIMULATOR_PAGE_USE] },
+];
+
+/** "edit implies view" — same table as the API's PERMISSION_IMPLIES, applied when ticking. */
+export const PERMISSION_IMPLIES: Partial<Record<P, P[]>> = {
+  [P.CUSTOMER_PANEL_CONTACT_EDIT]: [P.CUSTOMER_PANEL_CONTACT_VIEW],
+  [P.CUSTOMER_PANEL_CHANNEL_LINK]: [P.CUSTOMER_PANEL_CHANNEL_VIEW],
+  [P.CUSTOMER_PANEL_CHANNEL_UNLINK]: [P.CUSTOMER_PANEL_CHANNEL_VIEW],
+  [P.CUSTOMER_PANEL_NOTE_EDIT]: [P.CUSTOMER_PANEL_NOTE_VIEW],
+  [P.SETTINGS_SLA_EDIT]: [P.SETTINGS_SLA_VIEW],
+  [P.INBOX_STATUS_CHANGE_ANY]: [P.INBOX_STATUS_CHANGE],
+  [P.INBOX_TAG_CREATE_INLINE]: [P.INBOX_TAG_APPLY],
+};

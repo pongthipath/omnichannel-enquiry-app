@@ -3,6 +3,8 @@
  * components never call fetch directly: component → hook → service → http-client.
  */
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1';
+/** Socket.IO lives at the API origin, not under /api/v1. */
+export const API_ORIGIN = new URL(BASE_URL).origin;
 
 /** Mirrors the API's ApiErrorDto. `code` is used as the i18n key (e.g. errors.chat.notAssigned). */
 export class ApiError extends Error {
@@ -20,6 +22,7 @@ let accessToken: string | null = null; // kept in memory only (design §16.12)
 export const setAccessToken = (token: string | null): void => {
   accessToken = token;
 };
+export const getAccessToken = (): string | null => accessToken;
 
 /** Set by the session: gets a new access token after a 401. Returns false when the user must sign in again. */
 let onUnauthorized: (() => Promise<boolean>) | null = null;

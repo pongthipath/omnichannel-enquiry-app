@@ -1,6 +1,6 @@
 /**
  * Mirrors the API's `enum Permission` (design §16.13). Bit positions must never change or be reused.
- * TODO: generate this file from the API's /permissions/catalog so the two can't drift.
+ * Copied from omnichannel-enquiry-api/src/common/permissions/permission.enum.ts — keep in sync.
  */
 export enum Permission {
   DASHBOARD_PAGE_VIEW = 0,
@@ -25,6 +25,25 @@ export enum Permission {
   INBOX_TAG_CREATE_INLINE = 19,
   CUSTOMER_PANEL_CONTACT_VIEW = 20,
   CUSTOMER_PANEL_CONTACT_EDIT = 21,
+  CUSTOMER_PANEL_SALESPERSON_ASSIGN = 22,
+  CUSTOMER_PANEL_CHANNEL_VIEW = 23,
+  CUSTOMER_PANEL_CHANNEL_LINK = 24,
+  CUSTOMER_PANEL_CHANNEL_UNLINK = 25,
+  CUSTOMER_PANEL_MERGE = 26,
+  CUSTOMER_PANEL_HISTORY_VIEW = 27,
+  CUSTOMER_PANEL_ORDERS_VIEW = 28,
+  CUSTOMER_PANEL_NOTE_VIEW = 29,
+  CUSTOMER_PANEL_NOTE_EDIT = 30,
+  CUSTOMER_PANEL_TAG_APPLY = 31,
+  CUSTOMERS_PAGE_VIEW = 32,
+  CUSTOMERS_PLACEHOLDER_VIEW = 33,
+  CUSTOMERS_PLACEHOLDER_MERGE = 34,
+  SIMULATOR_PAGE_USE = 35,
+  SETTINGS_SLA_VIEW = 36,
+  SETTINGS_SLA_EDIT = 37,
+  SETTINGS_STAFF_MANAGE = 38,
+  SETTINGS_DEPARTMENT_MANAGE = 39,
+  SETTINGS_TAG_MANAGE = 40,
   SETTINGS_ROLE_MANAGE = 45,
   INBOX_ENQUIRY_EDIT = 46,
   INBOX_STATUS_CHANGE_ANY = 47,

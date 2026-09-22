@@ -12,6 +12,7 @@ module.exports = {
   green: { DEFAULT: '#1A8245', light: '#DAF8E6', dark: '#4ADE80' },
   yellow: { DEFAULT: '#9D5425', light: '#FFFBEB', dark: '#FBBF24' },
   cyan: { DEFAULT: '#0B76B7', light: '#E1F4FC' },
+  purple: { DEFAULT: '#6D28D9', light: '#F3E8FF' },
   white: '#FFFFFF',
   black: '#000000',
   transparent: 'transparent',

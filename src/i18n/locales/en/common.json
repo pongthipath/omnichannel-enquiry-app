@@ -20,7 +20,12 @@
       "staffSubtitle": "For FoodLink staff handling customer enquiries",
       "hintCustomerTab": "The “Customer” tab is selected. For a staff account, choose “Staff”.",
       "hintStaffTab": "The “Staff” tab is selected. For a customer account, choose “Customer”.",
-      "demoTitle": "Demo accounts (dev only), password {{password}}"
+      "demoTitle": "Demo accounts (dev only), password {{password}}",
+      "brandTitle": "Every customer question, every channel, one place",
+      "brandPoint1": "App, web chat, LINE, Facebook and phone in one inbox",
+      "brandPoint2": "Live SLA and status tracking",
+      "brandPoint3": "See only what your department and role allow",
+      "brandFooter": "FoodLink Distribution · Customer service"
     },
     "logout": "Sign out"
   },
@@ -28,17 +33,53 @@
     "auth": {
       "invalidCredentials": "Incorrect email or password",
       "locked": "Too many attempts. Please try again later",
-      "disabled": "This account is disabled. Contact your admin"
+      "disabled": "This account is disabled. Contact your admin",
+      "forbidden": "You don't have permission to do this",
+      "staffOnly": "Staff only",
+      "customerOnly": "Customers only",
+      "unauthenticated": "Please sign in again"
     },
     "common": {
       "network": "Can't reach the server. Check your connection and try again",
-      "unknown": "Something went wrong. Please try again"
+      "unknown": "Something went wrong. Please try again",
+      "validation": "Some fields are missing or invalid"
+    },
+    "chat": {
+      "notFound": "Enquiry not found, or you cannot see it",
+      "notAssigned": "Assign an owner before changing status",
+      "notResponsible": "Only the owner or permitted roles can do this",
+      "invalidTransition": "Can't move to that status from the current one",
+      "statusChanged": "Someone changed the status first — data refreshed, try again",
+      "closed": "This enquiry is closed",
+      "sameDepartment": "Already in this department",
+      "customerRequired": "Please choose a customer"
+    },
+    "tag": {
+      "duplicateName": "A tag with this name exists",
+      "notFound": "Tag not found",
+      "notForEnquiry": "This tag is for customers only"
+    },
+    "customer": {
+      "changed": "Someone edited this customer first — reopen and try again",
+      "duplicateEmail": "Another customer uses this email",
+      "notFound": "Customer not found"
+    },
+    "department": {
+      "duplicateCode": "This department code exists",
+      "defaultRequired": "There must always be a default department — set another one first",
+      "notFound": "Department not found"
+    },
+    "staff": {
+      "duplicateEmail": "Another staff member uses this email",
+      "cannotDisableSelf": "You can't deactivate your own account",
+      "notFound": "Staff not found"
+    },
+    "role": {
+      "invalidPermissions": "Invalid permission set",
+      "notFound": "Role not found"
     }
   },
   "enquiry": {
-    "myTitle": "My enquiries",
-    "inboxTitle": "Inbox",
-    "empty": "No enquiries yet",
     "slaBreached": "SLA breached",
     "reopened": "Reopened",
     "status": {
@@ -54,6 +95,460 @@
       "NORMAL": "Normal",
       "HIGH": "High",
       "URGENT": "Urgent"
+    },
+    "statusShort": {
+      "OPEN": "Open",
+      "ASSIGNED": "Assigned",
+      "IN_PROGRESS": "In progress",
+      "WAITING_FOR_CUSTOMER": "Waiting",
+      "RESOLVED": "Resolved",
+      "CLOSED": "Closed"
+    },
+    "type": {
+      "PRODUCT_INFORMATION": "Product information",
+      "PRICING": "Pricing / quotation",
+      "COMPLAINT": "Complaint / damaged goods",
+      "ORDER_DELIVERY": "Order / delivery",
+      "INVOICE_PAYMENT": "Invoice / payment",
+      "SAMPLE_REQUEST": "Sample request",
+      "GENERAL": "General"
+    },
+    "channel": {
+      "MOBILE_APP": "Mobile app",
+      "WEB_CHAT": "Web chat",
+      "LINE": "LINE",
+      "FACEBOOK": "Facebook",
+      "PHONE": "Phone"
+    },
+    "channelShort": {
+      "MOBILE_APP": "APP",
+      "WEB_CHAT": "WEB",
+      "LINE": "LINE",
+      "FACEBOOK": "FB",
+      "PHONE": "TEL"
+    }
+  },
+  "common": {
+    "all": "All",
+    "back": "Back",
+    "cancel": "Cancel",
+    "clear": "Clear",
+    "close": "Close",
+    "create": "Create",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "search": "Search",
+    "select": "Select",
+    "noResults": "Nothing found",
+    "noAccess": "You don't have access to this page",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "duration": {
+      "days": "{{d}} d {{h}} h",
+      "hours": "{{h}} h {{m}} min",
+      "minutes": "{{m}} min"
+    }
+  },
+  "nav": {
+    "inbox": "Inbox",
+    "customers": "Customers",
+    "products": "Products",
+    "dashboard": "Dashboard",
+    "tags": "Tags",
+    "departments": "Departments",
+    "roles": "Roles & permissions",
+    "staff": "Staff",
+    "work": "Service",
+    "settings": "Settings",
+    "expand": "Expand menu",
+    "collapse": "Collapse menu",
+    "online": "Online"
+  },
+  "events": {
+    "system": "System",
+    "assigned": "{{actor}} assigned it to {{staff}}",
+    "statusChanged": "{{actor}} changed status to {{to}}",
+    "customerClosed": "Customer confirmed it is resolved — closed",
+    "autoInProgress": "Owner replied — now in progress",
+    "customerResumed": "Customer replied — now {{to}}",
+    "escalated": "{{actor}} escalated to {{department}}: {{reason}}",
+    "reopened": "Customer wrote again — reopened (#{{count}}), new SLA cycle",
+    "updated": "{{actor}} edited the details",
+    "created": "Enquiry created",
+    "generic": "Enquiry updated"
+  },
+  "inbox": {
+    "title": "Inbox",
+    "create": "New enquiry",
+    "searchPlaceholder": "Search reference, message, customer or product",
+    "scope": {
+      "mine": "Mine",
+      "department": "My department",
+      "all": "All",
+      "visible": "Visible"
+    },
+    "allStatuses": "All statuses",
+    "empty": "No enquiries yet",
+    "noMatch": "No matching enquiries",
+    "noMatchHint": "Try a reference, shop name, product or words from a message",
+    "selectPrompt": "Pick an enquiry",
+    "selectHint": "Chat, status and customer details show here",
+    "take": "Take",
+    "assign": "Assign",
+    "reassign": "Reassign",
+    "escalate": "Escalate",
+    "changeStatus": "Change status",
+    "togglePanel": "Show / hide customer panel",
+    "stepperLabel": "Current status {{status}}",
+    "reply": "Reply",
+    "internal": "Internal note",
+    "internalNote": "Internal note · customer cannot see",
+    "replyPlaceholder": "Write to the customer…",
+    "internalPlaceholder": "Note for the team (hidden from customer)…",
+    "send": "Send",
+    "sending": "Sending…",
+    "read": "Read",
+    "loadOlder": "Load earlier messages",
+    "closedNotice": "This enquiry is closed. If the customer writes, it reopens automatically.",
+    "noReplyPermission": "Your role can read chats but not reply",
+    "quick": {
+      "sorry": "Sorry for the inconvenience.",
+      "morePhoto": "Could you send more photos, please?",
+      "checking": "We're checking this for you."
+    },
+    "statusModal": {
+      "title": "Change status",
+      "current": "Now: {{status}}",
+      "confirm": "Change status",
+      "assignFirst": "Assign an owner first (\"Take\" or \"Assign\")",
+      "none": "You cannot change this status (owner or permitted roles only)"
+    },
+    "statusHint": {
+      "OPEN": "Reopen — back to the queue",
+      "ASSIGNED": "Has an owner",
+      "IN_PROGRESS": "Being checked / handled",
+      "WAITING_FOR_CUSTOMER": "Waiting for customer info (SLA paused)",
+      "RESOLVED": "Resolved — customer to confirm",
+      "CLOSED": "Close the enquiry"
+    },
+    "escalateModal": {
+      "title": "Escalate",
+      "description": "It goes back to Open in the new department queue and loses its owner",
+      "department": "To department",
+      "reason": "Reason",
+      "reasonPlaceholder": "e.g. need to check the product lot",
+      "reasonHint": "Visible to staff only",
+      "confirm": "Escalate"
+    },
+    "assignModal": {
+      "title": "Assign to",
+      "sameDepartment": "Same department as the enquiry"
+    },
+    "tagModal": {
+      "title": "Tags of this enquiry",
+      "search": "Search or type a new tag",
+      "create": "Create tag \"{{name}}\""
+    },
+    "productModal": {
+      "title": "Choose product",
+      "search": "Name, code, brand or category",
+      "hint": "Small typos are fine",
+      "clear": "No product"
+    },
+    "createModal": {
+      "title": "New enquiry",
+      "titleStaff": "New enquiry for a customer",
+      "description": "Our team will reply in this enquiry chat",
+      "descriptionStaff": "e.g. the customer called — log it to follow up",
+      "customer": "Customer",
+      "channel": "Channel",
+      "type": "Type",
+      "priority": "Priority",
+      "subject": "Subject",
+      "subjectPlaceholder": "Short summary, e.g. 2 damaged butter boxes",
+      "details": "Details",
+      "detailsPlaceholder": "What happened, order number, quantity",
+      "product": "Related product",
+      "productPlaceholder": "Tap to choose a product (optional)",
+      "submit": "Submit"
+    },
+    "panel": {
+      "customer": "Customer",
+      "detail": "Details",
+      "history": "History",
+      "openEnquiries": "Open enquiries",
+      "contact": "Contact",
+      "channels": "Linked channels",
+      "linked": "Linked",
+      "otherEnquiries": "Other enquiries of this customer",
+      "noOther": "No other enquiries",
+      "noContactPermission": "Your role can't see customer contacts",
+      "department": "Department",
+      "owner": "Owner",
+      "unassigned": "Unassigned",
+      "created": "Created",
+      "tags": "Tags",
+      "addTag": "Add tag",
+      "noProduct": "No product yet",
+      "createdVia": "Created via {{channel}}"
+    },
+    "sla": {
+      "title": "SLA",
+      "reopenCycle": "New SLA cycle (after reopen)",
+      "left": "{{time}} left",
+      "overdue": "{{time}} overdue",
+      "paused": "Paused (waiting for customer)",
+      "done": "Finished",
+      "target": "Target: reply within {{minutes}} min"
+    },
+    "customerPlaceholder": "Type a message…"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Live overview of customer service (only enquiries you may see)",
+    "period": {
+      "all": "All",
+      "today": "Today",
+      "week": "7 days",
+      "month": "30 days"
+    },
+    "kpi": {
+      "notClosed": "Not closed",
+      "notClosedNote": "Excludes resolved / closed",
+      "unassigned": "Unassigned",
+      "unassignedNote": "Waiting for an owner",
+      "breachedNote": "Reply now",
+      "reopenedNote": "Customer wrote after resolution",
+      "firstResponse": "Avg first response",
+      "firstResponseNote": "Created → first team message"
+    },
+    "minutes": "{{n}} min",
+    "byStatus": "By status",
+    "byDepartment": "Open by department",
+    "byChannel": "By channel",
+    "urgent": "Needs attention",
+    "noUrgent": "Nothing urgent",
+    "team": "Team workload",
+    "teamCols": {
+      "staff": "Staff",
+      "department": "Department",
+      "active": "Holding",
+      "waiting": "Waiting"
+    }
+  },
+  "customers": {
+    "title": "Customers",
+    "subtitle": "Shops, contacts and linked chat channels",
+    "total": "Customers",
+    "withOpen": "With open enquiries",
+    "linked": "Linked external chat",
+    "noSalesperson": "No salesperson",
+    "none": "None",
+    "searchPlaceholder": "Search shop, code, contact, phone or email",
+    "empty": "No customers found",
+    "cols": {
+      "company": "Shop / code",
+      "contact": "Contact",
+      "channels": "Channels",
+      "open": "Open",
+      "last": "Last contact"
+    },
+    "company": "Shop / company",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "salesperson": "Salesperson",
+    "note": "Internal note about the customer",
+    "noteHint": "Visible to staff only",
+    "editTitle": "Edit customer",
+    "enquiries": "Enquiries of this customer"
+  },
+  "products": {
+    "title": "Products",
+    "subtitle": "{{count}} items · attach to enquiries and search from the inbox",
+    "searchPlaceholder": "Search name, code, brand or category",
+    "typoHint": "Typos are fine",
+    "empty": "No products found",
+    "emptyHint": "Try another word or the product code",
+    "brand": "Brand",
+    "cols": {
+      "product": "Product",
+      "category": "Category",
+      "size": "Size"
+    },
+    "relatedEnquiries": "Enquiries about this product ({{count}})",
+    "noEnquiries": "No enquiries about this product yet"
+  },
+  "tags": {
+    "title": "Tags",
+    "subtitle": "Team-made labels to group enquiries and customers; filter the inbox with them",
+    "create": "New tag",
+    "edit": "Edit tag",
+    "editOne": "Edit tag {{name}}",
+    "name": "Tag name",
+    "color": "Color",
+    "preview": "Preview in the inbox",
+    "empty": "No tags yet",
+    "cols": {
+      "tag": "Tag",
+      "appliesTo": "Applies to",
+      "description": "Description",
+      "usage": "In use"
+    },
+    "appliesTo": {
+      "ENQUIRY": "Enquiries",
+      "CUSTOMER": "Customers",
+      "BOTH": "Enquiries and customers"
+    },
+    "colors": {
+      "yellow": "Yellow",
+      "blue": "Blue",
+      "red": "Red",
+      "green": "Green",
+      "cyan": "Cyan",
+      "gray": "Gray",
+      "purple": "Purple"
+    },
+    "deleteTitle": "Delete tag",
+    "deleteMessage": "Delete \"{{name}}\"? It is also removed from {{count}} enquiries. This cannot be undone."
+  },
+  "departments": {
+    "title": "Departments",
+    "subtitle": "Staff see their department enquiries; new enquiries go to the default department",
+    "create": "Add department",
+    "default": "Default",
+    "inactive": "Inactive",
+    "staff": "Staff",
+    "open": "Open",
+    "nameTh": "Thai name",
+    "nameEn": "English name",
+    "code": "Code",
+    "codeHint": "A–Z, 0–9 and _ (cannot change later)",
+    "codeLocked": "Code cannot change",
+    "makeDefault": "Default department for new enquiries",
+    "active": "Active",
+    "members": "Members ({{count}})"
+  },
+  "roles": {
+    "title": "Roles & permissions",
+    "subtitle": "Choose what each role can do, by page and screen section",
+    "create": "New role",
+    "save": "Save permissions",
+    "meta": "{{people}} people · {{count}}/{{total}} permissions",
+    "name": "Role name",
+    "copyHint": "Starts with the permissions of {{role}}; adjust later",
+    "note": "Changes apply to everyone in the role right away. Ticking \"edit\" also turns on \"view\".",
+    "desc": {
+      "AGENT": "Replies, takes department enquiries",
+      "SUPERVISOR": "Assigns work, changes any status in the department",
+      "MANAGER": "All departments, edits SLA rules",
+      "ADMIN": "Every permission incl. system settings"
+    }
+  },
+  "staff": {
+    "title": "Staff",
+    "subtitle": "{{count}} people · department and role decide what they see",
+    "create": "Add staff",
+    "name": "Display name",
+    "password": "First password",
+    "passwordHint": "At least 8 characters; they change it later",
+    "active": "Active",
+    "inactive": "Inactive",
+    "lastLogin": "Last sign-in",
+    "cols": {
+      "person": "Staff",
+      "department": "Department",
+      "role": "Role",
+      "load": "Holding",
+      "status": "Status"
+    },
+    "disable": "Deactivate",
+    "enable": "Activate",
+    "disableTitle": "Deactivate staff",
+    "disableMessage": "{{name}} will not be able to sign in. Their enquiries stay — reassign them."
+  },
+  "my": {
+    "hello": "Hello {{name}}",
+    "searchPlaceholder": "Search enquiries or reference",
+    "newTitle": "Report something",
+    "newOther": "Something else",
+    "title": "My enquiries",
+    "filter": {
+      "active": "In progress",
+      "done": "Done"
+    },
+    "empty": "No enquiries yet",
+    "emptyHint": "Tap a topic above to report something",
+    "quick": {
+      "damaged": "Damaged goods",
+      "damagedHint": "Photos welcome",
+      "order": "Track an order",
+      "orderHint": "Delivery status",
+      "pricing": "Price / quotation",
+      "pricingHint": "Bulk orders",
+      "invoice": "Tax invoice",
+      "invoiceHint": "Finance"
+    },
+    "waitingForStaff": "Waiting for {{department}} to pick it up",
+    "resolvedPrompt": "Our team marked this resolved. If all is fine, please confirm.",
+    "confirmResolved": "Confirm resolved",
+    "confirmTitle": "Close this enquiry?",
+    "confirmMessage": "If anything comes up, just write in this chat and it reopens.",
+    "offlineHint": "No signal? Keep typing — it sends when you are back online"
+  },
+  "permissions": {
+    "DASHBOARD_PAGE_VIEW": "See the dashboard",
+    "DASHBOARD_KPI_VIEW": "See KPI totals",
+    "DASHBOARD_CATEGORY_VIEW": "By department and channel",
+    "DASHBOARD_NEAR_BREACH": "Urgent list",
+    "INBOX_PAGE_VIEW": "See the inbox",
+    "INBOX_SCOPE_OWN": "See own enquiries",
+    "INBOX_SCOPE_DEPARTMENT": "See department enquiries",
+    "INBOX_SCOPE_ALL": "See every enquiry",
+    "INBOX_CHAT_REPLY": "Reply to customers",
+    "INBOX_CHAT_INTERNAL_VIEW": "See internal notes",
+    "INBOX_ASSIGN_SELF": "Take enquiries",
+    "INBOX_ASSIGN_OTHERS": "Assign to others",
+    "INBOX_STATUS_CHANGE": "Change status of own enquiries",
+    "INBOX_STATUS_CHANGE_ANY": "Change status of any visible enquiry",
+    "INBOX_STATUS_ESCALATE": "Escalate to another department",
+    "INBOX_STATUS_REOPEN": "Reopen enquiries",
+    "INBOX_ENQUIRY_CREATE": "Create on behalf of a customer",
+    "INBOX_ENQUIRY_EDIT": "Edit enquiry details",
+    "INBOX_CUSTOMER_CHAT_VIEW": "See all chats of a customer",
+    "INBOX_CUSTOMER_CHAT_SEARCH_MESSAGES": "Search message text",
+    "INBOX_TAG_APPLY": "Tag enquiries",
+    "INBOX_TAG_CREATE_INLINE": "Create tags from the chat",
+    "CUSTOMER_PANEL_CONTACT_VIEW": "See contact details",
+    "CUSTOMER_PANEL_CONTACT_EDIT": "Edit contact details",
+    "CUSTOMER_PANEL_SALESPERSON_ASSIGN": "Set salesperson",
+    "CUSTOMER_PANEL_CHANNEL_VIEW": "See linked channels",
+    "CUSTOMER_PANEL_CHANNEL_LINK": "Link channels",
+    "CUSTOMER_PANEL_CHANNEL_UNLINK": "Unlink channels",
+    "CUSTOMER_PANEL_MERGE": "Merge duplicates",
+    "CUSTOMER_PANEL_HISTORY_VIEW": "See enquiry history",
+    "CUSTOMER_PANEL_ORDERS_VIEW": "See orders",
+    "CUSTOMER_PANEL_NOTE_VIEW": "See customer notes",
+    "CUSTOMER_PANEL_NOTE_EDIT": "Write customer notes",
+    "CUSTOMER_PANEL_TAG_APPLY": "Tag customers",
+    "CUSTOMERS_PAGE_VIEW": "See the customers page",
+    "CUSTOMERS_PLACEHOLDER_VIEW": "See unverified customers",
+    "CUSTOMERS_PLACEHOLDER_MERGE": "Merge into real customers",
+    "SIMULATOR_PAGE_USE": "Channel message simulator",
+    "SETTINGS_SLA_VIEW": "See SLA rules",
+    "SETTINGS_SLA_EDIT": "Edit SLA rules",
+    "SETTINGS_STAFF_MANAGE": "Manage staff",
+    "SETTINGS_DEPARTMENT_MANAGE": "Manage departments",
+    "SETTINGS_TAG_MANAGE": "Manage tags",
+    "SETTINGS_ROLE_MANAGE": "Manage roles & permissions",
+    "group": {
+      "inbox": "Inbox",
+      "customerPanel": "Customer panel (right)",
+      "customers": "Customers page",
+      "dashboard": "Dashboard",
+      "settings": "Settings",
+      "tools": "Tools"
     }
   }
 }

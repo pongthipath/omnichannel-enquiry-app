@@ -8,6 +8,7 @@ declare const colors: {
   green: { DEFAULT: string; light: string; dark: string };
   yellow: { DEFAULT: string; light: string; dark: string };
   cyan: { DEFAULT: string; light: string };
+  purple: { DEFAULT: string; light: string };
   white: string;
   black: string;
   transparent: string;

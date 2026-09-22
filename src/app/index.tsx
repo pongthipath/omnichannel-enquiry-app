@@ -1,7 +1,6 @@
 import { Redirect } from 'expo-router';
 
-// The (app) layout checks the session and sends signed-out users to /login.
-// TODO: staff → first page their permissions allow once the staff console has more pages.
+// The (app) layout checks the session (signed out → /login); the staff layout sends customers to /my.
 export default function Index() {
-  return <Redirect href="/enquiries" />;
+  return <Redirect href="/inbox" />;
 }

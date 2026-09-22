@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ตั้งค่าแท็ก</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&amp;family=Noto+Sans:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Noto Sans Thai Looped','Noto Sans',sans-serif;color:#111928}
+a{color:#3758F9}a:hover{color:#1B44C8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; background: #F9FAFB; font-family: 'Noto Sans Thai Looped','Noto Sans',sans-serif; color: #111928; overflow: hidden;">
+<dc-import name="Sidebar" active="tags" hint-size="232px,900px"></dc-import>
+<main style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 24px 24px 24px 28px;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div style="flex-grow: 1; display: flex; flex-direction: column;">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700;">แท็ก</h1>
+<span style="font-size: 14px; color: #637381;">ป้ายที่ทีมสร้างเองไว้จัดกลุ่มเรื่องและลูกค้า ใช้กรองในกล่องงานได้</span>
+</div>
+<button style="height: 42px; padding: 0 16px; border: 0; border-radius: 6px; background: #3758F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">+ สร้างแท็ก</button>
+</div>
+
+<div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0;">
+<section style="flex-grow: 1; min-width: 0; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; overflow: hidden;">
+<div style="display: flex; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #DFE4EA;">
+<label style="flex-grow: 1; display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #F9FAFB; color: #6B7280;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><input aria-label="ค้นหาแท็ก" placeholder="ค้นหาแท็ก" style="flex-grow: 1; border: 0; background: transparent; font-family: inherit; font-size: 14px; outline: none;"></label>
+<button style="height: 40px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer;">ใช้กับ: ทั้งหมด ▾</button>
+</div>
+<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+<thead><tr style="background: #F9FAFB; color: #637381; font-size: 12px; text-align: left;"><th style="padding: 10px 16px; font-weight: 600;">แท็ก</th><th style="padding: 10px 8px; font-weight: 600;">ใช้กับ</th><th style="padding: 10px 8px; font-weight: 600;">คำอธิบาย</th><th style="padding: 10px 8px; font-weight: 600; text-align: right;">ใช้อยู่</th><th style="padding: 10px 16px; font-weight: 600; text-align: right;">จัดการ</th></tr></thead>
+<tbody>
+<sc-for list="{{tags}}" as="t" hint-placeholder-count="6">
+<tr style="{{t.rowStyle}}">
+<td style="padding: 12px 16px;"><span style="font-size: 13px; font-weight: 600; padding: 3px 12px; border-radius: 12px; background: {{t.bg}}; color: {{t.fg}};">{{t.name}}</span></td>
+<td style="padding: 12px 8px; color: #4B5563;">{{t.scope}}</td>
+<td style="padding: 12px 8px; color: #637381; font-size: 13px;">{{t.desc}}</td>
+<td style="padding: 12px 8px; text-align: right; font-weight: 700;">{{t.uses}}</td>
+<td style="padding: 12px 16px; text-align: right;"><button style="height: 32px; padding: 0 10px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 12px; cursor: pointer;">แก้ไข</button></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</section>
+
+<aside aria-label="แก้ไขแท็ก" style="width: 340px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; padding: 18px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA;">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700;">แก้ไขแท็ก</h2>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600;">ชื่อแท็ก<input value="ขนส่งล่าช้า" style="height: 42px; padding: 0 12px; border: 1px solid #3758F9; border-radius: 6px; font-family: inherit; font-size: 14px; outline: none;"></label>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 13px; font-weight: 600;">สี</span>
+<div style="display: flex; gap: 8px;">
+<sc-for list="{{swatches}}" as="s" hint-placeholder-count="7">
+<button aria-label="{{s.name}}" style="{{s.style}}"></button>
+</sc-for>
+</div>
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px;">
+<legend style="font-size: 13px; font-weight: 600; padding: 0 0 8px;">ใช้กับ</legend>
+<label style="display: flex; align-items: center; gap: 8px; font-size: 14px;"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #3758F9;">เรื่อง (enquiry)</label>
+<label style="display: flex; align-items: center; gap: 8px; font-size: 14px;"><input type="checkbox" style="width: 18px; height: 18px; accent-color: #3758F9;">ลูกค้า</label>
+</fieldset>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600;">คำอธิบาย<textarea style="height: 72px; padding: 10px 12px; border: 1px solid #DFE4EA; border-radius: 6px; font-family: inherit; font-size: 14px; resize: none;">ของมาส่งช้ากว่าที่นัดลูกค้าไว้</textarea></label>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 8px; background: #F9FAFB;">
+<span style="font-size: 12px; color: #637381;">ตัวอย่างในกล่องงาน</span>
+<div style="display: flex; gap: 6px; align-items: center;"><span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #E1F4FC; color: #0B76B7;">เปิด</span><span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #FFFBEB; color: #9D5425;">ขนส่งล่าช้า</span></div>
+</div>
+<div style="display: flex; gap: 8px; margin-top: auto;">
+<button style="height: 42px; padding: 0 14px; border: 1px solid #FEEBEB; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #E10E0E; cursor: pointer;">ลบ</button>
+<span style="flex-grow: 1;"></span>
+<button style="height: 42px; padding: 0 14px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 14px; cursor: pointer;">ยกเลิก</button>
+<button style="height: 42px; padding: 0 16px; border: 0; border-radius: 6px; background: #3758F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">บันทึก</button>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var C = {
+      yellow: ['#FFFBEB', '#9D5425'], blue: ['#EBEEFE', '#1B44C8'], red: ['#FEEBEB', '#E10E0E'],
+      green: ['#DAF8E6', '#1A8245'], cyan: ['#E1F4FC', '#0B76B7'], gray: ['#F3F4F6', '#4B5563']
+    };
+    var list = [
+      ['ขนส่งล่าช้า', 'yellow', 'เรื่อง', 'ของมาส่งช้ากว่าที่นัดลูกค้าไว้', 1, true],
+      ['ลูกค้าประจำ', 'blue', 'เรื่อง, ลูกค้า', 'สั่งซื้อต่อเนื่อง ให้ความสำคัญเป็นพิเศษ', 1],
+      ['สินค้าเสียหาย', 'red', 'เรื่อง', 'กล่องบุบ แตก หรือเสียระหว่างขนส่ง', 1],
+      ['รอเคลม', 'red', 'เรื่อง', 'ต้องส่งเรื่องเคลมกับซัพพลายเออร์', 0],
+      ['ขอใบเสนอราคา', 'green', 'เรื่อง', 'ลูกค้าขอราคาสั่งจำนวนมาก', 2],
+      ['ลูกค้าโรงแรม', 'cyan', 'ลูกค้า', 'กลุ่มลูกค้าโรงแรมและจัดเลี้ยง', 1],
+      ['สต็อกไม่พอ', 'gray', 'เรื่อง', 'ต้องเช็กกับคลังสินค้าก่อนตอบ', 1]
+    ];
+    var tags = list.map(function (t) {
+      return { name: t[0], bg: C[t[1]][0], fg: C[t[1]][1], scope: t[2], desc: t[3], uses: t[4],
+        rowStyle: 'border-top: 1px solid #F3F4F6; ' + (t[5] ? 'background: #EBEEFE;' : 'background: #FFFFFF;') };
+    });
+    var swatches = [['เหลือง', '#FBBF24', true], ['น้ำเงิน', '#3758F9'], ['แดง', '#E10E0E'], ['เขียว', '#22AD5C'], ['ฟ้า', '#0B76B7'], ['เทา', '#9CA3AF'], ['ม่วง', '#8B5CF6']].map(function (s) {
+      return { name: s[0], style: 'width: 32px; height: 32px; border-radius: 16px; cursor: pointer; background: ' + s[1] + '; ' + (s[2] ? 'border: 3px solid #FFFFFF; box-shadow: 0 0 0 2px #111928;' : 'border: 0;') };
+    });
+    return { tags: tags, swatches: swatches };
+  }
+}
+</script>
+</body>
+</html>

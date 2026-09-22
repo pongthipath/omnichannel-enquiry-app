@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>เมนูซ้าย</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&amp;family=Noto+Sans:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Noto Sans Thai Looped','Noto Sans',sans-serif;color:#111928}
+a{color:#3758F9}a:hover{color:#1B44C8}
+</style>
+</helmet>
+<nav aria-label="เมนูหลัก" style="width: 232px; height: 900px; box-sizing: border-box; display: flex; flex-direction: column; background: #111928; color: #D1D5DB; padding: 16px 12px; gap: 4px; font-family: 'Noto Sans Thai Looped','Noto Sans',sans-serif;">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px 16px;">
+<div style="width: 36px; height: 36px; border-radius: 8px; background: #3758F9; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px;">F</div>
+<div style="display: flex; flex-direction: column; flex-grow: 1;">
+<span style="font-weight: 700; font-size: 15px; color: #FFFFFF;">FoodLink CS</span>
+<span style="font-size: 12px; color: #9CA3AF;">Omnichannel</span>
+</div>
+<button aria-label="ย่อเมนู" style="width: 32px; height: 32px; border: 1px solid #374151; background: transparent; color: #9CA3AF; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+</div>
+
+<span style="font-size: 12px; color: #6B7280; padding: 8px 12px 4px; font-weight: 600;">งานบริการ</span>
+<a href="Main.dc.html" style="{{nav.inbox}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg><span style="flex-grow: 1;">กล่องงาน</span><span style="min-width: 22px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 10px; background: #3758F9; color: #FFFFFF; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;">7</span></a>
+<a href="Customers.dc.html" style="{{nav.customers}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span style="flex-grow: 1;">ลูกค้า</span></a>
+<a href="Products.dc.html" style="{{nav.products}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg><span style="flex-grow: 1;">สินค้า</span></a>
+<a href="Dashboard.dc.html" style="{{nav.dashboard}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg><span style="flex-grow: 1;">แดชบอร์ด</span></a>
+
+<span style="font-size: 12px; color: #6B7280; padding: 16px 12px 4px; font-weight: 600;">ตั้งค่า</span>
+<a href="Tags.dc.html" style="{{nav.tags}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r="1"></circle></svg><span style="flex-grow: 1;">แท็ก</span></a>
+<a href="Departments.dc.html" style="{{nav.departments}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"></path></svg><span style="flex-grow: 1;">แผนก</span></a>
+<a href="Roles.dc.html" style="{{nav.roles}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg><span style="flex-grow: 1;">บทบาทและสิทธิ์</span></a>
+<a href="Staff.dc.html" style="{{nav.staff}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21v-1a6 6 0 0 1 12 0v1"></path><path d="M19 8v6M16 11h6"></path></svg><span style="flex-grow: 1;">พนักงาน</span></a>
+
+<div style="flex-grow: 1;"></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; background: #1F2A37;">
+<div style="width: 36px; height: 36px; border-radius: 18px; background: #374151; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px;">ว</div>
+<div style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0;">
+<span style="font-size: 14px; font-weight: 600; color: #FFFFFF;">วิภา (ผู้จัดการ)</span>
+<span style="font-size: 12px; color: #4ADE80;">ออนไลน์ · ทุกแผนก</span>
+</div>
+<a href="Login.dc.html" aria-label="ออกจากระบบ" style="width: 32px; height: 32px; color: #9CA3AF; display: flex; align-items: center; justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg></a>
+</div>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["inbox","customers","products","dashboard","tags","departments","roles","staff"],"default":"inbox"},"$preview":{"width":232,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var active = this.props.active ?? 'inbox';
+    var base = 'display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 6px; font-size: 14px; text-decoration: none; ';
+    var on = base + 'background: #1F2A37; color: #FFFFFF; font-weight: 600;';
+    var off = base + 'background: transparent; color: #D1D5DB;';
+    var keys = ['inbox', 'customers', 'products', 'dashboard', 'tags', 'departments', 'roles', 'staff'];
+    var nav = {};
+    keys.forEach(function (k) { nav[k] = k === active ? on : off; });
+    return { nav: nav };
+  }
+}
+</script>
+</body>
+</html>

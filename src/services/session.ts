@@ -22,21 +22,29 @@ async function clear(): Promise<void> {
   await sessionStore.clear();
 }
 
-/** One refresh at a time — parallel 401s wait for the same call (a second call would trip reuse detection). */
+type LockManager = { request: <T>(name: string, cb: () => Promise<T>) => Promise<T> };
+const locks = (globalThis.navigator as { locks?: LockManager } | undefined)?.locks;
+
+/**
+ * One refresh at a time. In this tab, parallel 401s share one call. Across browser tabs (they share the
+ * stored token) a Web Lock serialises refreshes, and each reads the token *inside* the lock — so a tab
+ * never sends a token another tab already rotated (that would trip reuse detection and sign everyone out).
+ */
 function refresh(): Promise<boolean> {
-  refreshing ??= (async () => {
+  const run = async () => {
     try {
-      const token = refreshToken ?? (await sessionStore.get());
+      const token = (persist ? await sessionStore.get() : null) ?? refreshToken;
       if (!token) return false;
       await apply(await authService.refresh(token));
       return true;
     } catch {
       await clear();
       return false;
-    } finally {
-      refreshing = null;
     }
-  })();
+  };
+  refreshing ??= (locks ? locks.request('omni.refresh', run) : run()).finally(() => {
+    refreshing = null;
+  });
   return refreshing;
 }
 

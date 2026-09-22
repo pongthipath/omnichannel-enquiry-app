@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>ลูกค้า</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&amp;family=Noto+Sans:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Noto Sans Thai Looped','Noto Sans',sans-serif;color:#111928}
+a{color:#3758F9}a:hover{color:#1B44C8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; background: #F9FAFB; font-family: 'Noto Sans Thai Looped','Noto Sans',sans-serif; color: #111928; overflow: hidden;">
+<dc-import name="Sidebar" active="customers" hint-size="232px,900px"></dc-import>
+<main style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 24px 24px 24px 28px;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div style="flex-grow: 1; display: flex; flex-direction: column;">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700;">ลูกค้า</h1>
+<span style="font-size: 14px; color: #637381;">ข้อมูลร้านค้า ผู้ติดต่อ และช่องทางแชทที่ผูกไว้</span>
+</div>
+<button style="height: 42px; padding: 0 14px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #111928; cursor: pointer;">ส่งออก CSV</button>
+<button style="height: 42px; padding: 0 16px; border: 0; border-radius: 6px; background: #3758F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">+ เพิ่มลูกค้า</button>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px;">
+<div style="padding: 14px 16px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; display: flex; flex-direction: column;"><span style="font-size: 13px; color: #637381;">ลูกค้าทั้งหมด</span><span style="font-size: 24px; font-weight: 700;">5</span></div>
+<div style="padding: 14px 16px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; display: flex; flex-direction: column;"><span style="font-size: 13px; color: #637381;">มีเรื่องที่ยังไม่ปิด</span><span style="font-size: 24px; font-weight: 700;">5</span></div>
+<div style="padding: 14px 16px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; display: flex; flex-direction: column;"><span style="font-size: 13px; color: #637381;">ผูกแชทภายนอกแล้ว</span><span style="font-size: 24px; font-weight: 700;">2</span></div>
+<div style="padding: 14px 16px; border-radius: 10px; background: #FFFBEB; display: flex; flex-direction: column;"><span style="font-size: 13px; color: #9D5425;">ยังไม่มีเซลส์ดูแล</span><span style="font-size: 24px; font-weight: 700; color: #9D5425;">3</span></div>
+</div>
+
+<div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0;">
+<section style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; overflow: hidden;">
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #DFE4EA;">
+<label style="flex-grow: 1; display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #F9FAFB; color: #6B7280;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input aria-label="ค้นหาลูกค้า" placeholder="ค้นหาชื่อร้าน รหัส ผู้ติดต่อ เบอร์โทร หรืออีเมล" style="flex-grow: 1; border: 0; background: transparent; font-family: inherit; font-size: 14px; outline: none;">
+</label>
+<button style="height: 40px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer;">ช่องทาง: ทั้งหมด ▾</button>
+<button style="height: 40px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer;">เซลส์: ทั้งหมด ▾</button>
+</div>
+<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+<thead><tr style="background: #F9FAFB; color: #637381; font-size: 12px; text-align: left;">
+<th style="padding: 10px 16px; font-weight: 600;">ร้าน / รหัส</th><th style="padding: 10px 8px; font-weight: 600;">ผู้ติดต่อ</th><th style="padding: 10px 8px; font-weight: 600;">ช่องทาง</th><th style="padding: 10px 8px; font-weight: 600;">เซลส์</th><th style="padding: 10px 8px; font-weight: 600; text-align: right;">เรื่องค้าง</th><th style="padding: 10px 16px; font-weight: 600;">ล่าสุด</th>
+</tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+<tr onClick="{{r.pick}}" style="{{r.rowStyle}}">
+<td style="padding: 12px 16px;"><div style="display: flex; align-items: center; gap: 10px;"><span style="width: 34px; height: 34px; border-radius: 17px; background: {{r.color}}; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{r.initial}}</span><div style="display: flex; flex-direction: column;"><span style="font-weight: 600;">{{r.company}}</span><span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">{{r.code}}</span></div></div></td>
+<td style="padding: 12px 8px;"><div style="display: flex; flex-direction: column;"><span>{{r.contact}}</span><span style="font-size: 12px; color: #637381;">{{r.phone}}</span></div></td>
+<td style="padding: 12px 8px;"><div style="display: flex; gap: 4px; flex-wrap: wrap;"><sc-for list="{{r.channels}}" as="c" hint-placeholder-count="2"><span style="font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; border: 1px solid #DFE4EA; color: #4B5563;">{{c}}</span></sc-for></div></td>
+<td style="padding: 12px 8px; color: {{r.salesColor}};">{{r.sales}}</td>
+<td style="padding: 12px 8px; text-align: right; font-weight: 700;">{{r.open}}</td>
+<td style="padding: 12px 16px; font-size: 13px; color: #637381;">{{r.last}}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</section>
+
+<aside aria-label="รายละเอียดลูกค้า" style="width: 340px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; padding: 18px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA; overflow: hidden;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<span style="width: 52px; height: 52px; border-radius: 26px; background: {{sel.color}}; color: #FFFFFF; font-weight: 700; font-size: 20px; display: flex; align-items: center; justify-content: center;">{{sel.initial}}</span>
+<div style="flex-grow: 1; display: flex; flex-direction: column;"><span style="font-size: 16px; font-weight: 700;">{{sel.company}}</span><span style="font-size: 13px; color: #637381; font-family: 'Noto Sans',sans-serif;">{{sel.code}}</span></div>
+<button style="height: 34px; padding: 0 12px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 13px; cursor: pointer;">แก้ไข</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+<div style="display: flex; justify-content: space-between;"><span style="color: #637381;">ผู้ติดต่อ</span><span>{{sel.contact}}</span></div>
+<div style="display: flex; justify-content: space-between;"><span style="color: #637381;">โทร</span><span>{{sel.phone}}</span></div>
+<div style="display: flex; justify-content: space-between;"><span style="color: #637381;">อีเมล</span><span>{{sel.email}}</span></div>
+<div style="display: flex; justify-content: space-between;"><span style="color: #637381;">เซลส์ผู้ดูแล</span><span style="color: {{sel.salesColor}};">{{sel.sales}}</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 12px; font-weight: 600; color: #637381;">ช่องทางแชทที่ผูกไว้</span>
+<sc-for list="{{sel.links}}" as="l" hint-placeholder-count="1">
+<div style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; border: 1px solid #DFE4EA; font-size: 13px;"><span style="font-weight: 700; color: #1A8245;">{{l.ch}}</span><span style="flex-grow: 1;">{{l.name}}</span><button style="height: 28px; padding: 0 8px; border: 0; background: transparent; font-family: inherit; font-size: 12px; color: #E10E0E; cursor: pointer;">ยกเลิกการผูก</button></div>
+</sc-for>
+<button style="height: 36px; border: 1px dashed #CED4DA; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 13px; color: #637381; cursor: pointer;">+ ผูกช่องทาง LINE / Facebook</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; min-height: 0;">
+<span style="font-size: 12px; font-weight: 600; color: #637381;">เรื่องของลูกค้ารายนี้</span>
+<sc-for list="{{sel.enquiries}}" as="e" hint-placeholder-count="2">
+<a href="Main.dc.html" style="display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 8px; border: 1px solid #DFE4EA; text-decoration: none; color: #111928;">
+<div style="display: flex; gap: 6px; align-items: center;"><span style="font-size: 12px; color: #637381; font-family: 'Noto Sans',sans-serif;">{{e.ref}}</span><span style="font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: {{e.bg}}; color: {{e.fg}};">{{e.status}}</span></div>
+<span style="font-size: 13px; font-weight: 600;">{{e.subject}}</span>
+</a>
+</sc-for>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { code: 'CUS-00128' };
+  }
+  renderVals() {
+    var self = this;
+    var S = {
+      OPEN: ['เปิด', '#E1F4FC', '#0B76B7'], ASSIGNED: ['มอบหมายแล้ว', '#EBEEFE', '#1B44C8'], IN_PROGRESS: ['กำลังดำเนินการ', '#EBEEFE', '#1B44C8'],
+      WAITING: ['รอลูกค้าตอบ', '#FFFBEB', '#9D5425'], RESOLVED: ['แก้ไขแล้ว', '#DAF8E6', '#1A8245'], CLOSED: ['ปิดแล้ว', '#F3F4F6', '#4B5563']
+    };
+    var enq = function (ref, st, subject) { var s = S[st]; return { ref: ref, status: s[0], bg: s[1], fg: s[2], subject: subject }; };
+    var data = [
+      { code: 'CUS-00128', company: 'Bangkok Bistro Co.', initial: 'B', color: '#1B44C8', contact: 'คุณมาลี', phone: '081-234-5678', email: 'malee@bkkbistro.test', sales: 'ธนพล (Sales)', channels: ['APP', 'LINE'], links: [{ ch: 'LINE', name: 'Malee' }], open: 1, last: 'วันนี้ 16:45',
+        enquiries: [enq('ENQ-2026-000017', 'IN_PROGRESS', 'เนยฝรั่งเศสกล่องบุบ 2 ลัง'), enq('ENQ-2026-000021', 'CLOSED', 'ขอตัวอย่างเนย Elle & Vire 1kg')] },
+      { code: 'CUS-00201', company: 'Siam Riverside Hotel', initial: 'S', color: '#9D5425', contact: 'คุณวิชัย', phone: '089-555-1122', email: 'purchasing@siamriverside.test', sales: 'ธนพล (Sales)', channels: ['APP', 'FB'], links: [{ ch: 'FB', name: 'Wichai Purchasing' }], open: 2, last: 'วันนี้ 15:31',
+        enquiries: [enq('ENQ-2026-000018', 'IN_PROGRESS', 'ขอใบเสนอราคา Mozzarella 20 ลัง'), enq('ENQ-2026-000016', 'ASSIGNED', 'ออเดอร์ SO-58812 จะส่งถึงกี่โมง')] },
+      { code: 'CUS-00077', company: 'Chiang Mai Bakehouse', initial: 'C', color: '#374151', contact: 'คุณแอน', phone: '053-111-222', email: 'ann@cmbakehouse.test', sales: null, channels: ['APP'], links: [], open: 2, last: 'วันนี้ 13:49',
+        enquiries: [enq('ENQ-2026-000015', 'OPEN', 'ขอราคาช็อกโกแลต Callebaut 54% สั่ง 50 ถุง'), enq('ENQ-2026-000019', 'WAITING', 'ครีมชีสขาด 2 กล่องจากออเดอร์ล่าสุด')] },
+      { code: 'CUS-00310', company: 'Nana Pizza', initial: 'N', color: '#1A8245', contact: 'คุณโจ้', phone: '086-123-9876', email: 'jo@nanapizza.test', sales: null, channels: ['APP', 'WEB'], links: [], open: 1, last: 'วันนี้ 15:49',
+        enquiries: [enq('ENQ-2026-000013', 'OPEN', 'Mozzarella 2.3kg มีสต็อกพอสำหรับ 40 ก้อนไหม'), enq('ENQ-2026-000020', 'RESOLVED', 'ขอใบกำกับภาษีเต็มรูปเดือนที่แล้ว')] },
+      { code: 'CUS-00415', company: 'Phuket Seafood House', initial: 'P', color: '#0B76B7', contact: 'คุณนิด', phone: '076-999-888', email: 'nid@phuketseafood.test', sales: null, channels: ['APP', 'โทร'], links: [], open: 2, last: 'วันนี้ 15:49',
+        enquiries: [enq('ENQ-2026-000022', 'OPEN', 'แซลมอนมาส่งช้ากว่านัด'), enq('ENQ-2026-000014', 'OPEN', 'วิปปิ้งครีมหมดอายุก่อนกำหนด 6 กล่อง')] }
+    ];
+    data.forEach(function (d) {
+      d.salesColor = d.sales ? '#111928' : '#9D5425';
+      if (!d.sales) d.sales = 'ยังไม่มี';
+    });
+    var selected = this.state.code;
+    var rows = data.map(function (d) {
+      var on = d.code === selected;
+      return Object.assign({}, d, {
+        pick: function () { self.setState({ code: d.code }); },
+        rowStyle: 'border-top: 1px solid #F3F4F6; cursor: pointer; ' + (on ? 'background: #EBEEFE; box-shadow: inset 3px 0 0 #3758F9;' : 'background: #FFFFFF;')
+      });
+    });
+    return { rows: rows, sel: data.filter(function (d) { return d.code === selected; })[0] };
+  }
+}
+</script>
+</body>
+</html>

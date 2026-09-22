@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>บทบาทและสิทธิ์</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&amp;family=Noto+Sans:wght@400;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Noto Sans Thai Looped','Noto Sans',sans-serif;color:#111928}
+a{color:#3758F9}a:hover{color:#1B44C8}
+</style>
+</helmet>
+<div style="width: 1440px; height: 900px; display: flex; background: #F9FAFB; font-family: 'Noto Sans Thai Looped','Noto Sans',sans-serif; color: #111928; overflow: hidden;">
+<dc-import name="Sidebar" active="roles" hint-size="232px,900px"></dc-import>
+<main style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 24px 24px 24px 28px;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div style="flex-grow: 1; display: flex; flex-direction: column;">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700;">บทบาทและสิทธิ์</h1>
+<span style="font-size: 14px; color: #637381;">เลือกได้ว่าแต่ละบทบาททำอะไรได้บ้าง แยกตามหน้าและส่วนของหน้าจอ</span>
+</div>
+<button style="height: 42px; padding: 0 14px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; font-family: inherit; font-size: 14px; color: #111928; cursor: pointer;">+ สร้างบทบาท</button>
+<button style="height: 42px; padding: 0 16px; border: 0; border-radius: 6px; background: #3758F9; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer;">บันทึกสิทธิ์</button>
+</div>
+
+<div style="display: flex; gap: 16px; flex-grow: 1; min-height: 0;">
+<nav aria-label="บทบาท" style="width: 240px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px;">
+<sc-for list="{{roles}}" as="r" hint-placeholder-count="4">
+<button onClick="{{r.pick}}" style="{{r.style}}">
+<span style="font-size: 15px; font-weight: 700;">{{r.name}}</span>
+<span style="font-size: 12px; color: #637381;">{{r.people}} คน · {{r.count}} สิทธิ์</span>
+<span style="font-size: 12px; color: #637381; text-align: left;">{{r.desc}}</span>
+</button>
+</sc-for>
+<div style="margin-top: auto; padding: 12px; border-radius: 8px; background: #E1F4FC; font-size: 12px; line-height: 20px; color: #0B76B7;">แก้สิทธิ์ของบทบาทแล้วมีผลกับทุกคนในบทบาทนั้นทันที สิทธิ์ "แก้ไข" จะเปิดสิทธิ์ "ดู" ให้อัตโนมัติ</div>
+</nav>
+
+<section style="flex-grow: 1; min-width: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start;">
+<sc-for list="{{columns}}" as="col" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<sc-for list="{{col}}" as="g" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; padding: 12px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DFE4EA;">
+<div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 6px;"><span style="font-size: 14px; font-weight: 700;">{{g.title}}</span><span style="font-size: 12px; color: #637381;">{{g.on}}/{{g.total}}</span></div>
+<sc-for list="{{g.items}}" as="p" hint-placeholder-count="4">
+<label style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px; color: {{p.color}}; cursor: pointer;"><input type="checkbox" checked="{{p.on}}" onChange="{{p.toggle}}" style="width: 16px; height: 16px; margin: 0; accent-color: #3758F9;">{{p.label}}</label>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var agent = ['DASH_PAGE', 'DASH_KPI', 'INBOX_PAGE', 'SCOPE_OWN', 'SCOPE_DEPT', 'REPLY', 'ASSIGN_SELF', 'STATUS', 'ESCALATE', 'CUST_CHAT', 'TAG_APPLY',
+      'CONTACT_VIEW', 'CONTACT_EDIT', 'CHANNEL_VIEW', 'CHANNEL_LINK', 'HISTORY', 'ORDERS', 'NOTE_VIEW', 'NOTE_EDIT', 'PANEL_TAG'];
+    var sup = agent.concat(['DASH_CAT', 'DASH_NEAR', 'INTERNAL', 'ASSIGN_OTHERS', 'REOPEN', 'STATUS_ANY', 'CREATE', 'EDIT', 'SEARCH_MSG', 'TAG_CREATE',
+      'SALES_ASSIGN', 'CHANNEL_UNLINK', 'MERGE', 'CUST_PAGE', 'PLACEHOLDER_VIEW', 'PLACEHOLDER_MERGE', 'SLA_VIEW']);
+    var mgr = sup.concat(['SCOPE_ALL', 'SLA_EDIT']);
+    var all = this.groups().reduce(function (a, g) { return a.concat(g.items.map(function (i) { return i[0]; })); }, []);
+    this.state = { role: 'SUPERVISOR', perms: { AGENT: agent, SUPERVISOR: sup, MANAGER: mgr, ADMIN: all } };
+  }
+  groups() {
+    return [
+      { col: 0, title: 'กล่องงาน', items: [['INBOX_PAGE', 'เห็นหน้ากล่องงาน'], ['SCOPE_OWN', 'เห็นเรื่องของตัวเอง'], ['SCOPE_DEPT', 'เห็นเรื่องของแผนก'], ['SCOPE_ALL', 'เห็นทุกเรื่องทุกแผนก'], ['REPLY', 'ตอบลูกค้า'], ['INTERNAL', 'เห็นโน้ตภายใน'], ['ASSIGN_SELF', 'รับเรื่องเอง'], ['ASSIGN_OTHERS', 'มอบหมายให้คนอื่น'], ['STATUS', 'เปลี่ยนสถานะเรื่องของตัวเอง'], ['STATUS_ANY', 'เปลี่ยนสถานะทุกเรื่องที่เห็น'], ['ESCALATE', 'ส่งต่อแผนก'], ['REOPEN', 'เปิดเรื่องอีกครั้ง'], ['CREATE', 'สร้างเรื่องแทนลูกค้า'], ['EDIT', 'แก้ไขรายละเอียดเรื่อง'], ['CUST_CHAT', 'ดูแชทรวมของลูกค้า'], ['SEARCH_MSG', 'ค้นหาในข้อความ'], ['TAG_APPLY', 'ติดแท็กให้เรื่อง'], ['TAG_CREATE', 'สร้างแท็กใหม่ระหว่างแชท']] },
+      { col: 1, title: 'แผงข้อมูลลูกค้า (ขวามือ)', items: [['CONTACT_VIEW', 'ดูข้อมูลติดต่อ'], ['CONTACT_EDIT', 'แก้ไขข้อมูลติดต่อ'], ['SALES_ASSIGN', 'กำหนดเซลส์ผู้ดูแล'], ['CHANNEL_VIEW', 'ดูช่องทางที่ผูก'], ['CHANNEL_LINK', 'ผูกช่องทาง'], ['CHANNEL_UNLINK', 'ยกเลิกการผูก'], ['MERGE', 'รวมลูกค้าซ้ำ'], ['HISTORY', 'ดูประวัติเรื่อง'], ['ORDERS', 'ดูออเดอร์'], ['NOTE_VIEW', 'ดูโน้ตลูกค้า'], ['NOTE_EDIT', 'เขียนโน้ตลูกค้า'], ['PANEL_TAG', 'ติดแท็กลูกค้า']] },
+      { col: 1, title: 'หน้าลูกค้า', items: [['CUST_PAGE', 'เห็นหน้าลูกค้า'], ['PLACEHOLDER_VIEW', 'ดูลูกค้าที่ยังไม่ยืนยันตัวตน'], ['PLACEHOLDER_MERGE', 'รวมเข้ากับลูกค้าจริง']] },
+      { col: 2, title: 'แดชบอร์ด', items: [['DASH_PAGE', 'เห็นหน้าแดชบอร์ด'], ['DASH_KPI', 'เห็นตัวเลขสรุป'], ['DASH_CAT', 'แยกตามแผนกและช่องทาง'], ['DASH_NEAR', 'รายการใกล้เกิน SLA']] },
+      { col: 2, title: 'ตั้งค่า', items: [['SLA_VIEW', 'ดูกติกา SLA'], ['SLA_EDIT', 'แก้กติกา SLA'], ['STAFF', 'จัดการพนักงาน'], ['DEPT', 'จัดการแผนก'], ['TAGS', 'จัดการแท็ก'], ['ROLES', 'จัดการบทบาทและสิทธิ์']] },
+      { col: 2, title: 'เครื่องมือ', items: [['SIMULATOR', 'จำลองข้อความจากช่องทางภายนอก']] }
+    ];
+  }
+  renderVals() {
+    var self = this;
+    var role = this.state.role;
+    var has = this.state.perms[role];
+    var groups = this.groups();
+    var total = groups.reduce(function (n, g) { return n + g.items.length; }, 0);
+    var meta = [['AGENT', 'Agent', 3, 'ตอบลูกค้า รับเรื่องของแผนก'], ['SUPERVISOR', 'Supervisor', 1, 'มอบหมายงาน เปลี่ยนสถานะทุกเรื่องในแผนก'], ['MANAGER', 'Manager', 1, 'เห็นทุกแผนก แก้กติกา SLA'], ['ADMIN', 'Admin', 1, 'ทุกสิทธิ์ รวมถึงตั้งค่าระบบ']];
+    var roles = meta.map(function (m) {
+      var on = m[0] === role;
+      return { name: m[1], people: m[2], desc: m[3], count: self.state.perms[m[0]].length + '/' + total,
+        pick: function () { self.setState({ role: m[0] }); },
+        style: 'display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 12px 14px; border-radius: 10px; font-family: inherit; color: #111928; cursor: pointer; text-align: left; ' +
+          (on ? 'background: #EBEEFE; border: 2px solid #3758F9;' : 'background: #FFFFFF; border: 1px solid #DFE4EA;') };
+    });
+    var toggle = function (key) {
+      return function () {
+        var cur = self.state.perms[role];
+        var next = cur.indexOf(key) >= 0 ? cur.filter(function (k) { return k !== key; }) : cur.concat([key]);
+        var perms = Object.assign({}, self.state.perms);
+        perms[role] = next;
+        self.setState({ perms: perms });
+      };
+    };
+    var cols = [[], [], []];
+    groups.forEach(function (g) {
+      var items = g.items.map(function (i) {
+        var on = has.indexOf(i[0]) >= 0;
+        return { label: i[1], on: on, color: on ? '#111928' : '#6B7280', toggle: toggle(i[0]) };
+      });
+      cols[g.col].push({ title: g.title, items: items, total: items.length, on: items.filter(function (i) { return i.on; }).length });
+    });
+    return { roles: roles, columns: cols };
+  }
+}
+</script>
+</body>
+</html>
