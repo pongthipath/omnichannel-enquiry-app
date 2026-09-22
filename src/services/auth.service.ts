@@ -11,8 +11,7 @@ export interface LoginInput {
 
 export interface LoginResult {
   accessToken: string;
-  /** native only — web receives it as an httpOnly cookie */
-  refreshToken?: string;
+  refreshToken: string;
 }
 
 export interface Me {
@@ -21,13 +20,14 @@ export interface Me {
   name: string;
   /** permission bitmask as a decimal string (design §16.13) — convert with BigInt() */
   permissions: string;
+  departmentId: string | null;
 }
 
 /** One function per endpoint of the auth module (design §16.12). */
 export const authService = {
   login: (input: LoginInput) => http.post<LoginResult>('/auth/login', input),
-  refresh: () => http.post<LoginResult>('/auth/refresh'),
-  logout: () => http.post<void>('/auth/logout'),
+  refresh: (refreshToken: string) => http.post<LoginResult>('/auth/refresh', { refreshToken }),
+  logout: (refreshToken: string) => http.post<void>('/auth/logout', { refreshToken }),
   me: () => http.get<Me>('/auth/me'),
   forgotPassword: (email: string) => http.post<void>('/auth/password/forgot', { email }),
 };

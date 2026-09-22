@@ -21,9 +21,23 @@ export const setAccessToken = (token: string | null): void => {
   accessToken = token;
 };
 
+/** Set by the session: gets a new access token after a 401. Returns false when the user must sign in again. */
+let onUnauthorized: (() => Promise<boolean>) | null = null;
+export const setUnauthorizedHandler = (handler: () => Promise<boolean>): void => {
+  onUnauthorized = handler;
+};
+
+const TOKEN_PATHS = /^\/auth\/(login|refresh|logout)\b/;
+
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-async function request<T>(method: Method, path: string, body?: unknown, headers: Record<string, string> = {}): Promise<T> {
+async function request<T>(
+  method: Method,
+  path: string,
+  body?: unknown,
+  headers: Record<string, string> = {},
+  isRetry = false,
+): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
     credentials: 'include', // web: httpOnly refresh cookie
@@ -36,6 +50,10 @@ async function request<T>(method: Method, path: string, body?: unknown, headers:
     body: body === undefined ? undefined : JSON.stringify(body),
   });
 
+  // access token expired (15 min) → refresh once and repeat; login/refresh/logout report their own 401s
+  if (res.status === 401 && !isRetry && !TOKEN_PATHS.test(path) && onUnauthorized && (await onUnauthorized())) {
+    return request<T>(method, path, body, headers, true);
+  }
   if (res.status === 204) return undefined as T;
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {

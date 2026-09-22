@@ -8,13 +8,21 @@
       "password": "Password",
       "show": "Show",
       "hide": "Hide",
-      "remember": "Keep me signed in on this device",
+      "remember": "Remember me",
       "submit": "Sign in",
       "submitting": "Signing in…",
       "forgot": "Forgot password?",
       "staffLink": "Staff sign in",
-      "customerLink": "I'm a customer"
-    }
+      "customerLink": "I'm a customer",
+      "customerTab": "Customer",
+      "staffTab": "Staff",
+      "customerSubtitle": "Track your enquiries and chat with customer service",
+      "staffSubtitle": "For FoodLink staff handling customer enquiries",
+      "hintCustomerTab": "The “Customer” tab is selected. For a staff account, choose “Staff”.",
+      "hintStaffTab": "The “Staff” tab is selected. For a customer account, choose “Customer”.",
+      "demoTitle": "Demo accounts (dev only), password {{password}}"
+    },
+    "logout": "Sign out"
   },
   "errors": {
     "auth": {
@@ -25,6 +33,27 @@
     "common": {
       "network": "Can't reach the server. Check your connection and try again",
       "unknown": "Something went wrong. Please try again"
+    }
+  },
+  "enquiry": {
+    "myTitle": "My enquiries",
+    "inboxTitle": "Inbox",
+    "empty": "No enquiries yet",
+    "slaBreached": "SLA breached",
+    "reopened": "Reopened",
+    "status": {
+      "OPEN": "Open",
+      "ASSIGNED": "Assigned",
+      "IN_PROGRESS": "In progress",
+      "WAITING_FOR_CUSTOMER": "Waiting for customer",
+      "RESOLVED": "Resolved",
+      "CLOSED": "Closed"
+    },
+    "priority": {
+      "LOW": "Low",
+      "NORMAL": "Normal",
+      "HIGH": "High",
+      "URGENT": "Urgent"
     }
   }
 }
