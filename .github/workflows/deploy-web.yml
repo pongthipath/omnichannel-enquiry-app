@@ -1,0 +1,43 @@
+name: deploy-web
+
+# main → dev · prod by hand. Mobile builds use EAS (eas build / eas submit), not this workflow.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options: [dev, prod]
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || 'dev' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: build web
+        run: npm run export:web
+        env:
+          EXPO_PUBLIC_API_URL: ${{ vars.EXPO_PUBLIC_API_URL }}
+          EXPO_PUBLIC_SOCKET_URL: ${{ vars.EXPO_PUBLIC_SOCKET_URL }}
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: upload (hashed assets cached long, index.html never cached)
+        run: |
+          aws s3 sync dist "s3://${{ vars.WEB_BUCKET }}" --delete --exclude index.html --cache-control "public,max-age=31536000,immutable"
+          aws s3 cp dist/index.html "s3://${{ vars.WEB_BUCKET }}/index.html" --cache-control "no-cache"
+      - name: invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id "${{ vars.WEB_DISTRIBUTION_ID }}" --paths "/index.html" "/"

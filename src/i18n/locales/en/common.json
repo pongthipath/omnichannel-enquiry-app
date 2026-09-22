@@ -1,0 +1,30 @@
+{
+  "appName": "FoodLink CS",
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "staffTitle": "Staff sign in",
+      "email": "Email",
+      "password": "Password",
+      "show": "Show",
+      "hide": "Hide",
+      "remember": "Keep me signed in on this device",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "forgot": "Forgot password?",
+      "staffLink": "Staff sign in",
+      "customerLink": "I'm a customer"
+    }
+  },
+  "errors": {
+    "auth": {
+      "invalidCredentials": "Incorrect email or password",
+      "locked": "Too many attempts. Please try again later",
+      "disabled": "This account is disabled. Contact your admin"
+    },
+    "common": {
+      "network": "Can't reach the server. Check your connection and try again",
+      "unknown": "Something went wrong. Please try again"
+    }
+  }
+}
