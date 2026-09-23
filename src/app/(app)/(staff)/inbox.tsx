@@ -52,7 +52,7 @@ export default function InboxScreen() {
         <View
           className={
             wide
-              ? 'w-[300px] border-l border-stroke dark:border-stroke-dark'
+              ? 'w-[300px] border-l border-stroke shadow-none dark:border-stroke-dark'
               : 'absolute bottom-0 right-0 top-0 w-[300px] max-w-[90%] border-l border-stroke bg-white shadow-card dark:border-stroke-dark dark:bg-dark-2'
           }
         >

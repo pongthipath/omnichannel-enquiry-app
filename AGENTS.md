@@ -39,3 +39,10 @@ Docs: https://docs.expo.dev/eas/index.md
 - If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
 - Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
 - Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+- NativeWind: never add a `shadow-*` class conditionally on its own. A shadow is a CSS variable, and
+  a component that gains its first variable after the initial render makes css-interop print an
+  upgrade warning whose `JSON.stringify` of the props walks into expo-router's context getters and
+  throws "Couldn't find a navigation context" — a red herring that looks like a routing bug. Pair the
+  conditional class with `shadow-none` on the other branch so the variable exists from the first
+  render (see `components/common/segmented-tabs.tsx`). Same care for any other variable-backed
+  utility added only in one state.

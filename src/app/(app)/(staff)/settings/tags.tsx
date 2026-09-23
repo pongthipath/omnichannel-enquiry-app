@@ -121,7 +121,10 @@ export default function TagsScreen() {
                     accessibilityState={{ checked: form.color === color }}
                     onPress={() => setForm((f) => ({ ...f, color }))}
                     style={{ backgroundColor: SWATCH[color] }}
-                    className={cn('h-8 w-8 rounded-full', form.color === color && 'border-[3px] border-white shadow-[0_0_0_2px_#111928]')}
+                    className={cn(
+                      'h-8 w-8 rounded-full',
+                      form.color === color ? 'border-[3px] border-white shadow-[0_0_0_2px_#111928]' : 'shadow-none',
+                    )}
                   />
                 ))}
               </View>

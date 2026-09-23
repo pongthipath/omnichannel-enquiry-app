@@ -24,7 +24,8 @@ export function LanguageToggle({ tone = 'light' }: { tone?: 'light' | 'dark' }) 
             onPress={() => void setLanguage(lng)}
             className={cn(
               'min-h-7 min-w-9 items-center justify-center rounded px-2',
-              on && (dark ? 'bg-white/20' : 'bg-white shadow-card dark:bg-dark-2'),
+              on && dark && 'bg-white/20',
+              on && !dark ? 'bg-white shadow-card dark:bg-dark-2' : 'shadow-none',
             )}
           >
             <Text

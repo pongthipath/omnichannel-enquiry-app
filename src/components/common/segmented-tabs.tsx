@@ -26,9 +26,11 @@ export function SegmentedTabs<T extends string>({
             accessibilityRole="tab"
             accessibilityState={{ selected: active }}
             onPress={() => onChange(o.value)}
+            // shadow-none on the inactive pill is deliberate: a shadow is a CSS variable, and
+            // NativeWind remounts (and warns) when a component gains its first variable later on
             className={cn(
               'min-h-8 flex-1 items-center justify-center rounded-md px-2',
-              active && 'bg-white shadow-card dark:bg-dark-2',
+              active ? 'bg-white shadow-card dark:bg-dark-2' : 'shadow-none',
             )}
           >
             <Text
