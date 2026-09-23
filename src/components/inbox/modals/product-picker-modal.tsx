@@ -33,7 +33,7 @@ export function ProductPickerModal({
       width="md"
       footer={onClear ? <Button title={t('inbox.productModal.clear')} variant="outline" onPress={onClear} /> : undefined}
     >
-      <View className="min-h-11 flex-row items-center gap-2 rounded-md border border-primary px-3">
+      <View className="min-h-9 flex-row items-center gap-2 rounded-md border border-primary px-3">
         <Icon name="search" size={16} color={colors.dark[5]} />
         <TextInput
           value={q}
@@ -54,7 +54,7 @@ export function ProductPickerModal({
               key={p.id}
               accessibilityRole="button"
               onPress={() => onPick(p)}
-              className="min-h-12 flex-row items-center gap-3 rounded-md px-2 active:bg-gray-2 dark:active:bg-dark-3"
+              className="min-h-10 flex-row items-center gap-3 rounded-md px-2 active:bg-gray-2 dark:active:bg-dark-3"
             >
               <View className="h-9 w-9 items-center justify-center rounded-md bg-gray-2 dark:bg-dark-3">
                 <Icon name="package" size={16} color={colors.dark[5]} />

@@ -148,7 +148,8 @@
       "days": "{{d}} วัน {{h}} ชม.",
       "hours": "{{h}} ชม. {{m}} นาที",
       "minutes": "{{m}} นาที"
-    }
+    },
+    "language": "ภาษา"
   },
   "nav": {
     "inbox": "กล่องงาน",
@@ -163,7 +164,8 @@
     "settings": "ตั้งค่า",
     "expand": "ขยายเมนู",
     "collapse": "ย่อเมนู",
-    "online": "ออนไลน์"
+    "online": "ออนไลน์",
+    "openMenu": "เปิดเมนู"
   },
   "events": {
     "system": "ระบบ",
@@ -176,7 +178,21 @@
     "reopened": "ลูกค้าทักกลับ ระบบเปิดเรื่องอีกครั้ง (ครั้งที่ {{count}}) และเริ่มนับ SLA ใหม่",
     "updated": "{{actor}} แก้ไขรายละเอียดเรื่อง",
     "created": "สร้างเรื่อง",
-    "generic": "อัปเดตเรื่อง"
+    "generic": "อัปเดตเรื่อง",
+    "tagsChanged": "{{actor}} แก้แท็ก: {{changes}}",
+    "tagsAdded": "เพิ่ม {{tags}}",
+    "tagsRemoved": "เอาออก {{tags}}",
+    "updatedFields": "{{actor}} แก้ไข: {{fields}}",
+    "fieldChange": "{{field}} → {{to}}",
+    "empty": "ไม่ระบุ",
+    "aProduct": "สินค้าที่เลือกไว้",
+    "field": {
+      "subject": "หัวข้อ",
+      "enquiryType": "ประเภท",
+      "enquirySubType": "ประเภทย่อย",
+      "priority": "ความสำคัญ",
+      "productId": "สินค้า"
+    }
   },
   "inbox": {
     "title": "กล่องงาน",
@@ -291,7 +307,12 @@
       "tags": "แท็ก",
       "addTag": "เพิ่มแท็ก",
       "noProduct": "ยังไม่ระบุสินค้า",
-      "createdVia": "สร้างเรื่องจาก{{channel}}"
+      "createdVia": "สร้างเรื่องจาก{{channel}}",
+      "title": "ข้อมูลประกอบ",
+      "notes": "โน้ตภายใน",
+      "notesHint": "ข้อความในแท็บนี้เห็นเฉพาะทีมงาน ลูกค้าไม่เห็น",
+      "noNotes": "ยังไม่มีโน้ตภายใน",
+      "internalOnly": "เฉพาะทีมงาน"
     },
     "sla": {
       "title": "SLA",
@@ -302,7 +323,12 @@
       "done": "จบแล้ว",
       "target": "เป้าหมายตอบภายใน {{minutes}} นาที"
     },
-    "customerPlaceholder": "พิมพ์ข้อความ…"
+    "customerPlaceholder": "พิมพ์ข้อความ…",
+    "moreActions": "การทำงานอื่น",
+    "hideHeader": "ซ่อนรายละเอียดด้านบน",
+    "showHeader": "แสดงรายละเอียดด้านบน",
+    "quickReplies": "ข้อความสำเร็จรูป",
+    "hideComposer": "ซ่อนกล่องข้อความ"
   },
   "dashboard": {
     "title": "แดชบอร์ด",

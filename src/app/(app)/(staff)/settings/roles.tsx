@@ -53,7 +53,7 @@ export default function RolesScreen() {
   const toggle = (p: Permission) => setDraft(withImplied(hasPermission(mask, p) ? mask & ~bit(p) : mask | bit(p)));
 
   return (
-    <View className="flex-1 gap-4 p-6">
+    <View className="flex-1 gap-3 p-4">
       <PageHeader
         title={t('roles.title')}
         subtitle={t('roles.subtitle')}
@@ -85,7 +85,7 @@ export default function RolesScreen() {
                   onPress={() => pickRole(r.id)}
                   className={cn('gap-0.5 rounded-xl px-3.5 py-3', on ? 'border-2 border-primary bg-primary-light dark:bg-dark-3' : 'border border-stroke bg-white dark:border-stroke-dark dark:bg-dark-2')}
                 >
-                  <Text className="font-bold text-[15px] text-dark dark:text-white">{r.name}</Text>
+                  <Text className="font-bold text-base text-dark dark:text-white">{r.name}</Text>
                   <Text className="font-sans text-xs text-body">
                     {t('roles.meta', { people: r.staffCount, count: count(BigInt(r.permissions)), total: TOTAL })}
                   </Text>
@@ -122,7 +122,7 @@ export default function RolesScreen() {
                           <View className={cn('h-4 w-4 items-center justify-center rounded border', on ? 'border-primary bg-primary' : 'border-gray-5 bg-white dark:bg-dark-2')}>
                             {on && <Icon name="check" size={10} color={colors.white} strokeWidth={3.5} />}
                           </View>
-                          <Text className={cn('flex-1 font-sans text-[13px]', on ? 'text-dark dark:text-white' : 'text-dark-5')}>
+                          <Text className={cn('flex-1 font-sans text-sm', on ? 'text-dark dark:text-white' : 'text-dark-5')}>
                             {t(`permissions.${Permission[p]}`)}
                           </Text>
                         </Pressable>

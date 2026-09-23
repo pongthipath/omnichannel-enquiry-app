@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Alert, Button, Card, Checkbox, Icon, SegmentedTabs, TextField } from '../../components/common';
+import { Alert, Button, Card, Checkbox, Icon, LanguageToggle, SegmentedTabs, TextField } from '../../components/common';
 import { DEMO_PASSWORD, demoAccounts } from '../../constants/demo-accounts';
 import { errorMessage } from '../../helpers/error.helper';
 import { useLogin } from '../../hooks/queries/use-session';
@@ -45,22 +45,25 @@ export default function LoginScreen() {
             <Text className="font-bold text-xl text-white">{t('appName')}</Text>
           </View>
           <View className="gap-6">
-            <Text className="font-bold text-[34px] leading-[48px] text-white">{t('auth.login.brandTitle')}</Text>
+            <Text className="font-bold text-[26px] leading-[38px] text-white">{t('auth.login.brandTitle')}</Text>
             {(['inbox', 'clock', 'shield'] as const).map((icon, i) => (
               <View key={icon} className="flex-row items-center gap-3">
                 <View className="h-8 w-8 items-center justify-center rounded-lg bg-dark-2">
                   <Icon name={icon} color="#6B83FA" />
                 </View>
-                <Text className="flex-1 font-sans text-[15px] text-gray-3">{t(`auth.login.brandPoint${i + 1}`)}</Text>
+                <Text className="flex-1 font-sans text-base text-gray-3">{t(`auth.login.brandPoint${i + 1}`)}</Text>
               </View>
             ))}
           </View>
-          <Text className="font-sans text-[13px] text-dark-6">{t('auth.login.brandFooter')}</Text>
+          <Text className="font-sans text-sm text-dark-6">{t('auth.login.brandFooter')}</Text>
         </View>
       )}
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className="flex-1">
         <ScrollView contentContainerClassName="grow justify-center px-4 py-10" keyboardShouldPersistTaps="handled">
-          <View className="w-full max-w-[440px] gap-6 self-center">
+          <View className="w-full max-w-[420px] gap-5 self-center">
+            <View className="flex-row justify-end">
+              <LanguageToggle />
+            </View>
             <View className="items-center gap-3">
               <View className="h-12 w-12 items-center justify-center rounded-lg bg-primary">
                 <Text className="font-bold text-xl text-white">F</Text>
@@ -68,7 +71,7 @@ export default function LoginScreen() {
               <Text className="font-semibold text-sm text-body dark:text-body-dark">{t('appName')}</Text>
             </View>
 
-            <Card className="gap-5 p-6 sm:p-10">
+            <Card className="gap-4 p-6 sm:p-8">
               <View className="gap-1">
                 <Text accessibilityRole="header" className="font-bold text-2xl text-dark dark:text-white">
                   {t('auth.login.title')}

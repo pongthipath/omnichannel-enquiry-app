@@ -7,22 +7,30 @@ import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { colorScheme } from 'nativewind';
 import { useEffect, useState } from 'react';
+import { restoreLanguage } from '../i18n/language';
 import { fontAssets } from '../theme/typography';
 
-void SplashScreen.preventAutoHideAsync(); // keep splash until fonts load (no text jumping)
+void SplashScreen.preventAutoHideAsync(); // keep splash until fonts + saved language are ready (no jumping)
 colorScheme.set('system'); // dark: classes follow the device setting
+const languageReady = restoreLanguage();
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts(fontAssets);
+  const [langLoaded, setLangLoaded] = useState(false);
   const [queryClient] = useState(
     () => new QueryClient({ defaultOptions: { queries: { staleTime: 30_000, retry: 1 } } }),
   );
+  const ready = (fontsLoaded || Boolean(fontError)) && langLoaded;
 
   useEffect(() => {
-    if (fontsLoaded || fontError) void SplashScreen.hideAsync();
-  }, [fontsLoaded, fontError]);
+    void languageReady.finally(() => setLangLoaded(true));
+  }, []);
 
-  if (!fontsLoaded && !fontError) return null;
+  useEffect(() => {
+    if (ready) void SplashScreen.hideAsync();
+  }, [ready]);
+
+  if (!ready) return null;
 
   return (
     <QueryClientProvider client={queryClient}>

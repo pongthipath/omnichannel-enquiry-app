@@ -8,6 +8,7 @@ import { usePermissions } from '../../hooks/use-permissions';
 import colors from '../../theme/colors';
 import { cn } from '../../utils/cn';
 import { Icon, IconName } from '../common/icon';
+import { LanguageToggle } from '../common/language-toggle';
 
 interface NavItem {
   href: Href;
@@ -19,7 +20,7 @@ interface NavItem {
 }
 
 /** Dark left menu from the design (Sidebar.dc.html). Items appear only when the role has the page permission. */
-export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => void }) {
+export function Sidebar({ collapsed, onToggle, closeIcon }: { collapsed: boolean; onToggle: () => void; closeIcon?: boolean }) {
   const { t } = useTranslation();
   const pathname = usePathname();
   const { me, can } = usePermissions();
@@ -50,7 +51,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
           accessibilityLabel={item.label}
           accessibilityState={{ selected: active }}
           className={cn(
-            'min-h-11 flex-row items-center gap-3 rounded-md px-3',
+            'min-h-9 flex-row items-center gap-3 rounded-md px-3',
             collapsed && 'justify-center px-0',
             active ? 'bg-dark-2' : 'active:bg-dark-2',
           )}
@@ -74,7 +75,7 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
   return (
     <View
       role="navigation"
-      className={cn('h-full bg-dark px-3 py-4', collapsed ? 'w-[72px]' : 'w-[232px]')}
+      className={cn('h-full bg-dark px-2.5 py-3', collapsed ? 'w-[60px]' : 'w-[208px]')}
     >
       <View className={cn('flex-row items-center gap-2.5 pb-4', collapsed ? 'flex-col' : 'px-2')}>
         <View className="h-9 w-9 items-center justify-center rounded-lg bg-primary">
@@ -82,17 +83,17 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
         </View>
         {!collapsed && (
           <View className="flex-1">
-            <Text className="font-bold text-[15px] text-white">{t('appName')}</Text>
+            <Text className="font-bold text-base text-white">{t('appName')}</Text>
             <Text className="font-sans text-xs text-dark-6">Omnichannel</Text>
           </View>
         )}
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={collapsed ? t('nav.expand') : t('nav.collapse')}
+          accessibilityLabel={closeIcon ? t('common.close') : collapsed ? t('nav.expand') : t('nav.collapse')}
           onPress={onToggle}
           className="h-8 w-8 items-center justify-center rounded-md border border-dark-3 active:bg-dark-2"
         >
-          <Icon name={collapsed ? 'chevronRight' : 'chevronLeft'} size={16} color={colors.dark[6]} />
+          <Icon name={closeIcon ? 'x' : collapsed ? 'chevronRight' : 'chevronLeft'} size={16} color={colors.dark[6]} />
         </Pressable>
       </View>
 
@@ -111,7 +112,13 @@ export function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle:
         )}
       </ScrollView>
 
-      <View className={cn('flex-row items-center gap-2.5 rounded-lg bg-dark-2 p-3', collapsed && 'flex-col p-2')}>
+      {!collapsed && (
+        <View className="flex-row items-center justify-between px-2 pb-2">
+          <Text className="font-sans text-xs text-dark-5">{t('common.language')}</Text>
+          <LanguageToggle tone="dark" />
+        </View>
+      )}
+      <View className={cn('flex-row items-center gap-2.5 rounded-lg bg-dark-2 p-2.5', collapsed && 'flex-col p-2')}>
         <View className="h-9 w-9 items-center justify-center rounded-full bg-dark-3">
           <Text className="font-semibold text-sm text-white">{me?.name?.[0] ?? '?'}</Text>
         </View>

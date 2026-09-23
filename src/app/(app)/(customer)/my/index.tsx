@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Pressable, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Alert, Badge, EmptyState, Icon, IconButton, SegmentedTabs, Spinner } from '../../../../components/common';
+import { Alert, Badge, EmptyState, Icon, IconButton, LanguageToggle, SegmentedTabs, Spinner } from '../../../../components/common';
 import { CreateEnquiryModal } from '../../../../components/inbox/modals/create-enquiry-modal';
 import { StatusStepper } from '../../../../components/inbox/status-stepper';
 import { statusTone } from '../../../../helpers/enquiry-status.helper';
@@ -50,9 +50,9 @@ export default function MyEnquiriesScreen() {
         <View className="flex-1" />
         <Text className="font-sans text-xs text-body">{formatListTime(item.lastMessageAt, i18n.language, t)}</Text>
       </View>
-      <Text className="font-semibold text-[15px] text-dark dark:text-white">{item.subject}</Text>
+      <Text className="font-semibold text-base text-dark dark:text-white">{item.subject}</Text>
       {item.lastMessagePreview ? (
-        <Text numberOfLines={1} className="font-sans text-[13px] text-body">
+        <Text numberOfLines={1} className="font-sans text-sm text-body">
           {item.lastMessagePreview}
         </Text>
       ) : null}
@@ -70,12 +70,13 @@ export default function MyEnquiriesScreen() {
         <View className="gap-3.5 bg-primary px-4 pb-4 pt-5">
           <View className="flex-row items-center gap-3">
             <View className="flex-1">
-              <Text className="font-sans text-[13px] text-[#DDE3FE]">{t('appName')}</Text>
+              <Text className="font-sans text-sm text-[#DDE3FE]">{t('appName')}</Text>
               <Text className="font-bold text-xl text-white">{t('my.hello', { name: me?.name ?? '' })}</Text>
             </View>
+            <LanguageToggle tone="dark" />
             <IconButton icon="logout" label={t('auth.logout')} color={colors.white} onPress={() => logout.mutate()} className="rounded-full bg-white/15" />
           </View>
-          <View className="min-h-11 flex-row items-center gap-2 rounded-lg bg-white px-3">
+          <View className="min-h-9 flex-row items-center gap-2 rounded-lg bg-white px-3">
             <Icon name="search" color={colors.dark[5]} />
             <TextInput
               value={search}
@@ -97,14 +98,14 @@ export default function MyEnquiriesScreen() {
           ListHeaderComponent={
             <View className="gap-4 pb-1">
               <View className="gap-2.5">
-                <Text className="font-bold text-[15px] text-dark dark:text-white">{t('my.newTitle')}</Text>
+                <Text className="font-bold text-base text-dark dark:text-white">{t('my.newTitle')}</Text>
                 <View className="flex-row flex-wrap gap-2.5">
                   {QUICK.map((q) => (
                     <Pressable
                       key={q.key}
                       accessibilityRole="button"
                       onPress={() => setCreating(q.type)}
-                      className="min-h-16 min-w-[45%] flex-1 gap-0.5 rounded-xl border border-stroke bg-white p-3 active:bg-gray-1 dark:border-stroke-dark dark:bg-dark-2"
+                      className="min-h-14 min-w-[45%] flex-1 gap-0.5 rounded-xl border border-stroke bg-white p-3 active:bg-gray-1 dark:border-stroke-dark dark:bg-dark-2"
                     >
                       <Text className="font-semibold text-sm text-dark dark:text-white">{t(`my.quick.${q.key}`)}</Text>
                       <Text className="font-sans text-xs text-body">{t(`my.quick.${q.key}Hint`)}</Text>
@@ -113,7 +114,7 @@ export default function MyEnquiriesScreen() {
                 </View>
               </View>
               <View className="flex-row items-center justify-between">
-                <Text className="font-bold text-[15px] text-dark dark:text-white">{t('my.title')}</Text>
+                <Text className="font-bold text-base text-dark dark:text-white">{t('my.title')}</Text>
                 <Pressable accessibilityRole="button" onPress={() => setCreating('GENERAL')} className="min-h-9 justify-center px-2">
                   <Text className="font-semibold text-sm text-primary">+ {t('my.newOther')}</Text>
                 </Pressable>

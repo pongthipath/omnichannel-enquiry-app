@@ -68,7 +68,7 @@ export default function TagsScreen() {
   };
 
   return (
-    <View className="flex-1 gap-4 p-6">
+    <View className="flex-1 gap-3 p-4">
       <PageHeader title={t('tags.title')} subtitle={t('tags.subtitle')} actions={<Button title={`+ ${t('tags.create')}`} onPress={() => setEditing('new')} />} />
       <View className="flex-1 flex-row gap-4">
         <Card className="flex-1 overflow-hidden">
@@ -90,13 +90,13 @@ export default function TagsScreen() {
                     accessibilityRole="button"
                     accessibilityLabel={t('tags.editOne', { name: tag.name })}
                     onPress={() => setEditing(tag)}
-                    className={cn('flex-row items-center border-t border-gray-2 px-4 py-3 dark:border-dark-3', on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1')}
+                    className={cn('flex-row items-center border-t border-gray-2 px-3 py-2.5 dark:border-dark-3', on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1')}
                   >
                     <View className="flex-[2]">
                       <Badge label={tag.name} tone={tagTone[tag.color]} />
                     </View>
                     <Text className="flex-[1.5] font-sans text-sm text-dark-4 dark:text-dark-6">{t(`tags.appliesTo.${tag.appliesTo}`)}</Text>
-                    <Text numberOfLines={1} className="flex-[3] font-sans text-[13px] text-body">{tag.description ?? '—'}</Text>
+                    <Text numberOfLines={1} className="flex-[3] font-sans text-sm text-body">{tag.description ?? '—'}</Text>
                     <Text className="flex-1 text-right font-bold text-sm text-dark dark:text-white">{tag.usageCount}</Text>
                   </Pressable>
                 );
@@ -107,7 +107,7 @@ export default function TagsScreen() {
         </Card>
 
         {editing && (
-          <Card className="w-[340px] gap-4 p-5">
+          <Card className="w-[300px] gap-4 p-5">
             <Text className="font-bold text-base text-dark dark:text-white">{editing === 'new' ? t('tags.create') : t('tags.edit')}</Text>
             <TextField label={t('tags.name')} value={form.name} onChangeText={(name) => setForm((f) => ({ ...f, name }))} maxLength={60} />
             <View className="gap-2">

@@ -46,7 +46,7 @@ export const TagPickerModal = whileOpen(function TagPickerModalContent({ enquiry
         </>
       }
     >
-      <View className="min-h-11 flex-row items-center gap-2 rounded-md border border-stroke px-3 dark:border-stroke-dark">
+      <View className="min-h-9 flex-row items-center gap-2 rounded-md border border-stroke px-3 dark:border-stroke-dark">
         <Icon name="search" size={16} color={colors.dark[5]} />
         <TextInput
           value={q}
@@ -65,7 +65,7 @@ export const TagPickerModal = whileOpen(function TagPickerModalContent({ enquiry
               accessibilityRole="checkbox"
               accessibilityState={{ checked: on }}
               onPress={() => toggle(tag.id)}
-              className="min-h-11 flex-row items-center gap-3 rounded-md px-2 active:bg-gray-2 dark:active:bg-dark-3"
+              className="min-h-9 flex-row items-center gap-3 rounded-md px-2 active:bg-gray-2 dark:active:bg-dark-3"
             >
               <View className={cn('h-5 w-5 items-center justify-center rounded border', on ? 'border-primary bg-primary' : 'border-stroke dark:border-stroke-dark')}>
                 {on && <Icon name="check" size={12} color={colors.white} strokeWidth={3} />}

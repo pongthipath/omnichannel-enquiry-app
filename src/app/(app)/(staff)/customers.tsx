@@ -34,7 +34,7 @@ export default function CustomersScreen() {
   if (!can(Permission.CUSTOMERS_PAGE_VIEW)) return <EmptyState icon="lock" title={t('common.noAccess')} />;
 
   return (
-    <View className="flex-1 gap-4 p-6">
+    <View className="flex-1 gap-3 p-4">
       <PageHeader title={t('customers.title')} subtitle={t('customers.subtitle')} />
       <View className="flex-row flex-wrap gap-3">
         <StatTile label={t('customers.total')} value={customers.data?.total ?? '—'} />
@@ -79,7 +79,7 @@ export default function CustomersScreen() {
                     accessibilityRole="button"
                     accessibilityState={{ selected: on }}
                     onPress={() => setSelectedId(x.id)}
-                    className={cn('flex-row items-center border-t border-gray-2 px-4 py-3 dark:border-dark-3', on ? 'border-l-[3px] border-l-primary bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1')}
+                    className={cn('flex-row items-center border-t border-gray-2 px-3 py-2.5 dark:border-dark-3', on ? 'border-l-[3px] border-l-primary bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1')}
                   >
                     <View className="flex-[3] flex-row items-center gap-2.5">
                       <Avatar name={x.companyName} size={34} />
@@ -95,7 +95,7 @@ export default function CustomersScreen() {
                     <View className="flex-[2] flex-row flex-wrap gap-1">
                       {x.channels.map((ch) => (
                         <View key={ch.id} className="rounded border border-stroke px-1.5 dark:border-stroke-dark">
-                          <Text className="font-semibold text-[11px] text-dark-4">{t(`enquiry.channelShort.${ch.channel}`)}</Text>
+                          <Text className="font-semibold text-xs text-dark-4">{t(`enquiry.channelShort.${ch.channel}`)}</Text>
                         </View>
                       ))}
                     </View>
@@ -103,7 +103,7 @@ export default function CustomersScreen() {
                       {x.salespersonName ?? t('customers.none')}
                     </Text>
                     <Text className="flex-1 text-right font-bold text-sm text-dark dark:text-white">{x.openEnquiries}</Text>
-                    <Text className="flex-[1.4] pl-4 font-sans text-[13px] text-body">
+                    <Text className="flex-[1.4] pl-4 font-sans text-sm text-body">
                       {x.lastContactAt ? formatListTime(x.lastContactAt, i18n.language, t) : '—'}
                     </Text>
                   </Pressable>
@@ -129,7 +129,7 @@ function CustomerPanel({ id }: { id: string }) {
   const x = customer.data;
 
   return (
-    <Card className="w-[340px] gap-4 p-5">
+    <Card className="w-[300px] gap-4 p-5">
       {!x ? (
         <Spinner />
       ) : (
@@ -138,7 +138,7 @@ function CustomerPanel({ id }: { id: string }) {
             <Avatar name={x.companyName} size={52} />
             <View className="flex-1">
               <Text className="font-bold text-base text-dark dark:text-white">{x.companyName}</Text>
-              <Text className="font-latin text-[13px] text-body">{x.code}</Text>
+              <Text className="font-latin text-sm text-body">{x.code}</Text>
             </View>
             <Button title={t('common.edit')} size="sm" variant="outline" onPress={() => setEdit(true)} />
           </View>
@@ -153,7 +153,7 @@ function CustomerPanel({ id }: { id: string }) {
             {x.channels.map((ch) => (
               <View key={ch.id} className="flex-row items-center gap-2 rounded-lg border border-stroke px-2.5 py-2 dark:border-stroke-dark">
                 <Text className="font-bold text-sm text-green">{t(`enquiry.channelShort.${ch.channel}`)}</Text>
-                <Text className="flex-1 font-sans text-[13px] text-dark dark:text-white">{ch.displayName ?? t('inbox.panel.linked')}</Text>
+                <Text className="flex-1 font-sans text-sm text-dark dark:text-white">{ch.displayName ?? t('inbox.panel.linked')}</Text>
               </View>
             ))}
           </View>
@@ -179,7 +179,7 @@ function CustomerPanel({ id }: { id: string }) {
                   <Text className="font-latin text-xs text-body">{e.reference}</Text>
                   <Badge label={t(`enquiry.status.${e.status}`)} tone={statusTone[e.status]} />
                 </View>
-                <Text numberOfLines={1} className="font-semibold text-[13px] text-dark dark:text-white">{e.subject}</Text>
+                <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">{e.subject}</Text>
               </Pressable>
             ))}
           </View>

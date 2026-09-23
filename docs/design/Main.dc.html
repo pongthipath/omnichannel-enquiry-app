@@ -119,10 +119,7 @@ a{color:#3758F9}a:hover{color:#1B44C8}
 
 <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 20px 16px; background: #FFFFFF; border-top: 1px solid #DFE4EA;">
 <div style="display: flex; align-items: center; gap: 8px;">
-<div role="tablist" style="display: flex; padding: 3px; gap: 3px; border-radius: 8px; background: #F3F4F6;">
-<button role="tab" aria-selected="true" style="height: 30px; padding: 0 12px; border: 0; border-radius: 6px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.08); font-family: inherit; font-size: 13px; font-weight: 600; color: #3758F9; cursor: pointer;">ตอบลูกค้า</button>
-<button role="tab" aria-selected="false" style="height: 30px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent; font-family: inherit; font-size: 13px; color: #637381; cursor: pointer;">โน้ตภายใน</button>
-</div>
+<button aria-label="ข้อความสำเร็จรูป" style="width: 30px; height: 30px; border: 1px solid #DFE4EA; border-radius: 6px; background: #FFFFFF; color: #3758F9; display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg></button>
 <span style="font-size: 12px; color: #637381;">ส่งทาง: แอปมือถือ ▾</span>
 <span style="flex-grow: 1;"></span>
 <button style="height: 30px; padding: 0 10px; border: 1px solid #DFE4EA; border-radius: 15px; background: #FFFFFF; font-family: inherit; font-size: 12px; color: #374151; cursor: pointer;">ขออภัยในความไม่สะดวก</button>
@@ -203,6 +200,31 @@ a{color:#3758F9}a:hover{color:#1B44C8}
 </div>
 </sc-if>
 
+<sc-if value="{{showNotes}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; flex-grow: 1;">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 14px;">
+<div style="display: flex; gap: 8px; padding: 8px 10px; border-radius: 6px; background: #FFFBEB;">
+<span style="width: 4px; border-radius: 2px; background: #9D5425;"></span>
+<span style="flex: 1; font-size: 12px; line-height: 18px; color: #9D5425;">ข้อความในแท็บนี้เห็นเฉพาะทีมงาน ลูกค้าไม่เห็น</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid #9D5425; border-radius: 8px; background: #FFFBEB;">
+<span style="font-size: 13px; line-height: 20px; color: #111928;">ลูกค้าเคยแจ้งเรื่องเดียวกันเดือนที่แล้ว เช็กกับฝ่ายขนส่งก่อนตอบ</span>
+<span style="font-size: 11px; color: #637381;">ธนา (หัวหน้า CS) · วันนี้ 15:52</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid #9D5425; border-radius: 8px; background: #FFFBEB;">
+<span style="font-size: 13px; line-height: 20px; color: #111928;">สุดา แก้แท็ก: เพิ่ม ขนส่งล่าช้า</span>
+<span style="font-size: 11px; color: #637381;">วันนี้ 15:50</span>
+</div>
+</div>
+<div style="margin-top: auto; display: flex; align-items: flex-end; gap: 6px; padding: 10px 12px; border-top: 1px solid #DFE4EA;">
+<div style="flex: 1; display: flex; align-items: center; padding: 0 10px; border: 1px solid #9D5425; border-radius: 8px; background: #FFFFFF;">
+<input aria-label="เขียนโน้ตภายใน" placeholder="เขียนโน้ตให้ทีม (ลูกค้าไม่เห็น)…" style="flex: 1; height: 36px; border: 0; font-family: inherit; font-size: 14px; color: #111928; outline: none;">
+</div>
+<button aria-label="ส่งโน้ต" style="width: 36px; height: 36px; border: 0; border-radius: 6px; background: #9D5425; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg></button>
+</div>
+</div>
+</sc-if>
+
 <sc-if value="{{showHistory}}" hint-placeholder-val="{{false}}">
 <ol style="margin: 0; padding: 16px; list-style: none; display: flex; flex-direction: column; gap: 14px;">
 <sc-for list="{{history}}" as="h" hint-placeholder-count="5">
@@ -268,7 +290,7 @@ class Component extends DCLogic {
       return { label: l, bar: current ? '#3758F9' : '#E5E7EB', fg: current ? '#1B44C8' : '#6B7280', weight: current ? '700' : '400' };
     });
     var tab = this.state.tab;
-    var tabDefs = [['customer', 'ลูกค้า'], ['detail', 'รายละเอียดเรื่อง'], ['history', 'ประวัติ']];
+    var tabDefs = [['customer', 'ลูกค้า'], ['detail', 'รายละเอียด'], ['notes', 'โน้ตภายใน'], ['history', 'ประวัติ']];
     var tabs = tabDefs.map(function (t) {
       var on = t[0] === tab;
       return {
@@ -280,7 +302,7 @@ class Component extends DCLogic {
     });
     return {
       items: items, chips: chips, steps: steps, tabs: tabs,
-      showCustomer: tab === 'customer', showDetail: tab === 'detail', showHistory: tab === 'history',
+      showCustomer: tab === 'customer', showDetail: tab === 'detail', showNotes: tab === 'notes', showHistory: tab === 'history',
       fields: [
         { label: 'ประเภท', value: 'สั่งซื้อ / จัดส่ง · ส่งช้า' },
         { label: 'ความสำคัญ', value: 'สูง' },

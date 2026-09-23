@@ -48,7 +48,7 @@ export function MessageItem({ message: m, mine }: { message: Message; mine: bool
           <Text className="pb-0.5 font-semibold text-xs text-yellow dark:text-yellow-dark">{t('inbox.internalNote')}</Text>
           <Text className="font-sans text-sm text-dark dark:text-white">{m.body}</Text>
         </View>
-        <Text className="self-end font-sans text-[11px] text-body dark:text-body-dark">{meta}</Text>
+        <Text className="self-end font-sans text-xs text-body dark:text-body-dark">{meta}</Text>
       </View>
     );
   }
@@ -59,7 +59,7 @@ export function MessageItem({ message: m, mine }: { message: Message; mine: bool
         <View className="rounded-2xl rounded-br-md bg-primary px-3.5 py-2.5">
           <Text className="font-sans text-sm leading-[22px] text-white">{m.body}</Text>
         </View>
-        <Text className="self-end font-sans text-[11px] text-body dark:text-body-dark">{meta}</Text>
+        <Text className="self-end font-sans text-xs text-body dark:text-body-dark">{meta}</Text>
       </View>
     );
   }
@@ -71,7 +71,7 @@ export function MessageItem({ message: m, mine }: { message: Message; mine: bool
         <View className="rounded-2xl rounded-bl-md border border-stroke bg-white px-3.5 py-2.5 dark:border-stroke-dark dark:bg-dark-2">
           <Text className="font-sans text-sm leading-[22px] text-dark dark:text-white">{m.body}</Text>
         </View>
-        <Text className="font-sans text-[11px] text-body dark:text-body-dark">{meta}</Text>
+        <Text className="font-sans text-xs text-body dark:text-body-dark">{meta}</Text>
       </View>
     </View>
   );

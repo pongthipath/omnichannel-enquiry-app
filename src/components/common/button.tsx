@@ -18,7 +18,8 @@ const label: Record<Variant, string> = {
   ghost: 'text-primary',
   danger: 'text-white',
 };
-const sizes: Record<Size, string> = { sm: 'min-h-9 px-4', md: 'min-h-11 px-6', lg: 'min-h-12 px-7' };
+const sizes: Record<Size, string> = { sm: 'min-h-8 px-3', md: 'min-h-10 px-4', lg: 'min-h-9 px-5' };
+const labels: Record<Size, string> = { sm: 'text-sm', md: 'text-base', lg: 'text-base' };
 
 export interface ButtonProps extends Omit<PressableProps, 'children'> {
   title: string;
@@ -47,7 +48,7 @@ export function Button({ title, variant = 'primary', size = 'md', loading, disab
       {...rest}
     >
       {loading && <ActivityIndicator size="small" color={spinner} />}
-      <Text className={cn('font-semibold text-base', label[variant])}>{title}</Text>
+      <Text className={cn('font-semibold', labels[size], label[variant])}>{title}</Text>
     </Pressable>
   );
 }

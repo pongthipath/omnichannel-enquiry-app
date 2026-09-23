@@ -148,7 +148,8 @@
       "days": "{{d}} d {{h}} h",
       "hours": "{{h}} h {{m}} min",
       "minutes": "{{m}} min"
-    }
+    },
+    "language": "Language"
   },
   "nav": {
     "inbox": "Inbox",
@@ -163,7 +164,8 @@
     "settings": "Settings",
     "expand": "Expand menu",
     "collapse": "Collapse menu",
-    "online": "Online"
+    "online": "Online",
+    "openMenu": "Open menu"
   },
   "events": {
     "system": "System",
@@ -176,7 +178,21 @@
     "reopened": "Customer wrote again — reopened (#{{count}}), new SLA cycle",
     "updated": "{{actor}} edited the details",
     "created": "Enquiry created",
-    "generic": "Enquiry updated"
+    "generic": "Enquiry updated",
+    "tagsChanged": "{{actor}} changed tags: {{changes}}",
+    "tagsAdded": "added {{tags}}",
+    "tagsRemoved": "removed {{tags}}",
+    "updatedFields": "{{actor}} edited: {{fields}}",
+    "fieldChange": "{{field}} → {{to}}",
+    "empty": "none",
+    "aProduct": "the chosen product",
+    "field": {
+      "subject": "subject",
+      "enquiryType": "type",
+      "enquirySubType": "sub type",
+      "priority": "priority",
+      "productId": "product"
+    }
   },
   "inbox": {
     "title": "Inbox",
@@ -291,7 +307,12 @@
       "tags": "Tags",
       "addTag": "Add tag",
       "noProduct": "No product yet",
-      "createdVia": "Created via {{channel}}"
+      "createdVia": "Created via {{channel}}",
+      "title": "Details",
+      "notes": "Internal notes",
+      "notesHint": "Only the team sees this tab — the customer never does",
+      "noNotes": "No internal notes yet",
+      "internalOnly": "staff only"
     },
     "sla": {
       "title": "SLA",
@@ -302,7 +323,12 @@
       "done": "Finished",
       "target": "Target: reply within {{minutes}} min"
     },
-    "customerPlaceholder": "Type a message…"
+    "customerPlaceholder": "Type a message…",
+    "moreActions": "More actions",
+    "hideHeader": "Hide the header",
+    "showHeader": "Show the header",
+    "quickReplies": "Quick replies",
+    "hideComposer": "Hide the reply box"
   },
   "dashboard": {
     "title": "Dashboard",

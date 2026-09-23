@@ -17,12 +17,13 @@ module.exports = {
         latin: ['NotoSans_400Regular'],
       },
       fontSize: {
+        // compact console scale (smallest text stays 12px for Thai readability)
         xs: ['12px', '18px'],
-        sm: ['14px', '22px'],
-        base: ['16px', '26px'],
-        lg: ['18px', '28px'],
-        xl: ['22px', '30px'],
-        '2xl': ['28px', '36px'],
+        sm: ['13px', '20px'],
+        base: ['14px', '22px'],
+        lg: ['16px', '24px'],
+        xl: ['18px', '26px'],
+        '2xl': ['22px', '30px'],
       },
       boxShadow: {
         card: '0px 1px 3px rgba(0, 0, 0, 0.08), 0px 1px 2px rgba(0, 0, 0, 0.04)',

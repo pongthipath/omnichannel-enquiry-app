@@ -55,6 +55,11 @@ const shapes = {
   panelRight: [<Rect key="a" x="3" y="3" width="18" height="18" rx="2" />, <Path key="b" d="M15 3v18" />],
   arrowRight: [<Path key="a" d="M5 12h14" />, <Path key="b" d="m12 5 7 7-7 7" />],
   lock: [<Rect key="a" x="3" y="11" width="18" height="11" rx="2" />, <Path key="b" d="M7 11V7a5 5 0 0 1 10 0v4" />],
+  menu: [<Path key="a" d="M4 6h16M4 12h16M4 18h16" />],
+  more: [<Circle key="a" cx="12" cy="5" r="1" />, <Circle key="b" cx="12" cy="12" r="1" />, <Circle key="c" cx="12" cy="19" r="1" />],
+  chevronUp: [<Path key="a" d="m18 15-6-6-6 6" />],
+  zap: [<Path key="a" d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />],
+  note: [<Path key="a" d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z" />, <Path key="b" d="M15 3v6h6" />],
   wifiOff: [<Path key="a" d="M2 2l20 20" />, <Path key="b" d="M8.5 16.5a5 5 0 0 1 7 0" />, <Path key="c" d="M12 20h.01" />],
 } as const;
 

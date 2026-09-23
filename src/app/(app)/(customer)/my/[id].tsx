@@ -42,7 +42,7 @@ export default function MyEnquiryScreen() {
               <View className="flex-row items-center gap-2 rounded-lg border border-stroke bg-gray-1 px-2.5 py-2 dark:border-stroke-dark dark:bg-dark">
                 <Avatar name={e.assignedStaffName ?? e.departmentName ?? '?'} size={28} />
                 <View className="flex-1">
-                  <Text className="font-semibold text-[13px] text-dark dark:text-white">
+                  <Text className="font-semibold text-sm text-dark dark:text-white">
                     {e.assignedStaffName ? `${e.assignedStaffName} · ${e.departmentName ?? ''}` : t('my.waitingForStaff', { department: e.departmentName ?? '' })}
                   </Text>
                   <Text className="font-sans text-xs text-body">{t(`enquiry.type.${e.enquiryType}`)} · {t(`enquiry.priority.${e.priority}`)}</Text>
@@ -51,7 +51,7 @@ export default function MyEnquiryScreen() {
               <StatusStepper status={e.status} compact />
               {e.status === 'RESOLVED' && (
                 <View className="flex-row items-center gap-2 rounded-lg bg-green-light p-2.5">
-                  <Text className="flex-1 font-sans text-[13px] text-green">{t('my.resolvedPrompt')}</Text>
+                  <Text className="flex-1 font-sans text-sm text-green">{t('my.resolvedPrompt')}</Text>
                   <Button title={t('my.confirmResolved')} size="sm" onPress={() => setConfirm(true)} />
                 </View>
               )}

@@ -19,11 +19,11 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(function TextFiel
   const c = useTheme();
   const [focused, setFocused] = useState(false);
   return (
-    <View className="gap-2">
+    <View className="gap-1.5">
       <Text className="font-semibold text-sm text-dark dark:text-white">{label}</Text>
       <View
         className={cn(
-          'min-h-12 flex-row items-center rounded-md border bg-white px-5 dark:bg-dark-2',
+          'min-h-10 flex-row items-center rounded-md border bg-white px-3 dark:bg-dark-2',
           error ? 'border-red' : focused ? 'border-primary' : 'border-stroke dark:border-stroke-dark',
         )}
       >
@@ -40,7 +40,7 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(function TextFiel
             onBlur?.(e);
           }}
           // 16px: iOS zooms into smaller inputs · outline-none: the border shows focus on web
-          className={cn('flex-1 py-3 font-sans text-base text-dark outline-none dark:text-white', className)}
+          className={cn('flex-1 py-2 font-sans text-base text-dark outline-none dark:text-white', className)}
           {...rest}
         />
         {right}

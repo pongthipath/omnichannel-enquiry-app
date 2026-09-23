@@ -1,19 +1,54 @@
-import { Redirect, Slot } from 'expo-router';
+import { Redirect, Slot, usePathname } from 'expo-router';
 import { useState } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Modal, Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { IconButton, LanguageToggle } from '../../../components/common';
 import { Sidebar } from '../../../components/layout/sidebar';
 import { usePermissions } from '../../../hooks/use-permissions';
+import colors from '../../../theme/colors';
 
-/** Staff console shell: dark left menu (collapsible) + the page. Customers are sent to their app. */
+const PHONE = 760;
+
+/**
+ * Staff console shell. Tablet / desktop: dark left menu (collapsible, follows the width until toggled).
+ * Phone: the menu is hidden behind a ☰ button in a slim top bar and opens as a drawer.
+ */
 export default function StaffLayout() {
+  const { t } = useTranslation();
   const { isStaff } = usePermissions();
   const { width } = useWindowDimensions();
-  // follows the screen width until the user toggles it
+  const pathname = usePathname();
   const [manual, setManual] = useState<boolean | null>(null);
+  const [drawer, setDrawer] = useState<string | null>(null); // path the drawer was opened on
   const collapsed = manual ?? width < 1100;
+  const phone = width < PHONE;
 
   if (!isStaff) return <Redirect href="/my" />;
+
+  if (phone) {
+    // navigating from the drawer changes the path → the drawer closes by itself
+    const drawerOpen = drawer === pathname;
+    return (
+      <SafeAreaView className="flex-1 bg-gray-1 dark:bg-dark" edges={['top', 'bottom']}>
+        <View className="h-11 flex-row items-center gap-2 bg-dark px-2">
+          <IconButton icon="menu" label={t('nav.openMenu')} color={colors.white} onPress={() => setDrawer(pathname)} />
+          <Text className="flex-1 font-bold text-base text-white">{t('appName')}</Text>
+          <LanguageToggle tone="dark" />
+        </View>
+        <View className="flex-1">
+          <Slot />
+        </View>
+        <Modal visible={drawerOpen} transparent animationType="fade" onRequestClose={() => setDrawer(null)}>
+          <View className="flex-1 flex-row">
+            <Sidebar collapsed={false} onToggle={() => setDrawer(null)} closeIcon />
+            <Pressable accessibilityLabel={t('common.close')} onPress={() => setDrawer(null)} className="flex-1 bg-black/50" />
+          </View>
+        </Modal>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView className="flex-1 flex-row bg-gray-1 dark:bg-dark" edges={['top', 'bottom']}>
       <Sidebar collapsed={collapsed} onToggle={() => setManual(!collapsed)} />

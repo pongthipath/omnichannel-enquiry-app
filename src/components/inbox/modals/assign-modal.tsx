@@ -32,7 +32,7 @@ export function AssignModal({ enquiry, visible, onClose }: { enquiry: Enquiry; v
                 accessibilityState={{ selected: current }}
                 disabled={actions.assign.isPending}
                 onPress={() => actions.assign.mutate(s.id, { onSuccess: onClose })}
-                className={cn('min-h-12 flex-row items-center gap-3 rounded-md px-3', current ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-2 dark:active:bg-dark-3')}
+                className={cn('min-h-10 flex-row items-center gap-3 rounded-md px-3', current ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-2 dark:active:bg-dark-3')}
               >
                 <Avatar name={s.name} size={32} />
                 <View className="flex-1">

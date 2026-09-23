@@ -27,7 +27,7 @@ export function SegmentedTabs<T extends string>({
             accessibilityState={{ selected: active }}
             onPress={() => onChange(o.value)}
             className={cn(
-              'min-h-10 flex-1 items-center justify-center rounded-md',
+              'min-h-8 flex-1 items-center justify-center rounded-md px-2',
               active && 'bg-white shadow-card dark:bg-dark-2',
             )}
           >

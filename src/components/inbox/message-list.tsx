@@ -8,20 +8,24 @@ import { SenderType } from '../../services/message.service';
 import { Button, Spinner } from '../common';
 import { MessageItem } from './message-item';
 
-/** Scrollable thread with day separators; stays pinned to the newest message. */
-export function MessageList({ chatId, mySide }: { chatId: string; mySide: SenderType }) {
+/**
+ * Scrollable thread with day separators; stays pinned to the newest message.
+ * `hideInternal`: the staff chat shows the customer conversation only — internal notes and internal
+ * events live in the right panel (notes / history tabs).
+ */
+export function MessageList({ chatId, mySide, hideInternal }: { chatId: string; mySide: SenderType; hideInternal?: boolean }) {
   const { t, i18n } = useTranslation();
   const messages = useMessages(chatId);
   const scroll = useRef<ScrollView>(null);
 
   if (messages.isPending) return <Spinner className="flex-1" />;
-  const items = messages.data ?? [];
+  const items = (messages.data ?? []).filter((m) => !(hideInternal && m.isInternal));
 
   return (
     <ScrollView
       ref={scroll}
       className="flex-1"
-      contentContainerClassName="gap-3.5 p-5"
+      contentContainerClassName="gap-3 px-3 py-4"
       onContentSizeChange={() => scroll.current?.scrollToEnd({ animated: false })}
     >
       {messages.hasNextPage && (

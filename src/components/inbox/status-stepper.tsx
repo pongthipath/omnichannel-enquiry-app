@@ -20,7 +20,7 @@ export function StatusStepper({ status, compact }: { status: ChatStatus; compact
           {!compact && (
             <Text
               numberOfLines={1}
-              className={cn('text-[11px]', i === current ? 'font-bold text-primary-dark dark:text-white' : 'font-sans text-dark-5')}
+              className={cn('text-xs', i === current ? 'font-bold text-primary-dark dark:text-white' : 'font-sans text-dark-5')}
             >
               {t(`enquiry.statusShort.${s}`)}
             </Text>

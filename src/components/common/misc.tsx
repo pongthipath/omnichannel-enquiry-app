@@ -7,7 +7,7 @@ import { Icon, IconName } from './icon';
 const avatarColors = ['#1B44C8', '#0B76B7', '#1A8245', '#9D5425', '#374151', '#6D28D9', '#B42318'];
 
 /** Round initial avatar; the color is stable per name. */
-export function Avatar({ name, size = 40 }: { name: string; size?: number }) {
+export function Avatar({ name, size = 34 }: { name: string; size?: number }) {
   const initial = (name.trim()[0] ?? '?').toUpperCase();
   const hash = [...name].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7);
   return (
@@ -65,7 +65,7 @@ export function IconButton({
       hitSlop={6}
       className={cn(
         'items-center justify-center rounded-md active:bg-gray-2 dark:active:bg-dark-3',
-        size === 'sm' ? 'h-8 w-8' : 'h-10 w-10',
+        size === 'sm' ? 'h-8 w-8' : 'h-9 w-9',
         className,
       )}
       {...rest}
@@ -83,7 +83,7 @@ export function Chip({ label, count, selected, onPress }: { label: string; count
       accessibilityState={{ selected: !!selected }}
       onPress={onPress}
       className={cn(
-        'min-h-8 flex-row items-center gap-1 rounded-full border px-3',
+        'min-h-7 flex-row items-center gap-1 rounded-full border px-2.5',
         selected
           ? 'border-primary bg-primary-light dark:border-primary dark:bg-dark-3'
           : 'border-stroke bg-white active:bg-gray-2 dark:border-stroke-dark dark:bg-dark-2',
@@ -117,7 +117,7 @@ export function UnderlineTabs<T extends string>({ tabs, value, onChange }: {
             accessibilityRole="tab"
             accessibilityState={{ selected: on }}
             onPress={() => onChange(tab.value)}
-            className={cn('min-h-12 flex-1 items-center justify-center border-b-2', on ? 'border-primary' : 'border-transparent')}
+            className={cn('min-h-10 flex-1 items-center justify-center border-b-2 px-1', on ? 'border-primary' : 'border-transparent')}
           >
             <Text className={cn('text-sm', on ? 'font-bold text-primary' : 'font-sans text-body dark:text-body-dark')}>{tab.label}</Text>
           </Pressable>

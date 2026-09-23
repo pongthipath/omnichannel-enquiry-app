@@ -37,7 +37,7 @@ export default function DashboardScreen() {
   const openInbox = (id: string) => router.push({ pathname: '/inbox', params: { id } });
 
   return (
-    <ScrollView contentContainerClassName="gap-5 p-6">
+    <ScrollView contentContainerClassName="gap-4 p-4">
       <PageHeader
         title={t('dashboard.title')}
         subtitle={t('dashboard.subtitle')}

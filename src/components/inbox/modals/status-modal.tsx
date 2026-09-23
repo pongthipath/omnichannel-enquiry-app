@@ -77,7 +77,7 @@ export const StatusModal = whileOpen(function StatusModalContent({ enquiry, visi
                 accessibilityState={{ checked: on }}
                 onPress={() => setPicked(s)}
                 className={cn(
-                  'min-h-14 flex-row items-center gap-3 rounded-lg border px-4',
+                  'min-h-10 flex-row items-center gap-3 rounded-lg border px-4',
                   on ? 'border-2 border-primary bg-primary-light dark:bg-dark-3' : 'border-stroke dark:border-stroke-dark',
                 )}
               >

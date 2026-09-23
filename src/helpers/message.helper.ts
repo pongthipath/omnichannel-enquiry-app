@@ -21,8 +21,29 @@ export function eventText(m: Message, t: TFunction): string {
       return t('events.escalated', { actor, department: d.toDepartmentName ?? '', reason: d.reason ?? '' });
     case 'REOPENED':
       return t('events.reopened', { count: Number(d.reopenCount ?? 1) });
-    case 'UPDATED':
-      return t('events.updated', { actor });
+    case 'TAGS_CHANGED': {
+      const list = (key: 'added' | 'removed') => (Array.isArray(d[key]) ? (d[key] as string[]) : []);
+      const parts = [
+        list('added').length ? t('events.tagsAdded', { tags: list('added').join(', ') }) : null,
+        list('removed').length ? t('events.tagsRemoved', { tags: list('removed').join(', ') }) : null,
+      ].filter(Boolean);
+      return t('events.tagsChanged', { actor, changes: parts.join(' · ') });
+    }
+    case 'UPDATED': {
+      // { changes: { priority: { from, to }, … } } — name the fields, and translate the enum values
+      const changes = (d.changes ?? {}) as Record<string, { from?: unknown; to?: unknown }>;
+      const value = (field: string, v: unknown) => {
+        if (v === null || v === undefined || v === '') return t('events.empty');
+        if (field === 'priority') return t(`enquiry.priority.${String(v)}`);
+        if (field === 'enquiryType') return t(`enquiry.type.${String(v)}`);
+        if (field === 'productId') return t('events.aProduct');
+        return String(v);
+      };
+      const fields = Object.entries(changes).map(([field, c]) =>
+        t('events.fieldChange', { field: t(`events.field.${field}`, { defaultValue: field }), to: value(field, c?.to) }),
+      );
+      return fields.length ? t('events.updatedFields', { actor, fields: fields.join(' · ') }) : t('events.updated', { actor });
+    }
     case 'CREATED':
       return t('events.created');
     default:
@@ -33,7 +54,7 @@ export function eventText(m: Message, t: TFunction): string {
 /** Tone of the event pill. */
 export function eventTone(m: Message): 'blue' | 'green' | 'yellow' | 'gray' {
   const d = (m.eventData ?? {}) as EventData;
-  if (d.kind === 'REOPENED' || d.to === 'WAITING_FOR_CUSTOMER') return 'yellow';
+  if (d.kind === 'REOPENED' || d.to === 'WAITING_FOR_CUSTOMER' || d.kind === 'TAGS_CHANGED') return 'yellow';
   if (d.to === 'RESOLVED' || d.to === 'CLOSED') return 'green';
   if (d.kind === 'ASSIGNED' || d.kind === 'REASSIGNED' || d.kind === 'ESCALATED') return 'blue';
   return 'gray';

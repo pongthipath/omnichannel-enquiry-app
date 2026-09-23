@@ -8,7 +8,7 @@ export function Checkbox({ checked, onChange, label }: { checked: boolean; onCha
       accessibilityRole="checkbox"
       accessibilityState={{ checked }}
       onPress={() => onChange(!checked)}
-      className="min-h-11 flex-row items-center gap-3 self-start"
+      className="min-h-9 flex-row items-center gap-3 self-start"
     >
       <View
         className={cn(

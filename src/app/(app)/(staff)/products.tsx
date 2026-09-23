@@ -28,10 +28,10 @@ export default function ProductsScreen() {
   const current = selected && list.some((p) => p.id === selected.id) ? selected : list[0];
 
   return (
-    <View className="flex-1 gap-4 p-6">
+    <View className="flex-1 gap-3 p-4">
       <PageHeader title={t('products.title')} subtitle={t('products.subtitle', { count: all.length })} />
       <Card className="gap-2.5 p-4">
-        <View className="min-h-11 flex-row items-center gap-2 rounded-md border border-primary px-3">
+        <View className="min-h-9 flex-row items-center gap-2 rounded-md border border-primary px-3">
           <Icon name="search" color={colors.dark[5]} />
           <TextInput
             value={search}
@@ -39,7 +39,7 @@ export default function ProductsScreen() {
             placeholder={t('products.searchPlaceholder')}
             placeholderTextColor={c.placeholder}
             accessibilityLabel={t('products.searchPlaceholder')}
-            className="flex-1 py-2 font-sans text-[15px] text-dark outline-none dark:text-white"
+            className="flex-1 py-2 font-sans text-base text-dark outline-none dark:text-white"
           />
           <Text className="font-sans text-xs text-body">{t('products.typoHint')}</Text>
         </View>
@@ -101,13 +101,13 @@ function ProductPanel({ product }: { product: Product }) {
   const enquiries = useEnquiries({ productId: product.id, limit: 20 });
   const rows = enquiries.data ?? [];
   return (
-    <Card className="w-[340px] gap-3.5 p-5">
+    <Card className="w-[300px] gap-3.5 p-5">
       <View className="h-[120px] items-center justify-center rounded-lg bg-gray-2 dark:bg-dark-3">
         <Icon name="package" size={36} color={colors.dark[6]} />
       </View>
       <View>
         <Text className="font-latin text-xs text-body">{product.code}</Text>
-        <Text className="font-bold text-[17px] text-dark dark:text-white">{product.name}</Text>
+        <Text className="font-bold text-lg text-dark dark:text-white">{product.name}</Text>
       </View>
       <View className="flex-row flex-wrap gap-2">
         {[
@@ -134,7 +134,7 @@ function ProductPanel({ product }: { product: Product }) {
               <Text className="font-latin text-xs text-body">{e.reference}</Text>
               <Badge label={t(`enquiry.status.${e.status}`)} tone={statusTone[e.status]} />
             </View>
-            <Text numberOfLines={1} className="font-semibold text-[13px] text-dark dark:text-white">
+            <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">
               {e.customer?.companyName} · {e.subject}
             </Text>
           </Pressable>

@@ -132,7 +132,7 @@ export const CreateEnquiryModal = whileOpen(function CreateEnquiryModalContent({
           <Pressable
             accessibilityRole="button"
             onPress={() => setPickProduct(true)}
-            className="min-h-12 flex-row items-center gap-3 rounded-md border border-dashed border-gray-5 px-3 active:bg-gray-1"
+            className="min-h-10 flex-row items-center gap-3 rounded-md border border-dashed border-gray-5 px-3 active:bg-gray-1"
           >
             <Icon name="package" size={16} color={colors.dark[5]} />
             <Text className="flex-1 font-sans text-sm text-dark dark:text-white" numberOfLines={1}>

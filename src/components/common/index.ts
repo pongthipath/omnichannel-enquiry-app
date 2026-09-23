@@ -9,3 +9,4 @@ export * from './modal';
 export * from './segmented-tabs';
 export * from './select';
 export * from './text-field';
+export * from './language-toggle';

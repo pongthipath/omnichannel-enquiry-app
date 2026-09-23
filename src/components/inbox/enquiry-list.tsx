@@ -52,7 +52,7 @@ export function EnquiryList({
         accessibilityLabel={`${item.reference} ${item.customer?.companyName ?? ''} ${item.subject}`}
         onPress={() => onSelect(item.id)}
         className={cn(
-          'flex-row gap-3 border-b border-gray-2 px-4 py-3 dark:border-dark-3',
+          'flex-row gap-3 border-b border-gray-2 px-3 py-2.5 dark:border-dark-3',
           selected ? 'border-l-[3px] border-l-primary bg-primary-light dark:bg-dark-3' : 'bg-white active:bg-gray-1 dark:bg-dark-2',
         )}
       >
@@ -64,15 +64,15 @@ export function EnquiryList({
             </Text>
             <Text className="font-sans text-xs text-body dark:text-body-dark">{formatListTime(item.lastMessageAt, i18n.language, t)}</Text>
           </View>
-          <Text numberOfLines={1} className="font-semibold text-[13px] text-dark-3 dark:text-gray-3">
+          <Text numberOfLines={1} className="font-semibold text-sm text-dark-3 dark:text-gray-3">
             {item.subject}
           </Text>
-          <Text numberOfLines={1} className="font-sans text-[13px] text-body dark:text-body-dark">
+          <Text numberOfLines={1} className="font-sans text-sm text-body dark:text-body-dark">
             {item.lastMessagePreview}
           </Text>
           <View className="mt-1 flex-row flex-wrap items-center gap-1">
             <View className="rounded border border-stroke px-1.5 dark:border-stroke-dark">
-              <Text className="font-semibold text-[11px] text-dark-4 dark:text-dark-6">{t(`enquiry.channelShort.${item.originChannel}`)}</Text>
+              <Text className="font-semibold text-xs text-dark-4 dark:text-dark-6">{t(`enquiry.channelShort.${item.originChannel}`)}</Text>
             </View>
             <Badge label={t(`enquiry.status.${item.status}`)} tone={statusTone[item.status]} />
             {item.priority === 'URGENT' && <Badge label={t('enquiry.priority.URGENT')} tone="red" />}
@@ -84,7 +84,7 @@ export function EnquiryList({
             <View className="flex-1" />
             {unread > 0 && (
               <View className="h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5">
-                <Text className="font-bold text-[11px] text-white">{unread}</Text>
+                <Text className="font-bold text-xs text-white">{unread}</Text>
               </View>
             )}
           </View>

@@ -50,7 +50,7 @@ export default function StaffScreen() {
   const valid = form.name.trim() && form.departmentId && form.roleId && (editing !== 'new' || (/\S+@\S+\.\S+/.test(form.email) && form.password.length >= 8));
 
   return (
-    <View className="flex-1 gap-4 p-6">
+    <View className="flex-1 gap-3 p-4">
       <PageHeader
         title={t('staff.title')}
         subtitle={t('staff.subtitle', { count: staff.data?.length ?? 0 })}
@@ -77,7 +77,7 @@ export default function StaffScreen() {
                     accessibilityRole="button"
                     accessibilityLabel={s.name}
                     onPress={() => setEditing(s)}
-                    className={cn('flex-row items-center border-t border-gray-2 px-4 py-3 dark:border-dark-3', on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1', !s.isActive && 'opacity-60')}
+                    className={cn('flex-row items-center border-t border-gray-2 px-3 py-2.5 dark:border-dark-3', on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1', !s.isActive && 'opacity-60')}
                   >
                     <View className="flex-[3] flex-row items-center gap-2.5">
                       <Avatar name={s.name} size={34} />
@@ -93,7 +93,7 @@ export default function StaffScreen() {
                     <Text className="flex-1 text-right font-bold text-sm text-dark dark:text-white">{loadOf(s.id)}</Text>
                     <View className="flex-[1.2] flex-row items-center gap-1.5 pl-4">
                       <View className={cn('h-2 w-2 rounded-full', s.isActive ? 'bg-green' : 'bg-dark-5')} />
-                      <Text className={cn('font-sans text-[13px]', s.isActive ? 'text-green' : 'text-dark-5')}>{s.isActive ? t('staff.active') : t('staff.inactive')}</Text>
+                      <Text className={cn('font-sans text-sm', s.isActive ? 'text-green' : 'text-dark-5')}>{s.isActive ? t('staff.active') : t('staff.inactive')}</Text>
                     </View>
                   </Pressable>
                 );
@@ -103,13 +103,13 @@ export default function StaffScreen() {
         </Card>
 
         {editing && (
-          <Card className="w-[340px] gap-3.5 p-5">
+          <Card className="w-[300px] gap-3.5 p-5">
             {editing !== 'new' ? (
               <View className="flex-row items-center gap-3">
                 <Avatar name={editing.name} size={48} />
                 <View className="flex-1">
                   <Text className="font-bold text-base text-dark dark:text-white">{editing.name}</Text>
-                  <Text className="font-sans text-[13px] text-body">{editing.email}</Text>
+                  <Text className="font-sans text-sm text-body">{editing.email}</Text>
                 </View>
               </View>
             ) : (
@@ -126,8 +126,8 @@ export default function StaffScreen() {
             <Select label={t('staff.cols.role')} value={form.roleId} onChange={(roleId) => setForm((f) => ({ ...f, roleId }))} options={roles.map((r) => ({ value: r.id, label: r.name }))} />
             {editing !== 'new' && (
               <View className="gap-1.5 rounded-lg bg-gray-1 p-3 dark:bg-dark">
-                <Text className="font-sans text-[13px] text-body">{t('staff.lastLogin')}: {editing.lastLoginAt ? formatDateTime(editing.lastLoginAt, i18n.language) : '—'}</Text>
-                <Text className="font-sans text-[13px] text-body">{t('staff.cols.load')}: {loadOf(editing.id)}</Text>
+                <Text className="font-sans text-sm text-body">{t('staff.lastLogin')}: {editing.lastLoginAt ? formatDateTime(editing.lastLoginAt, i18n.language) : '—'}</Text>
+                <Text className="font-sans text-sm text-body">{t('staff.cols.load')}: {loadOf(editing.id)}</Text>
               </View>
             )}
             {error && <Alert tone="error" message={errorMessage(error, t)} />}

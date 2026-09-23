@@ -45,7 +45,7 @@ export function Select<T extends string>({
   );
 
   return (
-    <View className="gap-2">
+    <View className="gap-1.5">
       {label ? <Text className="font-semibold text-sm text-dark dark:text-white">{label}</Text> : null}
       <Pressable
         accessibilityRole="button"
@@ -54,7 +54,7 @@ export function Select<T extends string>({
         onPress={() => setOpen(true)}
         className={cn(
           'flex-row items-center justify-between gap-2 rounded-md border border-stroke bg-white px-3 dark:border-stroke-dark dark:bg-dark-2',
-          compact ? 'min-h-9' : 'min-h-11',
+          compact ? 'min-h-8' : 'min-h-10',
           disabled && 'opacity-50',
         )}
       >
@@ -69,7 +69,7 @@ export function Select<T extends string>({
 
       <Modal visible={open} onClose={() => setOpen(false)} title={label ?? t('common.select')} width="sm">
         {options.length > 8 && (
-          <View className="min-h-11 flex-row items-center gap-2 rounded-md border border-stroke px-3 dark:border-stroke-dark">
+          <View className="min-h-9 flex-row items-center gap-2 rounded-md border border-stroke px-3 dark:border-stroke-dark">
             <Icon name="search" size={16} color={colors.dark[5]} />
             <TextInput
               value={q}
@@ -94,7 +94,7 @@ export function Select<T extends string>({
                   setQ('');
                 }}
                 className={cn(
-                  'min-h-11 flex-row items-center gap-3 rounded-md px-3',
+                  'min-h-9 flex-row items-center gap-3 rounded-md px-3',
                   selected ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-2 dark:active:bg-dark-3',
                 )}
               >

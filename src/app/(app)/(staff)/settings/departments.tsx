@@ -43,7 +43,7 @@ export default function DepartmentsScreen() {
   const members = editing && editing !== 'new' ? (staff.data ?? []).filter((s) => s.departmentId === editing.id && s.isActive) : [];
 
   return (
-    <View className="flex-1 gap-4 p-6">
+    <View className="flex-1 gap-3 p-4">
       <PageHeader title={t('departments.title')} subtitle={t('departments.subtitle')} actions={<Button title={`+ ${t('departments.create')}`} onPress={() => setEditing('new')} />} />
       <View className="flex-1 flex-row gap-4">
         {departments.isPending ? (
@@ -69,7 +69,7 @@ export default function DepartmentsScreen() {
                       <Text className="font-latin text-xs font-bold text-primary-dark">{d.code.slice(0, 2)}</Text>
                     </View>
                     <View className="flex-1">
-                      <Text className="font-bold text-[15px] text-dark dark:text-white">{d.nameTh}</Text>
+                      <Text className="font-bold text-base text-dark dark:text-white">{d.nameTh}</Text>
                       <Text className="font-sans text-xs text-body">{d.nameEn} · {d.code}</Text>
                     </View>
                     {d.isDefault && <Badge label={t('departments.default')} tone="green" />}
@@ -92,7 +92,7 @@ export default function DepartmentsScreen() {
         )}
 
         {editing && (
-          <Card className="w-[340px] gap-3.5 p-5">
+          <Card className="w-[300px] gap-3.5 p-5">
             <Text className="font-bold text-base text-dark dark:text-white">{editing === 'new' ? t('departments.create') : editing.nameTh}</Text>
             <TextField label={t('departments.nameTh')} value={form.nameTh} onChangeText={(nameTh) => setForm((f) => ({ ...f, nameTh }))} />
             <TextField label={t('departments.nameEn')} value={form.nameEn} onChangeText={(nameEn) => setForm((f) => ({ ...f, nameEn }))} />
@@ -113,8 +113,8 @@ export default function DepartmentsScreen() {
                 <Text className="font-semibold text-sm text-dark dark:text-white">{t('departments.members', { count: members.length })}</Text>
                 {members.map((m) => (
                   <View key={m.id} className="flex-row justify-between">
-                    <Text className="font-sans text-[13px] text-dark dark:text-white">{m.name}</Text>
-                    <Text className="font-sans text-[13px] text-body">{m.roleName}</Text>
+                    <Text className="font-sans text-sm text-dark dark:text-white">{m.name}</Text>
+                    <Text className="font-sans text-sm text-body">{m.roleName}</Text>
                   </View>
                 ))}
               </View>
