@@ -28,6 +28,16 @@ Run lint and typecheck before declaring any task done.
 - Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
 - Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
 - Docs: https://docs.expo.dev/router/introduction.md
+- **The phone app and the web console are different shells over the same screens.** Branch on
+  `NATIVE` from `utils/platform` (`Platform.OS !== 'web'`), never on `useWindowDimensions`, when the
+  question is "is this a phone?". Width still decides the console's own layout in a browser — a
+  narrowed window keeps the sidebar console, it does not become the phone app.
+- On native, `(staff)/_layout` and `(customer)/_layout` render `BottomTabs` on the tab roots only and
+  a back bar on everything else, and the screens below a tab are pushed routes. Adding a staff screen
+  that should be reachable from a phone means adding a row to `(staff)/menu.tsx` as well as the
+  sidebar; adding a pushed route means adding its title to `PUSHED_TITLES`.
+- A pushed screen must not claim safe-area insets its shell already claimed — the staff shell pads
+  top (and bottom off the tab roots), so screens under it pass `edges={[]}` or `['bottom']`.
 
 ## Building with EAS
 

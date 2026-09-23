@@ -18,6 +18,7 @@ import { usePermissions } from '../../../../hooks/use-permissions';
 import { ProductSettings } from '../../../../services/catalog.service';
 import colors from '../../../../theme/colors';
 import { cn } from '../../../../utils/cn';
+import { WideTable } from '../../../../components/layout/wide-table';
 
 interface Form {
   code: string;
@@ -97,69 +98,71 @@ export default function ProductSettingsScreen() {
 
       <View className="flex-1 flex-row gap-4">
         <Card className="flex-1 overflow-hidden">
-          <View className="border-b border-stroke p-3 dark:border-stroke-dark">
-            <TextField
-              label={t('common.search')}
-              value={search}
-              onChangeText={setSearch}
-              placeholder={t('productSettings.searchPlaceholder')}
-            />
-          </View>
-          <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
-            <Text className="flex-[1.2] font-semibold text-xs text-body">{t('productSettings.code')}</Text>
-            <Text className="flex-[3] font-semibold text-xs text-body">{t('productSettings.name')}</Text>
-            <Text className="flex-[1.2] font-semibold text-xs text-body">{t('productSettings.brand')}</Text>
-            <Text className="flex-1 font-semibold text-xs text-body">{t('productSettings.packSize')}</Text>
-            <Text className="w-16 text-right font-semibold text-xs text-body">{t('productSettings.enquiries')}</Text>
-            <Text className="w-20 text-right font-semibold text-xs text-body">{t('productSettings.active')}</Text>
-          </View>
-          {products.isPending ? (
-            <Spinner />
-          ) : list.length === 0 ? (
-            <EmptyState icon="package" title={t('productSettings.empty')} />
-          ) : (
-            <ScrollView>
-              {list.map((p) => {
-                const on = editing !== 'new' && editing?.id === p.id;
-                return (
-                  <Pressable
-                    key={p.id}
-                    accessibilityRole="button"
-                    accessibilityLabel={t('productSettings.editOne', { name: p.name })}
-                    onPress={() => setEditing(p)}
-                    className={cn(
-                      'flex-row items-center border-t border-gray-2 px-4 py-2.5 dark:border-dark-3',
-                      on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1',
-                      !p.isActive && 'opacity-50',
-                    )}
-                  >
-                    <Text className="flex-[1.2] font-latin text-xs text-body">{p.code}</Text>
-                    <View className="flex-[3] pr-2">
-                      <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">
-                        {p.name}
+          <WideTable width={860}>
+            <View className="border-b border-stroke p-3 dark:border-stroke-dark">
+              <TextField
+                label={t('common.search')}
+                value={search}
+                onChangeText={setSearch}
+                placeholder={t('productSettings.searchPlaceholder')}
+              />
+            </View>
+            <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
+              <Text className="flex-[1.2] font-semibold text-xs text-body">{t('productSettings.code')}</Text>
+              <Text className="flex-[3] font-semibold text-xs text-body">{t('productSettings.name')}</Text>
+              <Text className="flex-[1.2] font-semibold text-xs text-body">{t('productSettings.brand')}</Text>
+              <Text className="flex-1 font-semibold text-xs text-body">{t('productSettings.packSize')}</Text>
+              <Text className="w-16 text-right font-semibold text-xs text-body">{t('productSettings.enquiries')}</Text>
+              <Text className="w-20 text-right font-semibold text-xs text-body">{t('productSettings.active')}</Text>
+            </View>
+            {products.isPending ? (
+              <Spinner />
+            ) : list.length === 0 ? (
+              <EmptyState icon="package" title={t('productSettings.empty')} />
+            ) : (
+              <ScrollView>
+                {list.map((p) => {
+                  const on = editing !== 'new' && editing?.id === p.id;
+                  return (
+                    <Pressable
+                      key={p.id}
+                      accessibilityRole="button"
+                      accessibilityLabel={t('productSettings.editOne', { name: p.name })}
+                      onPress={() => setEditing(p)}
+                      className={cn(
+                        'flex-row items-center border-t border-gray-2 px-4 py-2.5 dark:border-dark-3',
+                        on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1',
+                        !p.isActive && 'opacity-50',
+                      )}
+                    >
+                      <Text className="flex-[1.2] font-latin text-xs text-body">{p.code}</Text>
+                      <View className="flex-[3] pr-2">
+                        <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">
+                          {p.name}
+                        </Text>
+                        {p.category ? <Badge label={p.category} tone="gray" /> : null}
+                      </View>
+                      <Text numberOfLines={1} className="flex-[1.2] font-sans text-sm text-dark-4 dark:text-dark-6">
+                        {p.brand ?? '—'}
                       </Text>
-                      {p.category ? <Badge label={p.category} tone="gray" /> : null}
-                    </View>
-                    <Text numberOfLines={1} className="flex-[1.2] font-sans text-sm text-dark-4 dark:text-dark-6">
-                      {p.brand ?? '—'}
-                    </Text>
-                    <Text className="flex-1 font-sans text-sm text-body">
-                      {[p.packSize, p.unit].filter(Boolean).join(' / ') || '—'}
-                    </Text>
-                    <Text className="w-16 text-right font-bold text-sm text-dark dark:text-white">{p.enquiries}</Text>
-                    <View className="w-20 items-end">
-                      <Switch
-                        value={p.isActive}
-                        onValueChange={(isActive) => update.mutate({ id: p.id, input: { isActive } })}
-                        trackColor={{ true: colors.green.DEFAULT }}
-                        accessibilityLabel={t('productSettings.active')}
-                      />
-                    </View>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-          )}
+                      <Text className="flex-1 font-sans text-sm text-body">
+                        {[p.packSize, p.unit].filter(Boolean).join(' / ') || '—'}
+                      </Text>
+                      <Text className="w-16 text-right font-bold text-sm text-dark dark:text-white">{p.enquiries}</Text>
+                      <View className="w-20 items-end">
+                        <Switch
+                          value={p.isActive}
+                          onValueChange={(isActive) => update.mutate({ id: p.id, input: { isActive } })}
+                          trackColor={{ true: colors.green.DEFAULT }}
+                          accessibilityLabel={t('productSettings.active')}
+                        />
+                      </View>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
+            )}
+          </WideTable>
         </Card>
 
         {editing && (

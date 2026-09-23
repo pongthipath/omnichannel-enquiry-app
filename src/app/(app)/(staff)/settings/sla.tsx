@@ -21,6 +21,7 @@ import { ENQUIRY_TYPES, PRIORITIES } from '../../../../services/enquiry.service'
 import { SlaPolicy } from '../../../../services/sla.service';
 import colors from '../../../../theme/colors';
 import { cn } from '../../../../utils/cn';
+import { WideTable } from '../../../../components/layout/wide-table';
 
 const ANY = 'ANY';
 
@@ -86,23 +87,25 @@ export default function SlaScreen() {
 
       <View className="flex-1 flex-row gap-4">
         <Card className="flex-1 overflow-hidden">
-          <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
-            <Text className="flex-[2] font-semibold text-xs text-body">{t('sla.cols.scope')}</Text>
-            <Text className="flex-1 font-semibold text-xs text-body">{t('sla.cols.target')}</Text>
-            <Text className="flex-1 font-semibold text-xs text-body">{t('sla.cols.pause')}</Text>
-            <Text className="w-24 text-right font-semibold text-xs text-body">{t('sla.cols.active')}</Text>
-          </View>
-          {policies.isPending ? (
-            <Spinner />
-          ) : sorted.length === 0 ? (
-            <EmptyState icon="clock" title={t('sla.empty')} />
-          ) : (
-            <ScrollView>
-              {sorted.map((p) => (
-                <SlaRow key={p.id} policy={p} canEdit={canEdit} onChange={(input) => update.mutate({ id: p.id, input })} />
-              ))}
-            </ScrollView>
-          )}
+          <WideTable width={720}>
+            <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
+              <Text className="flex-[2] font-semibold text-xs text-body">{t('sla.cols.scope')}</Text>
+              <Text className="flex-1 font-semibold text-xs text-body">{t('sla.cols.target')}</Text>
+              <Text className="flex-1 font-semibold text-xs text-body">{t('sla.cols.pause')}</Text>
+              <Text className="w-24 text-right font-semibold text-xs text-body">{t('sla.cols.active')}</Text>
+            </View>
+            {policies.isPending ? (
+              <Spinner />
+            ) : sorted.length === 0 ? (
+              <EmptyState icon="clock" title={t('sla.empty')} />
+            ) : (
+              <ScrollView>
+                {sorted.map((p) => (
+                  <SlaRow key={p.id} policy={p} canEdit={canEdit} onChange={(input) => update.mutate({ id: p.id, input })} />
+                ))}
+              </ScrollView>
+            )}
+          </WideTable>
         </Card>
 
         {creating && (

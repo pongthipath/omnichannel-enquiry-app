@@ -11,6 +11,7 @@ import { useDepartments, useRoles, useSettingsMutations, useStaffSettings } from
 import { usePermissions } from '../../../../hooks/use-permissions';
 import { StaffDetail } from '../../../../services/settings.service';
 import { cn } from '../../../../utils/cn';
+import { WideTable } from '../../../../components/layout/wide-table';
 
 /** Staff (design Staff.dc.html): table with department, role, workload; edit panel; add account. */
 export default function StaffScreen() {
@@ -58,48 +59,50 @@ export default function StaffScreen() {
       />
       <View className="flex-1 flex-row gap-4">
         <Card className="flex-1 overflow-hidden">
-          <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
-            <Text className="flex-[3] font-semibold text-xs text-body">{t('staff.cols.person')}</Text>
-            <Text className="flex-[2] font-semibold text-xs text-body">{t('staff.cols.department')}</Text>
-            <Text className="flex-[1.5] font-semibold text-xs text-body">{t('staff.cols.role')}</Text>
-            <Text className="flex-1 text-right font-semibold text-xs text-body">{t('staff.cols.load')}</Text>
-            <Text className="flex-[1.2] pl-4 font-semibold text-xs text-body">{t('staff.cols.status')}</Text>
-          </View>
-          {staff.isPending ? (
-            <Spinner />
-          ) : (
-            <ScrollView>
-              {(staff.data ?? []).map((s) => {
-                const on = editing !== 'new' && editing?.id === s.id;
-                return (
-                  <Pressable
-                    key={s.id}
-                    accessibilityRole="button"
-                    accessibilityLabel={s.name}
-                    onPress={() => setEditing(s)}
-                    className={cn('flex-row items-center border-t border-gray-2 px-3 py-2.5 dark:border-dark-3', on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1', !s.isActive && 'opacity-60')}
-                  >
-                    <View className="flex-[3] flex-row items-center gap-2.5">
-                      <Avatar name={s.name} size={34} />
-                      <View className="flex-1">
-                        <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">{s.name}</Text>
-                        <Text numberOfLines={1} className="font-sans text-xs text-body">{s.email}</Text>
+          <WideTable width={820}>
+            <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
+              <Text className="flex-[3] font-semibold text-xs text-body">{t('staff.cols.person')}</Text>
+              <Text className="flex-[2] font-semibold text-xs text-body">{t('staff.cols.department')}</Text>
+              <Text className="flex-[1.5] font-semibold text-xs text-body">{t('staff.cols.role')}</Text>
+              <Text className="flex-1 text-right font-semibold text-xs text-body">{t('staff.cols.load')}</Text>
+              <Text className="flex-[1.2] pl-4 font-semibold text-xs text-body">{t('staff.cols.status')}</Text>
+            </View>
+            {staff.isPending ? (
+              <Spinner />
+            ) : (
+              <ScrollView>
+                {(staff.data ?? []).map((s) => {
+                  const on = editing !== 'new' && editing?.id === s.id;
+                  return (
+                    <Pressable
+                      key={s.id}
+                      accessibilityRole="button"
+                      accessibilityLabel={s.name}
+                      onPress={() => setEditing(s)}
+                      className={cn('flex-row items-center border-t border-gray-2 px-3 py-2.5 dark:border-dark-3', on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1', !s.isActive && 'opacity-60')}
+                    >
+                      <View className="flex-[3] flex-row items-center gap-2.5">
+                        <Avatar name={s.name} size={34} />
+                        <View className="flex-1">
+                          <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">{s.name}</Text>
+                          <Text numberOfLines={1} className="font-sans text-xs text-body">{s.email}</Text>
+                        </View>
                       </View>
-                    </View>
-                    <Text numberOfLines={1} className="flex-[2] font-sans text-sm text-dark dark:text-white">{s.departmentName}</Text>
-                    <View className="flex-[1.5]">
-                      <Badge label={s.roleName} tone="primary" />
-                    </View>
-                    <Text className="flex-1 text-right font-bold text-sm text-dark dark:text-white">{loadOf(s.id)}</Text>
-                    <View className="flex-[1.2] flex-row items-center gap-1.5 pl-4">
-                      <View className={cn('h-2 w-2 rounded-full', s.isActive ? 'bg-green' : 'bg-dark-5')} />
-                      <Text className={cn('font-sans text-sm', s.isActive ? 'text-green' : 'text-dark-5')}>{s.isActive ? t('staff.active') : t('staff.inactive')}</Text>
-                    </View>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-          )}
+                      <Text numberOfLines={1} className="flex-[2] font-sans text-sm text-dark dark:text-white">{s.departmentName}</Text>
+                      <View className="flex-[1.5]">
+                        <Badge label={s.roleName} tone="primary" />
+                      </View>
+                      <Text className="flex-1 text-right font-bold text-sm text-dark dark:text-white">{loadOf(s.id)}</Text>
+                      <View className="flex-[1.2] flex-row items-center gap-1.5 pl-4">
+                        <View className={cn('h-2 w-2 rounded-full', s.isActive ? 'bg-green' : 'bg-dark-5')} />
+                        <Text className={cn('font-sans text-sm', s.isActive ? 'text-green' : 'text-dark-5')}>{s.isActive ? t('staff.active') : t('staff.inactive')}</Text>
+                      </View>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
+            )}
+          </WideTable>
         </Card>
 
         {editing && (

@@ -12,6 +12,7 @@ import { Product } from '../../../services/catalog.service';
 import colors from '../../../theme/colors';
 import { useTheme } from '../../../theme/use-theme';
 import { cn } from '../../../utils/cn';
+import { WideTable } from '../../../components/layout/wide-table';
 
 /** Products (design Products.dc.html): typo-tolerant search, category chips, enquiries about the product. */
 export default function ProductsScreen() {
@@ -53,42 +54,44 @@ export default function ProductsScreen() {
 
       <View className="flex-1 flex-row gap-4">
         <Card className="flex-1 overflow-hidden">
-          <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
-            <Text className="flex-[3] font-semibold text-xs text-body">{t('products.cols.product')}</Text>
-            <Text className="flex-1 font-semibold text-xs text-body">{t('products.cols.category')}</Text>
-            <Text className="flex-1 font-semibold text-xs text-body">{t('products.cols.size')}</Text>
-          </View>
-          {products.isPending ? (
-            <Spinner />
-          ) : (
-            <ScrollView>
-              {list.map((p) => {
-                const on = p.id === current?.id;
-                return (
-                  <Pressable
-                    key={p.id}
-                    accessibilityRole="button"
-                    accessibilityState={{ selected: on }}
-                    onPress={() => setSelected(p)}
-                    className={cn('flex-row items-center border-t border-gray-2 px-4 py-2.5 dark:border-dark-3', on ? 'border-l-[3px] border-l-primary bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1')}
-                  >
-                    <View className="flex-[3] flex-row items-center gap-2.5">
-                      <View className="h-9 w-9 items-center justify-center rounded-md bg-gray-2 dark:bg-dark-3">
-                        <Icon name="package" size={16} color={colors.dark[5]} />
+          <WideTable width={760}>
+            <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
+              <Text className="flex-[3] font-semibold text-xs text-body">{t('products.cols.product')}</Text>
+              <Text className="flex-1 font-semibold text-xs text-body">{t('products.cols.category')}</Text>
+              <Text className="flex-1 font-semibold text-xs text-body">{t('products.cols.size')}</Text>
+            </View>
+            {products.isPending ? (
+              <Spinner />
+            ) : (
+              <ScrollView>
+                {list.map((p) => {
+                  const on = p.id === current?.id;
+                  return (
+                    <Pressable
+                      key={p.id}
+                      accessibilityRole="button"
+                      accessibilityState={{ selected: on }}
+                      onPress={() => setSelected(p)}
+                      className={cn('flex-row items-center border-t border-gray-2 px-4 py-2.5 dark:border-dark-3', on ? 'border-l-[3px] border-l-primary bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1')}
+                    >
+                      <View className="flex-[3] flex-row items-center gap-2.5">
+                        <View className="h-9 w-9 items-center justify-center rounded-md bg-gray-2 dark:bg-dark-3">
+                          <Icon name="package" size={16} color={colors.dark[5]} />
+                        </View>
+                        <View className="flex-1">
+                          <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">{p.name}</Text>
+                          <Text className="font-latin text-xs text-body">{p.code} · {p.brand}</Text>
+                        </View>
                       </View>
-                      <View className="flex-1">
-                        <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">{p.name}</Text>
-                        <Text className="font-latin text-xs text-body">{p.code} · {p.brand}</Text>
-                      </View>
-                    </View>
-                    <Text className="flex-1 font-sans text-sm text-dark-4 dark:text-dark-6">{p.category}</Text>
-                    <Text className="flex-1 font-sans text-sm text-dark-4 dark:text-dark-6">{p.packSize} / {p.unit}</Text>
-                  </Pressable>
-                );
-              })}
-              {!list.length && <EmptyState icon="package" title={t('products.empty')} message={t('products.emptyHint')} />}
-            </ScrollView>
-          )}
+                      <Text className="flex-1 font-sans text-sm text-dark-4 dark:text-dark-6">{p.category}</Text>
+                      <Text className="flex-1 font-sans text-sm text-dark-4 dark:text-dark-6">{p.packSize} / {p.unit}</Text>
+                    </Pressable>
+                  );
+                })}
+                {!list.length && <EmptyState icon="package" title={t('products.empty')} message={t('products.emptyHint')} />}
+              </ScrollView>
+            )}
+          </WideTable>
         </Card>
         {width >= 1100 && current && <ProductPanel product={current} />}
       </View>

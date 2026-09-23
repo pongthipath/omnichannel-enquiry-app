@@ -10,6 +10,7 @@ import { useTagMutations, useTags } from '../../../../hooks/queries/use-catalog'
 import { usePermissions } from '../../../../hooks/use-permissions';
 import { Tag, TAG_COLORS, TagAppliesTo, TagColor } from '../../../../services/tag.service';
 import { cn } from '../../../../utils/cn';
+import { WideTable } from '../../../../components/layout/wide-table';
 
 const SWATCH: Record<TagColor, string> = {
   yellow: '#FBBF24',
@@ -72,38 +73,40 @@ export default function TagsScreen() {
       <PageHeader title={t('tags.title')} subtitle={t('tags.subtitle')} actions={<Button title={`+ ${t('tags.create')}`} onPress={() => setEditing('new')} />} />
       <View className="flex-1 flex-row gap-4">
         <Card className="flex-1 overflow-hidden">
-          <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
-            <Text className="flex-[2] font-semibold text-xs text-body">{t('tags.cols.tag')}</Text>
-            <Text className="flex-[1.5] font-semibold text-xs text-body">{t('tags.cols.appliesTo')}</Text>
-            <Text className="flex-[3] font-semibold text-xs text-body">{t('tags.cols.description')}</Text>
-            <Text className="flex-1 text-right font-semibold text-xs text-body">{t('tags.cols.usage')}</Text>
-          </View>
-          {tags.isPending ? (
-            <Spinner />
-          ) : (
-            <ScrollView>
-              {(tags.data ?? []).map((tag) => {
-                const on = editing !== 'new' && editing?.id === tag.id;
-                return (
-                  <Pressable
-                    key={tag.id}
-                    accessibilityRole="button"
-                    accessibilityLabel={t('tags.editOne', { name: tag.name })}
-                    onPress={() => setEditing(tag)}
-                    className={cn('flex-row items-center border-t border-gray-2 px-3 py-2.5 dark:border-dark-3', on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1')}
-                  >
-                    <View className="flex-[2]">
-                      <Badge label={tag.name} tone={tagTone[tag.color]} />
-                    </View>
-                    <Text className="flex-[1.5] font-sans text-sm text-dark-4 dark:text-dark-6">{t(`tags.appliesTo.${tag.appliesTo}`)}</Text>
-                    <Text numberOfLines={1} className="flex-[3] font-sans text-sm text-body">{tag.description ?? '—'}</Text>
-                    <Text className="flex-1 text-right font-bold text-sm text-dark dark:text-white">{tag.usageCount}</Text>
-                  </Pressable>
-                );
-              })}
-              {!tags.data?.length && <EmptyState icon="tag" title={t('tags.empty')} />}
-            </ScrollView>
-          )}
+          <WideTable width={720}>
+            <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
+              <Text className="flex-[2] font-semibold text-xs text-body">{t('tags.cols.tag')}</Text>
+              <Text className="flex-[1.5] font-semibold text-xs text-body">{t('tags.cols.appliesTo')}</Text>
+              <Text className="flex-[3] font-semibold text-xs text-body">{t('tags.cols.description')}</Text>
+              <Text className="flex-1 text-right font-semibold text-xs text-body">{t('tags.cols.usage')}</Text>
+            </View>
+            {tags.isPending ? (
+              <Spinner />
+            ) : (
+              <ScrollView>
+                {(tags.data ?? []).map((tag) => {
+                  const on = editing !== 'new' && editing?.id === tag.id;
+                  return (
+                    <Pressable
+                      key={tag.id}
+                      accessibilityRole="button"
+                      accessibilityLabel={t('tags.editOne', { name: tag.name })}
+                      onPress={() => setEditing(tag)}
+                      className={cn('flex-row items-center border-t border-gray-2 px-3 py-2.5 dark:border-dark-3', on ? 'bg-primary-light dark:bg-dark-3' : 'active:bg-gray-1')}
+                    >
+                      <View className="flex-[2]">
+                        <Badge label={tag.name} tone={tagTone[tag.color]} />
+                      </View>
+                      <Text className="flex-[1.5] font-sans text-sm text-dark-4 dark:text-dark-6">{t(`tags.appliesTo.${tag.appliesTo}`)}</Text>
+                      <Text numberOfLines={1} className="flex-[3] font-sans text-sm text-body">{tag.description ?? '—'}</Text>
+                      <Text className="flex-1 text-right font-bold text-sm text-dark dark:text-white">{tag.usageCount}</Text>
+                    </Pressable>
+                  );
+                })}
+                {!tags.data?.length && <EmptyState icon="tag" title={t('tags.empty')} />}
+              </ScrollView>
+            )}
+          </WideTable>
         </Card>
 
         {editing && (
