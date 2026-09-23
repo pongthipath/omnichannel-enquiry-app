@@ -5,7 +5,11 @@ One Expo codebase for **iOS, Android and Web** — the customer app (offline-fir
 - API: [`omnichannel-enquiry-api`](../omnichannel-enquiry-api) (design docs in its `docs/`) · Infra: [`omnichannel-enquiry-infra`](../omnichannel-enquiry-infra)
 - Stack: Expo SDK 57 · Expo Router · React Native + react-native-web · TanStack Query · i18next (th/en) · expo-sqlite (offline outbox) · socket.io-client · Noto Sans Thai Looped
 
-> **Status:** skeleton — routing, providers, fonts, design tokens, i18n, HTTP client with the API error format, permission bitmask helper, offline-sync contracts, and the sign-in screen (UI only, not yet connected to a running API). Screens from `docs/ux-ui.md` are next.
+> **Status:** ใช้งานได้ครบทั้งฝั่งลูกค้าและฝั่งพนักงาน — เข้าสู่ระบบ, แจ้งเรื่อง, บทสนทนาแบบ realtime, ไฟล์แนบ,
+> ข้อมูลของฉัน + คำสั่งซื้อ, กล่องงาน 3 ช่อง, แดชบอร์ด, ลูกค้า, สินค้า, แท็ก, ตั้งค่า SLA, หน้าจำลองช่องทาง,
+> outbox ออฟไลน์บน SQLite พร้อม sync engine · ตรวจบน Android จริงแล้ว (Expo Go) และบนเว็บ · ยังไม่ได้ตรวจบน iOS
+>
+> เอกสารส่งมอบฉบับเต็ม: [`../omnichannel-enquiry-api/docs/submission.md`](../omnichannel-enquiry-api/docs/submission.md)
 
 ## Run
 
