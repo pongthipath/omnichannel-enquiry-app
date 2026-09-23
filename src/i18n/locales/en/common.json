@@ -88,6 +88,10 @@
       "notFound": "Attachment not found",
       "fileRequired": "Choose a file first",
       "alreadyUsed": "That file was already sent"
+    },
+    "product": {
+      "notFound": "Product not found",
+      "duplicateCode": "That product code is already taken"
     }
   },
   "enquiry": {
@@ -178,7 +182,8 @@
     "online": "Online",
     "openMenu": "Open menu",
     "sla": "SLA",
-    "simulator": "Simulator"
+    "simulator": "Simulator",
+    "productSettings": "Products"
   },
   "events": {
     "system": "System",
@@ -611,7 +616,8 @@
       "dashboard": "Dashboard",
       "settings": "Settings",
       "tools": "Tools"
-    }
+    },
+    "SETTINGS_PRODUCT_MANAGE": "Manage products"
   },
   "sla": {
     "title": "First-reply targets (SLA)",
@@ -676,5 +682,24 @@
   "profile": {
     "title": "My details",
     "editHint": "If something here is wrong, tell the team in any of your enquiries and they will fix it."
+  },
+  "productSettings": {
+    "title": "Products",
+    "subtitle": "{{count}} in the catalogue — switch off instead of deleting, so old enquiries keep theirs",
+    "create": "Add a product",
+    "edit": "Edit product",
+    "editOne": "Edit {{name}}",
+    "searchPlaceholder": "Code, name, brand or category",
+    "code": "Product code",
+    "codeHint": "Must be unique, stored upper-case",
+    "name": "Product name",
+    "category": "Category",
+    "brand": "Brand",
+    "packSize": "Pack size",
+    "unit": "Unit",
+    "enquiries": "Enquiries",
+    "active": "Active",
+    "empty": "No products yet",
+    "inUse": "{{count}} enquiries mention this product. If it is discontinued, switch it off rather than changing the code."
   }
 }

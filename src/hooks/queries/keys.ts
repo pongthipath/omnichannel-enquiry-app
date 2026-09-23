@@ -13,6 +13,7 @@ export const qk = {
   customerList: (q: string) => ['customers', 'list', q] as const,
   customer: (id: string) => ['customers', 'detail', id] as const,
   products: (q: string) => ['products', q] as const,
+  productsSettings: ['products', 'settings'] as const,
   product: (id: string) => ['products', 'detail', id] as const,
   departments: ['departments'] as const,
   departmentsSettings: ['departments', 'settings'] as const,

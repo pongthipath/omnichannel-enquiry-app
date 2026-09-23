@@ -37,6 +37,7 @@ export function Sidebar({ collapsed, onToggle, closeIcon }: { collapsed: boolean
   ];
   const settings: NavItem[] = [
     { href: '/settings/sla', path: '/settings/sla', icon: 'clock', label: t('nav.sla'), permission: Permission.SETTINGS_SLA_VIEW },
+    { href: '/settings/products', path: '/settings/products', icon: 'package', label: t('nav.productSettings'), permission: Permission.SETTINGS_PRODUCT_MANAGE },
     { href: '/settings/tags', path: '/settings/tags', icon: 'tag', label: t('nav.tags'), permission: Permission.SETTINGS_TAG_MANAGE },
     { href: '/settings/departments', path: '/settings/departments', icon: 'building', label: t('nav.departments'), permission: Permission.SETTINGS_DEPARTMENT_MANAGE },
     { href: '/settings/roles', path: '/settings/roles', icon: 'shield', label: t('nav.roles'), permission: Permission.SETTINGS_ROLE_MANAGE },

@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { catalogService } from '../../services/catalog.service';
+import { catalogService, ProductInput } from '../../services/catalog.service';
 import { CustomerProfile, customerService, UpdateCustomerInput } from '../../services/customer.service';
 import { DashboardPeriod, dashboardService } from '../../services/dashboard.service';
 import { TagInput, tagService } from '../../services/tag.service';
@@ -78,4 +78,26 @@ export function useProduct(id: string | null | undefined) {
     enabled: Boolean(id),
     staleTime: 5 * 60_000,
   });
+}
+
+/** Settings › Products — the management list, inactive products included. */
+export function useProductsSettings(enabled = true) {
+  return useQuery({ queryKey: qk.productsSettings, queryFn: catalogService.listForSettings, enabled });
+}
+
+export function useProductMutations() {
+  const qc = useQueryClient();
+  // the pickers read a different key, so refresh both after a write
+  const refresh = () => {
+    void qc.invalidateQueries({ queryKey: qk.productsSettings });
+    void qc.invalidateQueries({ queryKey: ['products'] });
+  };
+  return {
+    create: useMutation({ mutationFn: (input: ProductInput) => catalogService.create(input), onSuccess: refresh }),
+    update: useMutation({
+      mutationFn: ({ id, input }: { id: string; input: Partial<ProductInput> & { isActive?: boolean } }) =>
+        catalogService.update(id, input),
+      onSuccess: refresh,
+    }),
+  };
 }
