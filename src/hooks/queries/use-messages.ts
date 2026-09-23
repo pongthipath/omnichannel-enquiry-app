@@ -63,7 +63,8 @@ export function useSendMessage(chatId: string, senderType: 'STAFF' | 'CUSTOMER' 
   const qc = useQueryClient();
   const { online, enqueue } = useOffline();
   return useMutation({
-    mutationFn: async (input: SendInput): Promise<SendOutcome> => {
+    // `attachments` is only for the pending bubble; the API rejects properties it does not define
+    mutationFn: async ({ attachments: _preview, ...input }: SendInput): Promise<SendOutcome> => {
       // offline: plain text waits in the outbox — notes and files need the server, so they still fail
       if (!online && !input.isInternal && !input.attachmentIds?.length) {
         await enqueue('message.create', { conversationId: chatId, body: input.body }, input.clientMessageId);

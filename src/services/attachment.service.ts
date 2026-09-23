@@ -40,25 +40,42 @@ export const attachmentService = {
    */
   async upload(file: PickedFile): Promise<Attachment> {
     const form = new FormData();
-    form.append(
-      'file',
-      (file.file as Blob | undefined) ??
-        ({ uri: file.uri, name: file.name, type: file.mimeType } as unknown as Blob),
-      file.name,
-    );
+    const picked = file.file as Blob | undefined;
+    if (picked) {
+      form.append('file', picked, file.name); // web: a real File from the picker
+    } else {
+      form.append('file', { uri: file.uri, name: file.name, type: file.mimeType } as unknown as Blob);
+    }
+
+    // XHR rather than fetch: React Native streams a { uri } part straight from disk, while Expo's
+    // fetch accepts only a Blob and rejects the part outright ("Unsupported FormDataPart").
     const token = getAccessToken();
-    const res = await fetch(`${BASE_URL}/attachments`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'X-Requested-With': 'omni-app',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-      body: form,
+    const { status, statusText, body } = await new Promise<{
+      status: number;
+      statusText: string;
+      body: string;
+    }>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `${BASE_URL}/attachments`);
+      xhr.withCredentials = true; // web: the httpOnly refresh cookie
+      xhr.setRequestHeader('X-Requested-With', 'omni-app');
+      if (token) xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+      xhr.onload = () =>
+        resolve({ status: xhr.status, statusText: xhr.statusText, body: xhr.responseText });
+      // a TypeError so the UI shows the "no connection" message, like a failed fetch does
+      xhr.onerror = () => reject(new TypeError('upload failed'));
+      xhr.onabort = () => reject(new TypeError('upload aborted'));
+      xhr.send(form);
     });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      throw new ApiError(res.status, data.code ?? 'common.unknown', data.message ?? res.statusText);
+
+    let data: Partial<Attachment> & { code?: string; message?: string } = {};
+    try {
+      data = JSON.parse(body) as typeof data;
+    } catch {
+      // a proxy or gateway answered with something that is not our JSON
+    }
+    if (status < 200 || status >= 300) {
+      throw new ApiError(status, data.code ?? 'common.unknown', data.message ?? statusText);
     }
     return data as Attachment;
   },
