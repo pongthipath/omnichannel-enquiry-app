@@ -7,6 +7,7 @@ import {
   ListEnquiriesParams,
   UpdateEnquiryInput,
 } from '../../services/enquiry.service';
+import { useOffline } from '../use-offline';
 import { qk } from './keys';
 
 /** Enquiries the signed-in user may see — the API applies the scope. Keyset pages of 30. */
@@ -65,10 +66,27 @@ export function useEnquiryActions(id: string) {
   };
 }
 
+/**
+ * Offline, a new enquiry waits in the outbox under its clientRequestId (design §13–15). The screen
+ * gets `queued` instead of an enquiry, so it can say "saved, will be sent" rather than pretend.
+ */
+/** Either the server created it, or it is waiting in the outbox. */
+export type CreateOutcome = { enquiry: Enquiry; created: boolean } | { queued: true };
+
 export function useCreateEnquiry() {
   const apply = useApplyEnquiry();
+  const { online, enqueue } = useOffline();
   return useMutation({
-    mutationFn: (input: CreateEnquiryInput) => enquiryService.create(input),
-    onSuccess: ({ enquiry }) => apply(enquiry),
+    mutationFn: async (input: CreateEnquiryInput): Promise<CreateOutcome> => {
+      if (!online) {
+        const { clientRequestId, ...rest } = input;
+        await enqueue('conversation.create', rest, clientRequestId);
+        return { queued: true };
+      }
+      return enquiryService.create(input);
+    },
+    onSuccess: (result) => {
+      if (!('queued' in result)) apply(result.enquiry);
+    },
   });
 }

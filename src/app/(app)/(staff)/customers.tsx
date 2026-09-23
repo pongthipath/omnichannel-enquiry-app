@@ -5,6 +5,7 @@ import { Pressable, ScrollView, Text, TextInput, useWindowDimensions, View } fro
 import { Alert, Avatar, Badge, Button, Card, EmptyState, Icon, InfoRow, SectionLabel, Spinner } from '../../../components/common';
 import { CreateEnquiryModal } from '../../../components/inbox/modals/create-enquiry-modal';
 import { CustomerEditModal } from '../../../components/inbox/modals/customer-edit-modal';
+import { MergeCustomerModal } from '../../../components/inbox/modals/merge-customer-modal';
 import { PageHeader, StatTile } from '../../../components/layout/page-header';
 import { Permission } from '../../../constants/permissions';
 import { statusTone } from '../../../helpers/enquiry-status.helper';
@@ -126,6 +127,7 @@ function CustomerPanel({ id }: { id: string }) {
   const enquiries = useEnquiries({ customerId: id, limit: 20 });
   const [edit, setEdit] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [merging, setMerging] = useState(false);
   const x = customer.data;
 
   return (
@@ -142,6 +144,15 @@ function CustomerPanel({ id }: { id: string }) {
             </View>
             <Button title={t('common.edit')} size="sm" variant="outline" onPress={() => setEdit(true)} />
           </View>
+          {x.isPlaceholder && (
+            <View className="gap-2 rounded-lg bg-yellow-light p-3 dark:bg-dark-3">
+              <Text className="font-semibold text-xs text-yellow">{t('customers.merge.placeholder')}</Text>
+              <Text className="font-sans text-sm text-dark dark:text-white">{t('customers.merge.placeholderHint')}</Text>
+              {can(Permission.CUSTOMERS_PLACEHOLDER_MERGE) && (
+                <Button title={t('customers.merge.action')} size="sm" onPress={() => setMerging(true)} />
+              )}
+            </View>
+          )}
           <View className="gap-2">
             <InfoRow label={t('customers.contact')} value={x.contactName ?? '—'} />
             <InfoRow label={t('customers.phone')} value={x.phone ?? '—'} />
@@ -185,6 +196,7 @@ function CustomerPanel({ id }: { id: string }) {
           </View>
           <CustomerEditModal customer={x} visible={edit} onClose={() => setEdit(false)} />
           <CreateEnquiryModal visible={creating} onClose={() => setCreating(false)} asStaff onCreated={(e) => router.push({ pathname: '/inbox', params: { id: e.id } })} />
+          <MergeCustomerModal visible={merging} placeholder={x} onClose={() => setMerging(false)} />
         </ScrollView>
       )}
     </Card>

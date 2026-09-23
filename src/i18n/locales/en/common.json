@@ -62,7 +62,10 @@
     "customer": {
       "changed": "Someone edited this customer first — reopen and try again",
       "duplicateEmail": "Another customer uses this email",
-      "notFound": "Customer not found"
+      "notFound": "Customer not found",
+      "notPlaceholder": "That record is not an unverified customer",
+      "targetIsPlaceholder": "The target must be a real customer",
+      "mergeSame": "Pick two different customers"
     },
     "department": {
       "duplicateCode": "This department code exists",
@@ -77,6 +80,14 @@
     "role": {
       "invalidPermissions": "Invalid permission set",
       "notFound": "Role not found"
+    },
+    "attachment": {
+      "tooLarge": "The file is larger than 10 MB",
+      "tooMany": "Up to 5 files per message",
+      "unsupportedType": "That file type is not supported",
+      "notFound": "Attachment not found",
+      "fileRequired": "Choose a file first",
+      "alreadyUsed": "That file was already sent"
     }
   },
   "enquiry": {
@@ -165,7 +176,9 @@
     "expand": "Expand menu",
     "collapse": "Collapse menu",
     "online": "Online",
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "sla": "SLA",
+    "simulator": "Simulator"
   },
   "events": {
     "system": "System",
@@ -312,7 +325,14 @@
       "notes": "Internal notes",
       "notesHint": "Only the team sees this tab — the customer never does",
       "noNotes": "No internal notes yet",
-      "internalOnly": "staff only"
+      "internalOnly": "staff only",
+      "customerChat": "Customer chat",
+      "orders": "Recent orders",
+      "noOrders": "No orders yet",
+      "searchMessages": "Search messages",
+      "searchMessagesPlaceholder": "Type what to look for",
+      "noMessages": "No messages yet",
+      "attachmentOnly": "(attachment)"
     },
     "sla": {
       "title": "SLA",
@@ -328,7 +348,13 @@
     "hideHeader": "Hide the header",
     "showHeader": "Show the header",
     "quickReplies": "Quick replies",
-    "hideComposer": "Hide the reply box"
+    "hideComposer": "Hide the reply box",
+    "attachment": {
+      "attach": "Attach a file",
+      "photo": "Take or choose a photo",
+      "saving": "Saving image…",
+      "failed": "Image unavailable"
+    }
   },
   "dashboard": {
     "title": "Dashboard",
@@ -388,7 +414,17 @@
     "note": "Internal note about the customer",
     "noteHint": "Visible to staff only",
     "editTitle": "Edit customer",
-    "enquiries": "Enquiries of this customer"
+    "enquiries": "Enquiries of this customer",
+    "merge": {
+      "placeholder": "Unverified customer",
+      "placeholderHint": "Created from a chat channel — we do not know which customer this is yet. Merge it into the real one.",
+      "action": "Merge into a real customer",
+      "title": "Merge customers",
+      "warning": "Channels, enquiries, orders and messages all move to the customer you pick, and this unverified record is removed. This cannot be undone.",
+      "searchTarget": "Pick the real customer",
+      "confirm": "Merge",
+      "noChannel": "No channel yet"
+    }
   },
   "products": {
     "title": "Products",
@@ -576,5 +612,69 @@
       "settings": "Settings",
       "tools": "Tools"
     }
+  },
+  "sla": {
+    "title": "First-reply targets (SLA)",
+    "subtitle": "How long the team has to answer each kind of enquiry. The most specific rule wins.",
+    "create": "Add a rule",
+    "empty": "No SLA rules yet",
+    "enquiryType": "Enquiry type",
+    "priority": "Priority",
+    "anyType": "Any type",
+    "anyPriority": "Any priority",
+    "targetMinutes": "Reply within (minutes)",
+    "targetHint": "From 5 minutes up to 14 days",
+    "pauseWhenWaiting": "Pause the clock while waiting for the customer",
+    "cols": {
+      "scope": "Applies to",
+      "target": "Target",
+      "pause": "Pause",
+      "active": "Active"
+    }
+  },
+  "simulator": {
+    "title": "Channel simulator",
+    "subtitle": "Send a message in as if LINE, Facebook or the web chat had delivered it",
+    "notice": "Same path as a real webhook, without the signature — for testing and demos only.",
+    "channel": "Channel",
+    "externalUserId": "Sender id on that channel",
+    "externalUserIdHint": "The same id means the same person: the message joins their open enquiry",
+    "displayName": "Display name",
+    "message": "Message",
+    "messagePlaceholder": "What the customer wrote",
+    "imageUrl": "Image link (optional)",
+    "imageUrlHint": "The link is kept as-is and the image is copied to our storage later",
+    "send": "Send",
+    "result": "Result",
+    "resultCounts": "{{accepted}} accepted · {{duplicates}} already seen",
+    "openEnquiry": "Open this enquiry",
+    "presets": {
+      "newLine": "New LINE customer",
+      "late": "Asking about a late delivery",
+      "web": "Quotation request from the web"
+    }
+  },
+  "orders": {
+    "title": "Orders",
+    "empty": "No orders yet",
+    "delivered": "Delivered on",
+    "status": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "DELIVERING": "On the way",
+      "DELIVERED": "Delivered",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "offline": {
+    "title": "You are offline — keep typing, this will be sent when you are back",
+    "pending": "{{count}} waiting to be sent",
+    "retry": "Try again",
+    "queued": "Saved, waiting to send",
+    "failed": "Could not send"
+  },
+  "profile": {
+    "title": "My details",
+    "editHint": "If something here is wrong, tell the team in any of your enquiries and they will fix it."
   }
 }

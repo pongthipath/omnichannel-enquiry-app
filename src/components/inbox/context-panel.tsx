@@ -2,24 +2,26 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { Permission } from '../../constants/permissions';
-import { slaMinutesLeft, statusTone, tagTone } from '../../helpers/enquiry-status.helper';
+import { orderTone, slaMinutesLeft, statusTone, tagTone } from '../../helpers/enquiry-status.helper';
 import { errorMessage } from '../../helpers/error.helper';
-import { formatDateTime, formatDuration } from '../../helpers/format.helper';
+import { formatDateTime, formatDuration, formatMoney } from '../../helpers/format.helper';
 import { eventText, eventTone } from '../../helpers/message.helper';
 import { useCustomer, useProduct } from '../../hooks/queries/use-catalog';
+import { useCustomerMessages, useCustomerOrders } from '../../hooks/queries/use-customer-360';
 import { useEnquiries, useEnquiry, useEnquiryActions } from '../../hooks/queries/use-enquiries';
 import { useMessages } from '../../hooks/queries/use-messages';
+import { useDebounced } from '../../hooks/use-debounced';
 import { usePermissions } from '../../hooks/use-permissions';
 import { ChatStatus, Enquiry, ENQUIRY_TYPES, PRIORITIES } from '../../services/enquiry.service';
 import colors from '../../theme/colors';
 import { cn } from '../../utils/cn';
-import { Alert, Avatar, Badge, Button, Icon, IconButton, InfoRow, SectionLabel, Select, Spinner, UnderlineTabs } from '../common';
+import { Alert, Avatar, Badge, Button, Icon, IconButton, InfoRow, SectionLabel, Select, Spinner, TextField, UnderlineTabs } from '../common';
 import { Composer } from './composer';
 import { CustomerEditModal } from './modals/customer-edit-modal';
 import { ProductPickerModal } from './modals/product-picker-modal';
 import { TagPickerModal } from './modals/tag-picker-modal';
 
-type Tab = 'customer' | 'detail' | 'notes' | 'history';
+type Tab = 'customer' | 'detail' | 'notes' | 'history' | 'chat';
 
 /**
  * Right column (design Main.dc.html): tabs for the open enquiry only — customer, details,
@@ -40,6 +42,7 @@ export function ContextPanel({
   const [tab, setTab] = useState<Tab>('customer');
   const enquiry = useEnquiry(enquiryId);
   const showNotes = can(Permission.INBOX_CHAT_INTERNAL_VIEW) || can(Permission.INBOX_CHAT_REPLY);
+  const showChat = can(Permission.INBOX_CUSTOMER_CHAT_VIEW);
 
   return (
     <View className="flex-1 bg-white dark:bg-dark-2">
@@ -56,6 +59,7 @@ export function ContextPanel({
           { value: 'customer', label: t('inbox.panel.customer') },
           { value: 'detail', label: t('inbox.panel.detail') },
           ...(showNotes ? [{ value: 'notes' as const, label: t('inbox.panel.notes') }] : []),
+          ...(showChat ? [{ value: 'chat' as const, label: t('inbox.panel.customerChat') }] : []),
           { value: 'history', label: t('inbox.panel.history') },
         ]}
       />
@@ -63,6 +67,8 @@ export function ContextPanel({
         enquiryId ? <Spinner /> : null
       ) : tab === 'notes' ? (
         <NotesTab enquiry={enquiry.data} />
+      ) : tab === 'chat' ? (
+        <CustomerChatTab enquiry={enquiry.data} onOpenEnquiry={onOpenEnquiry} />
       ) : (
         <ScrollView contentContainerClassName="gap-3 p-3">
           {tab === 'customer' && <CustomerTab enquiry={enquiry.data} onOpenEnquiry={onOpenEnquiry} />}
@@ -171,6 +177,8 @@ function CustomerTab({ enquiry, onOpenEnquiry }: { enquiry: Enquiry; onOpenEnqui
         <Alert tone="info" message={t('inbox.panel.noContactPermission')} />
       )}
 
+      <OrdersSection customerId={enquiry.customerId} />
+
       <View className="gap-2">
         <SectionLabel>{t('inbox.panel.otherEnquiries')}</SectionLabel>
         {list.length === 0 && <Text className="font-sans text-sm text-body">{t('inbox.panel.noOther')}</Text>}
@@ -194,6 +202,110 @@ function CustomerTab({ enquiry, onOpenEnquiry }: { enquiry: Enquiry; onOpenEnqui
       </View>
       {customer.data && <CustomerEditModal customer={customer.data} visible={edit} onClose={() => setEdit(false)} />}
     </>
+  );
+}
+
+/** Recent orders (design §12). Hidden entirely when the role may not see them. */
+function OrdersSection({ customerId }: { customerId: string }) {
+  const { t, i18n } = useTranslation();
+  const { can } = usePermissions();
+  const canView = can(Permission.CUSTOMER_PANEL_ORDERS_VIEW);
+  const orders = useCustomerOrders(customerId, canView);
+  if (!canView) return null;
+
+  return (
+    <View className="gap-2">
+      <SectionLabel>{t('inbox.panel.orders')}</SectionLabel>
+      {orders.isPending && <Spinner />}
+      {orders.data?.length === 0 && <Text className="font-sans text-sm text-body">{t('inbox.panel.noOrders')}</Text>}
+      {(orders.data ?? []).slice(0, 5).map((o) => (
+        <View key={o.id} className="gap-1 rounded-lg border border-stroke p-2.5 dark:border-stroke-dark">
+          <View className="flex-row items-center gap-1.5">
+            <Text className="flex-1 font-latin text-xs text-body">{o.orderNo}</Text>
+            <Badge label={t(`orders.status.${o.status}`)} tone={orderTone[o.status]} />
+          </View>
+          <Text className="font-semibold text-sm text-dark dark:text-white">
+            {formatMoney(o.totalAmount, o.currency, i18n.language)}
+          </Text>
+          {o.itemsSummary ? (
+            <Text numberOfLines={2} className="font-sans text-xs text-body dark:text-body-dark">
+              {o.itemsSummary}
+            </Text>
+          ) : null}
+          <Text className="font-sans text-xs text-body dark:text-body-dark">
+            {formatDateTime(o.orderedAt, i18n.language)}
+          </Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+/**
+ * Everything this customer wrote, across every enquiry (design A9). Searching the text needs its own
+ * permission (A10), so the search box only appears for roles that have it.
+ */
+function CustomerChatTab({ enquiry, onOpenEnquiry }: { enquiry: Enquiry; onOpenEnquiry: (id: string) => void }) {
+  const { t, i18n } = useTranslation();
+  const { can } = usePermissions();
+  const [q, setQ] = useState('');
+  const search = useDebounced(q, 300);
+  const canSearch = can(Permission.INBOX_CUSTOMER_CHAT_SEARCH_MESSAGES);
+  const messages = useCustomerMessages(enquiry.customerId, canSearch ? search : '');
+
+  return (
+    <View className="flex-1">
+      {canSearch && (
+        <View className="border-b border-stroke p-2 dark:border-stroke-dark">
+          <TextField
+            label={t('inbox.panel.searchMessages')}
+            value={q}
+            onChangeText={setQ}
+            placeholder={t('inbox.panel.searchMessagesPlaceholder')}
+          />
+        </View>
+      )}
+      <ScrollView contentContainerClassName="gap-2 p-3">
+        {messages.isPending && <Spinner />}
+        {messages.data?.length === 0 && (
+          <Text className="py-6 text-center font-sans text-sm text-body">
+            {search ? t('common.noResults') : t('inbox.panel.noMessages')}
+          </Text>
+        )}
+        {(messages.data ?? []).map((m) => (
+          <Pressable
+            key={m.id}
+            accessibilityRole="button"
+            onPress={() => onOpenEnquiry(m.chatId)}
+            className={cn(
+              'gap-1 rounded-lg border p-2.5 active:bg-gray-1 dark:border-stroke-dark',
+              m.chatId === enquiry.id ? 'border-primary' : 'border-stroke',
+            )}
+          >
+            <View className="flex-row flex-wrap items-center gap-1.5">
+              <Text className="font-latin text-xs text-body">{m.chatReference}</Text>
+              <Badge label={t(`enquiry.channel.${m.channel}`)} tone="gray" />
+              {m.isInternal && <Badge label={t('inbox.internalNote')} tone="yellow" />}
+            </View>
+            <Text numberOfLines={3} className="font-sans text-sm text-dark dark:text-white">
+              {m.body || t('inbox.panel.attachmentOnly')}
+            </Text>
+            <Text className="font-sans text-xs text-body dark:text-body-dark">
+              {[m.senderName, formatDateTime(m.createdAt, i18n.language)].filter(Boolean).join(' · ')}
+            </Text>
+          </Pressable>
+        ))}
+        {messages.hasNextPage && (
+          <Button
+            title={t('inbox.loadOlder')}
+            variant="outline"
+            size="sm"
+            onPress={() => void messages.fetchNextPage()}
+            loading={messages.isFetchingNextPage}
+          />
+        )}
+      </ScrollView>
+    </View>
   );
 }
 

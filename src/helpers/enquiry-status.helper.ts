@@ -1,5 +1,6 @@
 import { BadgeTone } from '../components/common/badge';
 import { Channel, ChatStatus, Enquiry, STATUS_FLOW } from '../services/enquiry.service';
+import { OrderStatus } from '../services/customer.service';
 import { TagColor } from '../services/tag.service';
 
 /** Status → badge color. Label comes from i18n `enquiry.status.<STATUS>`. */
@@ -54,3 +55,12 @@ export function slaMinutesLeft(e: Pick<Enquiry, 'slaDueAt' | 'slaPausedAt' | 'st
   if (e.slaPausedAt || e.status === 'RESOLVED' || e.status === 'CLOSED') return null;
   return Math.round((new Date(e.slaDueAt).getTime() - now) / 60_000);
 }
+
+/** Order status → badge colour: on the way is neutral, delivered green, cancelled red. */
+export const orderTone: Record<OrderStatus, BadgeTone> = {
+  PENDING: 'gray',
+  CONFIRMED: 'primary',
+  DELIVERING: 'cyan',
+  DELIVERED: 'green',
+  CANCELLED: 'red',
+};

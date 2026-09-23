@@ -33,8 +33,10 @@ export function Sidebar({ collapsed, onToggle, closeIcon }: { collapsed: boolean
     { href: '/customers', path: '/customers', icon: 'users', label: t('nav.customers'), permission: Permission.CUSTOMERS_PAGE_VIEW },
     { href: '/products', path: '/products', icon: 'package', label: t('nav.products'), permission: Permission.INBOX_PAGE_VIEW },
     { href: '/dashboard', path: '/dashboard', icon: 'chart', label: t('nav.dashboard'), permission: Permission.DASHBOARD_PAGE_VIEW },
+    { href: '/simulator', path: '/simulator', icon: 'zap', label: t('nav.simulator'), permission: Permission.SIMULATOR_PAGE_USE },
   ];
   const settings: NavItem[] = [
+    { href: '/settings/sla', path: '/settings/sla', icon: 'clock', label: t('nav.sla'), permission: Permission.SETTINGS_SLA_VIEW },
     { href: '/settings/tags', path: '/settings/tags', icon: 'tag', label: t('nav.tags'), permission: Permission.SETTINGS_TAG_MANAGE },
     { href: '/settings/departments', path: '/settings/departments', icon: 'building', label: t('nav.departments'), permission: Permission.SETTINGS_DEPARTMENT_MANAGE },
     { href: '/settings/roles', path: '/settings/roles', icon: 'shield', label: t('nav.roles'), permission: Permission.SETTINGS_ROLE_MANAGE },

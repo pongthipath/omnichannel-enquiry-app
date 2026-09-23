@@ -19,4 +19,7 @@ export const qk = {
   roles: ['roles'] as const,
   staff: (departmentId?: string) => ['staff', departmentId ?? 'all'] as const,
   staffSettings: ['staff', 'settings'] as const,
+  slaPolicies: ['sla', 'policies'] as const,
+  customerOrders: (id: string) => ['customers', 'orders', id] as const,
+  customerMessages: (id: string, q: string) => ['customers', 'messages', id, q] as const,
 };

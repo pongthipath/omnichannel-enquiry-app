@@ -1,4 +1,6 @@
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Attachment } from '../../services/attachment.service';
+import { useOffline } from '../use-offline';
 import { Message, MessagePage, messageService } from '../../services/message.service';
 import { newId } from '../../utils/id';
 import { qk } from './keys';
@@ -41,15 +43,34 @@ export function mergeMessage(
   return { ...data, pages: [{ ...first, items: [message, ...first.items] }, ...rest] };
 }
 
+/** Either the server took it, or it is waiting in the outbox. */
+export type SendOutcome = { message: Message; created: boolean } | { queued: true };
+
+export interface SendInput {
+  body: string;
+  isInternal?: boolean;
+  clientMessageId: string;
+  attachmentIds?: string[];
+  /** already-uploaded attachments, so the pending bubble can show them right away */
+  attachments?: Attachment[];
+}
+
 /**
  * Optimistic send: the bubble shows at once (pending), the clientMessageId makes retries safe,
  * and the server copy replaces it when the response or the realtime event arrives.
  */
 export function useSendMessage(chatId: string, senderType: 'STAFF' | 'CUSTOMER' = 'STAFF') {
   const qc = useQueryClient();
+  const { online, enqueue } = useOffline();
   return useMutation({
-    mutationFn: (input: { body: string; isInternal?: boolean; clientMessageId: string }) =>
-      messageService.send(chatId, input),
+    mutationFn: async (input: SendInput): Promise<SendOutcome> => {
+      // offline: plain text waits in the outbox — notes and files need the server, so they still fail
+      if (!online && !input.isInternal && !input.attachmentIds?.length) {
+        await enqueue('message.create', { conversationId: chatId, body: input.body }, input.clientMessageId);
+        return { queued: true };
+      }
+      return messageService.send(chatId, input);
+    },
     onMutate: (input) => {
       const pending: Message = {
         id: `pending-${input.clientMessageId}`,
@@ -66,10 +87,13 @@ export function useSendMessage(chatId: string, senderType: 'STAFF' | 'CUSTOMER' 
         deliveredAt: null,
         readAt: null,
         createdAt: new Date().toISOString(),
+        attachments: input.attachments ?? [],
       };
       qc.setQueryData<InfiniteData<MessagePage, string | undefined>>(qk.messages(chatId), (d) => mergeMessage(d, pending));
     },
-    onSuccess: ({ message }) => {
+    onSuccess: (result) => {
+      if ('queued' in result) return; // the optimistic bubble stays until the outbox drains
+      const { message } = result;
       qc.setQueryData<InfiniteData<MessagePage, string | undefined>>(qk.messages(chatId), (d) => mergeMessage(d, message));
       void qc.invalidateQueries({ queryKey: qk.enquiry(chatId) }); // auto status change, last message
       void qc.invalidateQueries({ queryKey: ['enquiries', 'list'] });

@@ -1,6 +1,8 @@
 import { Redirect, Stack } from 'expo-router';
 import { ActivityIndicator, View } from 'react-native';
+import { OfflineBanner } from '../../components/common/offline-banner';
 import { useMe } from '../../hooks/queries/use-session';
+import { OfflineProvider } from '../../hooks/use-offline';
 import { useRealtime } from '../../hooks/use-realtime';
 import colors from '../../theme/colors';
 
@@ -22,5 +24,12 @@ export default function AppLayout() {
   }
   if (me.isError) return <Redirect href="/login" />;
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <OfflineProvider>
+      <View className="flex-1">
+        <OfflineBanner />
+        <Stack screenOptions={{ headerShown: false }} />
+      </View>
+    </OfflineProvider>
+  );
 }

@@ -57,9 +57,10 @@ export const CreateEnquiryModal = whileOpen(function CreateEnquiryModalContent({
         ...(asStaff ? { customerId: customerId!, channel } : { channel: 'MOBILE_APP' as const }),
       },
       {
-        onSuccess: ({ enquiry }) => {
+        onSuccess: (result) => {
           onClose();
-          onCreated?.(enquiry);
+          // queued offline: there is no enquiry to open yet, the outbox banner takes it from here
+          if (!('queued' in result)) onCreated?.(result.enquiry);
         },
       },
     );

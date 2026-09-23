@@ -74,6 +74,7 @@ export default function MyEnquiriesScreen() {
               <Text className="font-bold text-xl text-white">{t('my.hello', { name: me?.name ?? '' })}</Text>
             </View>
             <LanguageToggle tone="dark" />
+            <IconButton icon="user" label={t('profile.title')} color={colors.white} onPress={() => router.push('/profile')} className="rounded-full bg-white/15" />
             <IconButton icon="logout" label={t('auth.logout')} color={colors.white} onPress={() => logout.mutate()} className="rounded-full bg-white/15" />
           </View>
           <View className="min-h-9 flex-row items-center gap-2 rounded-lg bg-white px-3">

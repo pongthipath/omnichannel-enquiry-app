@@ -5,6 +5,7 @@ import { formatTime } from '../../helpers/format.helper';
 import { Message } from '../../services/message.service';
 import { cn } from '../../utils/cn';
 import { Avatar } from '../common';
+import { AttachmentList } from './attachment-list';
 
 const pill = {
   blue: { box: 'bg-primary-light dark:bg-dark-3', text: 'text-dark-4 dark:text-gray-3' },
@@ -46,7 +47,8 @@ export function MessageItem({ message: m, mine }: { message: Message; mine: bool
       <View className="max-w-[85%] gap-1 self-end">
         <View className="rounded-xl border border-dashed border-yellow-dark bg-yellow-light px-3.5 py-2.5 dark:bg-dark-3">
           <Text className="pb-0.5 font-semibold text-xs text-yellow dark:text-yellow-dark">{t('inbox.internalNote')}</Text>
-          <Text className="font-sans text-sm text-dark dark:text-white">{m.body}</Text>
+          {Boolean(m.body) && <Text className="font-sans text-sm text-dark dark:text-white">{m.body}</Text>}
+          <AttachmentList attachments={m.attachments} mine={false} />
         </View>
         <Text className="self-end font-sans text-xs text-body dark:text-body-dark">{meta}</Text>
       </View>
@@ -57,7 +59,8 @@ export function MessageItem({ message: m, mine }: { message: Message; mine: bool
     return (
       <View className={cn('max-w-[80%] gap-1 self-end', pending && 'opacity-60')}>
         <View className="rounded-2xl rounded-br-md bg-primary px-3.5 py-2.5">
-          <Text className="font-sans text-sm leading-[22px] text-white">{m.body}</Text>
+          {Boolean(m.body) && <Text className="font-sans text-sm leading-[22px] text-white">{m.body}</Text>}
+          <AttachmentList attachments={m.attachments} mine />
         </View>
         <Text className="self-end font-sans text-xs text-body dark:text-body-dark">{meta}</Text>
       </View>
@@ -69,7 +72,8 @@ export function MessageItem({ message: m, mine }: { message: Message; mine: bool
       <Avatar name={m.senderName ?? '?'} size={28} />
       <View className="flex-shrink gap-1">
         <View className="rounded-2xl rounded-bl-md border border-stroke bg-white px-3.5 py-2.5 dark:border-stroke-dark dark:bg-dark-2">
-          <Text className="font-sans text-sm leading-[22px] text-dark dark:text-white">{m.body}</Text>
+          {Boolean(m.body) && <Text className="font-sans text-sm leading-[22px] text-dark dark:text-white">{m.body}</Text>}
+          <AttachmentList attachments={m.attachments} mine={false} />
         </View>
         <Text className="font-sans text-xs text-body dark:text-body-dark">{meta}</Text>
       </View>
