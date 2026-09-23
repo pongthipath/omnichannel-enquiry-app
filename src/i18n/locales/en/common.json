@@ -183,7 +183,8 @@
     "openMenu": "Open menu",
     "sla": "SLA",
     "simulator": "Simulator",
-    "productSettings": "Products"
+    "productSettings": "Products",
+    "me": "Me"
   },
   "events": {
     "system": "System",
@@ -562,7 +563,12 @@
     "confirmResolved": "Confirm resolved",
     "confirmTitle": "Close this enquiry?",
     "confirmMessage": "If anything comes up, just write in this chat and it reopens.",
-    "offlineHint": "No signal? Keep typing — it sends when you are back online"
+    "offlineHint": "No signal? Keep typing — it sends when you are back online",
+    "tabs": {
+      "home": "Home",
+      "new": "Report",
+      "profile": "My details"
+    }
   },
   "permissions": {
     "DASHBOARD_PAGE_VIEW": "See the dashboard",

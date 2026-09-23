@@ -15,6 +15,7 @@ import { useDebounced } from '../../../../hooks/use-debounced';
 import { ChatStatus, Enquiry, EnquiryType } from '../../../../services/enquiry.service';
 import colors from '../../../../theme/colors';
 import { useTheme } from '../../../../theme/use-theme';
+import { NATIVE } from '../../../../utils/platform';
 
 type Filter = 'all' | 'active' | 'done';
 const ACTIVE: ChatStatus[] = ['OPEN', 'ASSIGNED', 'IN_PROGRESS', 'WAITING_FOR_CUSTOMER'];
@@ -35,6 +36,8 @@ export default function MyEnquiriesScreen() {
   const [filter, setFilter] = useState<Filter>('all');
   const [search, setSearch] = useState('');
   const [creating, setCreating] = useState<EnquiryType | null>(null);
+  // phone: reporting something is its own page you can back out of; browser: the usual dialog
+  const startCreate = (type: EnquiryType) => (NATIVE ? router.push(`/my/new?type=${type}`) : setCreating(type));
   const list = useEnquiries({ q: useDebounced(search, 300), status: filter === 'active' ? ACTIVE : filter === 'done' ? DONE : undefined });
 
   const renderItem = ({ item }: { item: Enquiry }) => (
@@ -74,8 +77,13 @@ export default function MyEnquiriesScreen() {
               <Text className="font-bold text-xl text-white">{t('my.hello', { name: me?.name ?? '' })}</Text>
             </View>
             <LanguageToggle tone="dark" />
-            <IconButton icon="user" label={t('profile.title')} color={colors.white} onPress={() => router.push('/profile')} className="rounded-full bg-white/15" />
-            <IconButton icon="logout" label={t('auth.logout')} color={colors.white} onPress={() => logout.mutate()} className="rounded-full bg-white/15" />
+            {/* phone: both of these live in the profile tab, so the header stays for the greeting */}
+            {!NATIVE && (
+              <>
+                <IconButton icon="user" label={t('profile.title')} color={colors.white} onPress={() => router.push('/profile')} className="rounded-full bg-white/15" />
+                <IconButton icon="logout" label={t('auth.logout')} color={colors.white} onPress={() => logout.mutate()} className="rounded-full bg-white/15" />
+              </>
+            )}
           </View>
           <View className="min-h-9 flex-row items-center gap-2 rounded-lg bg-white px-3">
             <Icon name="search" color={colors.dark[5]} />
@@ -105,7 +113,7 @@ export default function MyEnquiriesScreen() {
                     <Pressable
                       key={q.key}
                       accessibilityRole="button"
-                      onPress={() => setCreating(q.type)}
+                      onPress={() => startCreate(q.type)}
                       className="min-h-14 min-w-[45%] flex-1 gap-0.5 rounded-xl border border-stroke bg-white p-3 active:bg-gray-1 dark:border-stroke-dark dark:bg-dark-2"
                     >
                       <Text className="font-semibold text-sm text-dark dark:text-white">{t(`my.quick.${q.key}`)}</Text>
@@ -116,7 +124,7 @@ export default function MyEnquiriesScreen() {
               </View>
               <View className="flex-row items-center justify-between">
                 <Text className="font-bold text-base text-dark dark:text-white">{t('my.title')}</Text>
-                <Pressable accessibilityRole="button" onPress={() => setCreating('GENERAL')} className="min-h-9 justify-center px-2">
+                <Pressable accessibilityRole="button" onPress={() => startCreate('GENERAL')} className="min-h-9 justify-center px-2">
                   <Text className="font-semibold text-sm text-primary">+ {t('my.newOther')}</Text>
                 </Pressable>
               </View>

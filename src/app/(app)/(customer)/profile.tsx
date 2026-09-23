@@ -21,6 +21,7 @@ import { useCustomerOrders, useMyProfile } from '../../../hooks/queries/use-cust
 import { useLogout } from '../../../hooks/queries/use-session';
 import { useOffline } from '../../../hooks/use-offline';
 import colors from '../../../theme/colors';
+import { NATIVE } from '../../../utils/platform';
 
 /**
  * The customer's own page (design C5): who we have on file, how they can be reached, and the orders
@@ -38,7 +39,8 @@ export default function CustomerProfileScreen() {
     <SafeAreaView className="flex-1 bg-gray-1 dark:bg-dark" edges={['top']}>
       <View className="w-full max-w-[640px] flex-1 self-center">
         <View className="flex-row items-center gap-2 bg-primary px-3 py-3">
-          <IconButton icon="chevronLeft" label={t('common.back')} color={colors.white} onPress={() => router.back()} />
+          {/* phone app: this is a tab, so there is nothing to go back to */}
+          {!NATIVE && <IconButton icon="chevronLeft" label={t('common.back')} color={colors.white} onPress={() => router.back()} />}
           <Text className="flex-1 font-bold text-lg text-white">{t('profile.title')}</Text>
           <LanguageToggle tone="dark" />
         </View>

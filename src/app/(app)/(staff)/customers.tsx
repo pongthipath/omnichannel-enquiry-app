@@ -2,24 +2,24 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, Text, TextInput, useWindowDimensions, View } from 'react-native';
-import { Alert, Avatar, Badge, Button, Card, EmptyState, Icon, InfoRow, SectionLabel, Spinner } from '../../../components/common';
-import { CreateEnquiryModal } from '../../../components/inbox/modals/create-enquiry-modal';
-import { CustomerEditModal } from '../../../components/inbox/modals/customer-edit-modal';
-import { MergeCustomerModal } from '../../../components/inbox/modals/merge-customer-modal';
+import { Alert, Avatar, Card, EmptyState, Icon, Spinner } from '../../../components/common';
+import { CustomerPanel } from '../../../components/inbox/customer-panel';
 import { PageHeader, StatTile } from '../../../components/layout/page-header';
 import { Permission } from '../../../constants/permissions';
-import { statusTone } from '../../../helpers/enquiry-status.helper';
 import { errorMessage } from '../../../helpers/error.helper';
 import { formatListTime } from '../../../helpers/format.helper';
-import { useCustomer, useCustomers } from '../../../hooks/queries/use-catalog';
-import { useEnquiries } from '../../../hooks/queries/use-enquiries';
+import { useCustomers } from '../../../hooks/queries/use-catalog';
 import { useDebounced } from '../../../hooks/use-debounced';
 import { usePermissions } from '../../../hooks/use-permissions';
 import colors from '../../../theme/colors';
 import { useTheme } from '../../../theme/use-theme';
 import { cn } from '../../../utils/cn';
+import { NATIVE } from '../../../utils/platform';
 
-/** Customers (design Customers.dc.html): searchable table + detail panel of the selected customer. */
+/**
+ * Customers (design Customers.dc.html): searchable table + detail panel of the selected customer.
+ * A table needs width, so on a phone the same rows are cards and the detail panel is its own page.
+ */
 export default function CustomersScreen() {
   const { t, i18n } = useTranslation();
   const c = useTheme();
@@ -34,6 +34,86 @@ export default function CustomersScreen() {
 
   if (!can(Permission.CUSTOMERS_PAGE_VIEW)) return <EmptyState icon="lock" title={t('common.noAccess')} />;
 
+  const searchBox = (
+    <View className="min-h-10 flex-row items-center gap-2 rounded-md border border-stroke bg-gray-1 px-3 dark:border-stroke-dark dark:bg-dark">
+      <Icon name="search" size={16} color={colors.dark[5]} />
+      <TextInput
+        value={search}
+        onChangeText={setSearch}
+        placeholder={t('customers.searchPlaceholder')}
+        placeholderTextColor={c.placeholder}
+        accessibilityLabel={t('customers.searchPlaceholder')}
+        className="flex-1 py-2 font-sans text-sm text-dark outline-none dark:text-white"
+      />
+    </View>
+  );
+
+  if (NATIVE) {
+    return (
+      <View className="flex-1">
+        <View className="gap-3 border-b border-stroke bg-white px-4 py-3 dark:border-stroke-dark dark:bg-dark-2">
+          <PageHeader title={t('customers.title')} subtitle={t('customers.subtitle')} />
+          {searchBox}
+        </View>
+        {customers.isError && (
+          <View className="p-4">
+            <Alert tone="error" message={errorMessage(customers.error, t)} />
+          </View>
+        )}
+        {customers.isPending ? (
+          <Spinner className="flex-1" />
+        ) : (
+          <ScrollView contentContainerClassName="gap-2.5 p-4">
+            {items.map((x) => (
+              <Pressable
+                key={x.id}
+                accessibilityRole="button"
+                accessibilityLabel={x.companyName + ' ' + x.code}
+                onPress={() => router.push({ pathname: '/customer/[id]', params: { id: x.id } })}
+                className="gap-2 rounded-xl border border-stroke bg-white p-3.5 active:bg-gray-1 dark:border-stroke-dark dark:bg-dark-2"
+              >
+                <View className="flex-row items-center gap-2.5">
+                  <Avatar name={x.companyName} size={38} />
+                  <View className="min-w-0 flex-1">
+                    <Text numberOfLines={1} className="font-semibold text-base text-dark dark:text-white">
+                      {x.companyName}
+                    </Text>
+                    <Text numberOfLines={1} className="font-latin text-xs text-body">
+                      {[x.code, x.contactName, x.phone].filter(Boolean).join(' \u00b7 ')}
+                    </Text>
+                  </View>
+                  <Icon name="chevronRight" size={16} color={colors.dark[6]} />
+                </View>
+                <View className="flex-row flex-wrap items-center gap-1.5">
+                  {x.channels.slice(0, 5).map((ch) => (
+                    <View key={ch.id} className="rounded border border-stroke px-1.5 dark:border-stroke-dark">
+                      <Text className="font-semibold text-xs text-dark-4">{t('enquiry.channelShort.' + ch.channel)}</Text>
+                    </View>
+                  ))}
+                  {x.channels.length > 5 && (
+                    <Text className="font-sans text-xs text-body">+{x.channels.length - 5}</Text>
+                  )}
+                </View>
+                <View className="flex-row items-center gap-2 border-t border-gray-2 pt-2 dark:border-dark-3">
+                  <Text numberOfLines={1} className={cn('flex-1 font-sans text-xs', x.salespersonName ? 'text-body' : 'text-yellow')}>
+                    {x.salespersonName ?? t('customers.none')}
+                  </Text>
+                  <Text className="font-semibold text-xs text-dark dark:text-white">
+                    {t('customers.cols.open')} {x.openEnquiries}
+                  </Text>
+                  <Text className="font-sans text-xs text-body">
+                    {x.lastContactAt ? formatListTime(x.lastContactAt, i18n.language, t) : '\u2014'}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+            {!items.length && <EmptyState icon="users" title={t('customers.empty')} />}
+          </ScrollView>
+        )}
+      </View>
+    );
+  }
+
   return (
     <View className="flex-1 gap-3 p-4">
       <PageHeader title={t('customers.title')} subtitle={t('customers.subtitle')} />
@@ -46,19 +126,7 @@ export default function CustomersScreen() {
 
       <View className="flex-1 flex-row gap-4">
         <Card className="flex-1 overflow-hidden">
-          <View className="border-b border-stroke p-3 dark:border-stroke-dark">
-            <View className="min-h-10 flex-row items-center gap-2 rounded-md border border-stroke bg-gray-1 px-3 dark:border-stroke-dark dark:bg-dark">
-              <Icon name="search" size={16} color={colors.dark[5]} />
-              <TextInput
-                value={search}
-                onChangeText={setSearch}
-                placeholder={t('customers.searchPlaceholder')}
-                placeholderTextColor={c.placeholder}
-                accessibilityLabel={t('customers.searchPlaceholder')}
-                className="flex-1 py-2 font-sans text-sm text-dark outline-none dark:text-white"
-              />
-            </View>
-          </View>
+          <View className="border-b border-stroke p-3 dark:border-stroke-dark">{searchBox}</View>
           <View className="flex-row bg-gray-1 px-4 py-2.5 dark:bg-dark">
             <Text className="flex-[3] font-semibold text-xs text-body">{t('customers.cols.company')}</Text>
             <Text className="flex-[2] font-semibold text-xs text-body">{t('customers.cols.contact')}</Text>
@@ -117,88 +185,5 @@ export default function CustomersScreen() {
         {showPanel && selected && <CustomerPanel id={selected} />}
       </View>
     </View>
-  );
-}
-
-function CustomerPanel({ id }: { id: string }) {
-  const { t } = useTranslation();
-  const { can } = usePermissions();
-  const customer = useCustomer(id);
-  const enquiries = useEnquiries({ customerId: id, limit: 20 });
-  const [edit, setEdit] = useState(false);
-  const [creating, setCreating] = useState(false);
-  const [merging, setMerging] = useState(false);
-  const x = customer.data;
-
-  return (
-    <Card className="w-[300px] gap-4 p-5">
-      {!x ? (
-        <Spinner />
-      ) : (
-        <ScrollView contentContainerClassName="gap-4">
-          <View className="flex-row items-center gap-3">
-            <Avatar name={x.companyName} size={52} />
-            <View className="flex-1">
-              <Text className="font-bold text-base text-dark dark:text-white">{x.companyName}</Text>
-              <Text className="font-latin text-sm text-body">{x.code}</Text>
-            </View>
-            <Button title={t('common.edit')} size="sm" variant="outline" onPress={() => setEdit(true)} />
-          </View>
-          {x.isPlaceholder && (
-            <View className="gap-2 rounded-lg bg-yellow-light p-3 dark:bg-dark-3">
-              <Text className="font-semibold text-xs text-yellow">{t('customers.merge.placeholder')}</Text>
-              <Text className="font-sans text-sm text-dark dark:text-white">{t('customers.merge.placeholderHint')}</Text>
-              {can(Permission.CUSTOMERS_PLACEHOLDER_MERGE) && (
-                <Button title={t('customers.merge.action')} size="sm" onPress={() => setMerging(true)} />
-              )}
-            </View>
-          )}
-          <View className="gap-2">
-            <InfoRow label={t('customers.contact')} value={x.contactName ?? '—'} />
-            <InfoRow label={t('customers.phone')} value={x.phone ?? '—'} />
-            <InfoRow label={t('customers.email')} value={x.email ?? '—'} />
-            <InfoRow label={t('customers.salesperson')} value={x.salespersonName ?? t('customers.none')} />
-          </View>
-          <View className="gap-2">
-            <SectionLabel>{t('inbox.panel.channels')}</SectionLabel>
-            {x.channels.map((ch) => (
-              <View key={ch.id} className="flex-row items-center gap-2 rounded-lg border border-stroke px-2.5 py-2 dark:border-stroke-dark">
-                <Text className="font-bold text-sm text-green">{t(`enquiry.channelShort.${ch.channel}`)}</Text>
-                <Text className="flex-1 font-sans text-sm text-dark dark:text-white">{ch.displayName ?? t('inbox.panel.linked')}</Text>
-              </View>
-            ))}
-          </View>
-          {x.internalNote ? (
-            <View className="rounded-lg bg-yellow-light p-3">
-              <Text className="font-semibold text-xs text-yellow">{t('customers.note')}</Text>
-              <Text className="font-sans text-sm text-dark">{x.internalNote}</Text>
-            </View>
-          ) : null}
-          <View className="gap-2">
-            <View className="flex-row items-center justify-between">
-              <SectionLabel>{t('customers.enquiries')}</SectionLabel>
-              {can(Permission.INBOX_ENQUIRY_CREATE) && <Button title={`+ ${t('inbox.create')}`} size="sm" variant="ghost" onPress={() => setCreating(true)} />}
-            </View>
-            {(enquiries.data ?? []).map((e) => (
-              <Pressable
-                key={e.id}
-                accessibilityRole="link"
-                onPress={() => router.push({ pathname: '/inbox', params: { id: e.id } })}
-                className="gap-0.5 rounded-lg border border-stroke px-3 py-2.5 active:bg-gray-1 dark:border-stroke-dark"
-              >
-                <View className="flex-row items-center gap-1.5">
-                  <Text className="font-latin text-xs text-body">{e.reference}</Text>
-                  <Badge label={t(`enquiry.status.${e.status}`)} tone={statusTone[e.status]} />
-                </View>
-                <Text numberOfLines={1} className="font-semibold text-sm text-dark dark:text-white">{e.subject}</Text>
-              </Pressable>
-            ))}
-          </View>
-          <CustomerEditModal customer={x} visible={edit} onClose={() => setEdit(false)} />
-          <CreateEnquiryModal visible={creating} onClose={() => setCreating(false)} asStaff onCreated={(e) => router.push({ pathname: '/inbox', params: { id: e.id } })} />
-          <MergeCustomerModal visible={merging} placeholder={x} onClose={() => setMerging(false)} />
-        </ScrollView>
-      )}
-    </Card>
   );
 }
